@@ -26,12 +26,12 @@ g_run_4 <- isolate_run(dt, 'gen',4); b_g_run_4 <- convert_to_bids(g_run_4, 'gen'
 # save with BIDS filenames
 name <- dt$participant[1]
 for (x in 1:2) {
-  fname <- paste0('output/BIDS/sub-', name, '_task-cond_run-0', x, '_bold.tsv')
+  fname <- paste0('output/BIDS/sub-', name, '_task-cond_run-0', x, '_events.tsv')
   vname <- paste0('c_run_', x)
   write.csv(vname, fname, row.names = FALSE)
 }
 for (x in 1:4) {
-  fname <- paste0('output/BIDS/sub-', name, '_task-gen_run-0', x, '_bold.tsv')
+  fname <- paste0('output/BIDS/sub-', name, '_task-gen_run-0', x, '_events.tsv')
   vname <- paste0('g_run_', x)
   write.csv(vname, fname, row.names = FALSE)
 }
