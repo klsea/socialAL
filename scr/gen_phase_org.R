@@ -12,7 +12,7 @@ gen_phase_org <- function(data, event) {
   } else {
     e <- NULL
   }
-  names <- c('onset', 'duration', 'my_codes', 'trial_type', 'response_time', 'response_key','stim_file_left', 'stim_file_right')
+  names <- c('onset', 'duration', 'event', 'trial_type', 'response_time', 'response_key','stim_file_left', 'stim_file_right')
   dt <- data.frame(e$o, e$d, e$mc, tt, rt, resp, sfl,sfr); colnames(dt) <- names
   return(dt)
 }

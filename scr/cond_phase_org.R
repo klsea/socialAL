@@ -1,6 +1,6 @@
 cond_phase_org <- function(data, event) {
   # Takes condition phase data and puts it in BIDS format
-  names <- c('onset', 'duration', 'my_codes', 'trial_type', 'response_time', 'response_key', 'stim_file', 'trial_earnings')
+  names <- c('onset', 'duration', 'event', 'trial_type', 'response_time', 'response_key', 'stim_file', 'trial_earnings')
   st <- data$triggerCondStartTime[1]
   tt <- data$condition
   sf <- data$stim

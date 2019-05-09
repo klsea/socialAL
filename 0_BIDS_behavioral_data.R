@@ -32,17 +32,17 @@ for (f in files) {
   
   # save with BIDS filenames
   name <- dt$participant[1]
-  dir.create(here('output', 'BIDS', name))
+  dir.create(here('data', 'BIDS', name))
   dfnames <- list(b_c_run_1, b_c_run_2, b_g_run_1, b_g_run_2, b_g_run_3, b_g_run_4)
   
   for (x in 1:2) {
-    fname <- here('output', 'BIDS', name, paste0('sub-', name, '_task-cond_run-0', x, '_events.tsv'))
+    fname <- here('data', 'BIDS', name, paste0('sub-', name, '_task-cond_run-0', x, '_events.tsv'))
     vname <- dfnames[x]
     write.table(vname, fname, sep='\t', row.names = FALSE)
   }
   
   for (x in 1:4) {
-    fname <- here('output', 'BIDS',name, paste0('sub-', name, '_task-gen_run-0', x, '_events.tsv'))
+    fname <- here('data', 'BIDS',name, paste0('sub-', name, '_task-gen_run-0', x, '_events.tsv'))
     vname <- dfnames[x+2]
     write.table(vname, fname, sep='\t', row.names = FALSE)
   }

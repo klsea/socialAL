@@ -1,0 +1,16 @@
+{
+  "event": {
+    "Long Name": "Event Name",
+    "Description": "Name of the intra-task event",
+    "Levels": {
+          "View" : "Participant views potential partner",
+          "Decision" : "Participant decides which partner they would like to play with"
+      },
+    "response_key" : {
+      "Long Name": "Response Key",
+      "Description": "The potential partner the participant would like to play with",
+      "Levels": {
+        "1" : "Play with partner on left",
+        "2" : "Play with partner on right"
+      }
+}
