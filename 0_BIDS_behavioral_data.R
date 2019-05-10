@@ -5,8 +5,8 @@
 library(here)
 
 # load source functions
-source("scr/cond_phase_org.R")
-source("scr/gen_phase_org.R")
+source("scr/org_cond_phase.R")
+source("scr/org_gen_phase.R")
 source("scr/isolate_run.R")
 source("scr/convert_to_bids.R")
 
