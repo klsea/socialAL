@@ -56,7 +56,7 @@ age_grp_means <- ggplot(grpmeans, aes(trial_type, mean_amount, colour = agegrp, 
   geom_bar(position=position_dodge(), stat='identity') + 
   geom_errorbar(aes(ymin=mean_amount - se_amount, ymax = mean_amount + se_amount), 
                 width = .2, position=position_dodge(.9))
-
+ggsave(here('figs', 'age_grp_means.pdf'))
 
 ## Graph 2 - Change over time
 ## --------------------------
@@ -73,8 +73,10 @@ d3 <- dt %>%
 trial_type_by_time <- ggplot(d3, aes(tt_number, mean_amount, colour = trial_type, fill = trial_type)) + 
   geom_point() + geom_smooth(method=lm) + facet_grid(. ~ agegrp) + 
   xlab('Trial') + ylab('Amount shared')
+ggsave(here('figs', 'grp_means_over_time.pdf'))
+
 
 # graph raw data
 ggplot(dt, aes(tt_number, amount_shared, colour = trial_type, fill = trial_type)) + 
   geom_point() + geom_smooth(method=lm) + facet_grid(. ~ agegrp) +
-  xlab('Trial') + ylab('Amount shared'))
+  xlab('Trial') + ylab('Amount shared')
