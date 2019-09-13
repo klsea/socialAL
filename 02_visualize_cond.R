@@ -6,6 +6,7 @@ library(here)
 library(tidyverse)
 
 # load source functions
+source(here('scr', 'add_tt_number.R'))
 
 # set hard-coded variables
 
@@ -31,17 +32,49 @@ dt <- dt %>%
 dt <- dt %>% 
   mutate(agegrp = ifelse(grp == 1, 'Younger', 'Older'))
 
+# reorder trial_type and agegrp factors
+dt$trial_type <- factor(dt$trial_type, levels = c("Untrustworthy", "Neutral", "Trustworthy"))
+dt$agegrp <- factor(dt$agegrp, levels = c("Younger", "Older"))
+
+
+## Graph 1 - Group means
+## ---------------------
 # calculate individual means 
-dt2 <- dt %>% 
+indiv_means <- dt %>% 
   dplyr::group_by(id, agegrp, trial_type) %>%
-  summarize(mean_amount=mean(amount_shared, na.rm = TRUE))
+  summarize(avg_amount=mean(amount_shared, na.rm = TRUE))
 
 # calculate age group means 
-# group sd not working
-grpmeans <- dt2 %>% 
+se <- function(sd,n) {sd/sqrt(n())}
+grpmeans <- indiv_means %>% 
   dplyr::group_by(agegrp, trial_type) %>%
-  summarise(mean_amount = mean(mean_amount), sd_amount = sd(mean_amount))
+  summarise(mean_amount = mean(avg_amount), sd_amount = sd(avg_amount), 
+            se_amount = sd(avg_amount)/sqrt(n()))
 
 # graph group means
+age_grp_means <- ggplot(grpmeans, aes(trial_type, mean_amount, colour = agegrp, fill= agegrp)) + 
+  geom_bar(position=position_dodge(), stat='identity') + 
+  geom_errorbar(aes(ymin=mean_amount - se_amount, ymax = mean_amount + se_amount), 
+                width = .2, position=position_dodge(.9))
 
 
+## Graph 2 - Change over time
+## --------------------------
+dt <- add_tt_number(dt)
+
+# calculate age group x trial_type x trial means
+d3 <- dt %>% 
+  dplyr::group_by(agegrp, trial_type, tt_number) %>%
+  summarise(mean_amount = mean(amount_shared, na.rm = TRUE), 
+            sd_amount = sd(amount_shared, na.rm = TRUE), 
+            se_amount = sd(amount_shared, na.rm = TRUE)/sqrt(n()))
+
+# graph trial_type over time
+trial_type_by_time <- ggplot(d3, aes(tt_number, mean_amount, colour = trial_type, fill = trial_type)) + 
+  geom_point() + geom_smooth(method=lm) + facet_grid(. ~ agegrp) + 
+  xlab('Trial') + ylab('Amount shared')
+
+# graph raw data
+ggplot(dt, aes(tt_number, amount_shared, colour = trial_type, fill = trial_type)) + 
+  geom_point() + geom_smooth(method=lm) + facet_grid(. ~ agegrp) +
+  xlab('Trial') + ylab('Amount shared'))
