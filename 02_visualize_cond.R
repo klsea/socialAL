@@ -57,22 +57,29 @@ age_grp_means <- ggplot(grpmeans, aes(trial_type, mean_amount, colour = agegrp, 
   geom_bar(position=position_dodge(), stat='identity') + 
   geom_errorbar(aes(ymin=mean_amount - se_amount, ymax = mean_amount + se_amount), 
                 width = .2, position=position_dodge(.9)) + theme_minimal() + 
-  scale_fill_brewer(palette="Set1", name="Experimental\nCondition") + 
-  scale_colour_brewer(palette="Set1", name="Experimental\nCondition") +
-  xlab('Trial Type') + ylab('Average Amount Shared') + 
+  scale_fill_brewer(palette="Set1", name="Age Group") + 
+  scale_colour_brewer(palette="Set1", name="Age Group") +
+  xlab('Trial Type') + ylab('Average $ Shared') + 
   coord_cartesian(ylim=c(0, 9)) + scale_y_continuous(breaks = c(3, 6, 9))
 ggsave(here('figs', 'age_grp_means.pdf'))
 
 # make it a violin plot
 library(Hmisc)
+lg = 18
+sm = 14
 violin <- ggplot(indiv_means, aes(trial_type, avg_amount, color = agegrp)) + 
   geom_violin(trim= FALSE) + geom_boxplot(width = 0.1, position = position_dodge(.9)) + 
-  theme_minimal() + scale_color_brewer(palette="Set1", name="Experimental\nCondition") + 
-  scale_fill_brewer(palette="Set1", name="Experimental\nCondition") + 
-  xlab('Trial Type') + ylab('Average Amount Shared') + 
-  coord_cartesian(ylim=c(0, 9)) + scale_y_continuous(breaks = c(3, 6, 9))
+  scale_color_brewer(palette="Set1", name="Age Group") + 
+  scale_fill_brewer(palette="Set1", name="Age Groupn") + 
+  xlab('Trial Type') + ylab('Average $ Shared') + 
+  scale_y_continuous(breaks = c(3, 6, 9)) + theme_minimal() + theme(
+    axis.title.x = element_text(size = lg), axis.text.x = element_text(size = sm),
+    axis.title.y = element_text(size = lg), axis.text.y = element_text(size = sm), 
+    legend.title = element_text(size = lg), legend.text = element_text(size = sm)
+    )
 violin
-ggsave(here('figs', 'age_grp_means_violin.pdf'))
+#ggsave(here('figs', 'age_grp_means_violin.pdf'))
+ggsave(here('figs', 'age_grp_means_violin.png'))
 
 ## Graph 2 - Change over time
 ## --------------------------
@@ -88,15 +95,19 @@ d3 <- dt %>%
 # graph trial_type over time
 trial_type_by_time <- ggplot(d3, aes(tt_number, mean_amount, colour = trial_type, fill = trial_type)) + 
   geom_point() + geom_smooth(method=lm) + facet_grid(. ~ agegrp) + 
-  xlab('Trial') + ylab('Average Amount Shared') + theme_minimal() + 
-  scale_fill_brewer(palette="Dark2", name="Experimental\nCondition") +
-  scale_colour_brewer(palette="Dark2", name="Experimental\nCondition") +
+  xlab('Trial') + ylab('Average $ Shared') + theme_minimal() + 
+  scale_fill_brewer(palette="Dark2", name="Condition") +
+  scale_colour_brewer(palette="Dark2", name="Condition") +
   scale_x_continuous(breaks = c(3, 6, 9, 12, 15)) + 
-  coord_cartesian(ylim=c(0, 9)) + scale_y_continuous(breaks = c(3, 6, 9)) 
-ggsave(here('figs', 'grp_means_over_time.pdf'))
-
+  coord_cartesian(ylim=c(0, 9)) + scale_y_continuous(breaks = c(3, 6, 9)) + theme(
+    axis.title.x = element_text(size = lg), axis.text.x = element_text(size = sm),
+    axis.title.y = element_text(size = lg), axis.text.y = element_text(size = sm), 
+    legend.title = element_text(size = lg), legend.text = element_text(size = sm), 
+    strip.text.x = element_text(size = lg))
+#ggsave(here('figs', 'grp_means_over_time.pdf'))
+ggsave(here('figs', 'grp_means_over_time.png'))
 
 # graph raw data
 ggplot(dt, aes(tt_number, amount_shared, colour = trial_type, fill = trial_type)) + 
   geom_point() + geom_smooth(method=lm) + facet_grid(. ~ agegrp) +
-  xlab('Trial') + ylab('Amount shared')
+  xlab('Trial') + ylab('Amount $ Shared')
