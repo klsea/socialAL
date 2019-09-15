@@ -4,6 +4,8 @@
 # load required packages
 library(here)
 library(tidyverse)
+library(ggplot2)
+library(Hmisc)
 
 # load source functions
 source(here('scr', 'add_tt_number.R'))
@@ -55,8 +57,17 @@ grpmeans <- indiv_means %>%
 age_grp_means <- ggplot(grpmeans, aes(trial_type, mean_amount, colour = agegrp, fill= agegrp)) + 
   geom_bar(position=position_dodge(), stat='identity') + 
   geom_errorbar(aes(ymin=mean_amount - se_amount, ymax = mean_amount + se_amount), 
-                width = .2, position=position_dodge(.9)) + theme_bw()
+                width = .2, position=position_dodge(.9)) + theme_bw() + 
+  scale_fill_brewer(palette="Set1") + xlab('Trial Type') + ylab('Average Amount Shared')
 ggsave(here('figs', 'age_grp_means.pdf'))
+
+# make it a violin plot
+violin <- ggplot(indiv_means, aes(trial_type, avg_amount, fill = agegrp)) + 
+  geom_violin() + geom_boxplot(width = 0.1, position = position_dodge(.9)) + 
+  theme_minimal() + scale_fill_brewer(palette="Set1") + xlab('Trial Type') + 
+  ylab('Average Amount Shared')
+violin
+ggsave(here('figs', 'age_grp_means_violin.pdf'))
 
 ## Graph 2 - Change over time
 ## --------------------------
@@ -72,7 +83,8 @@ d3 <- dt %>%
 # graph trial_type over time
 trial_type_by_time <- ggplot(d3, aes(tt_number, mean_amount, colour = trial_type, fill = trial_type)) + 
   geom_point() + geom_smooth(method=lm) + facet_grid(. ~ agegrp) + 
-  xlab('Trial') + ylab('Amount shared') + theme_bw()
+  xlab('Trial') + ylab('Amount shared') + theme_minimal() + 
+  scale_fill_brewer(palette="Dark2") +  scale_colour_brewer(palette="Dark2")
 ggsave(here('figs', 'grp_means_over_time.pdf'))
 
 
