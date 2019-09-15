@@ -66,7 +66,7 @@ ggsave(here('figs', 'age_grp_means.pdf'))
 # make it a violin plot
 library(Hmisc)
 violin <- ggplot(indiv_means, aes(trial_type, avg_amount, color = agegrp)) + 
-  geom_violin() + geom_boxplot(width = 0.1, position = position_dodge(.9)) + 
+  geom_violin(trim= FALSE) + geom_boxplot(width = 0.1, position = position_dodge(.9)) + 
   theme_minimal() + scale_color_brewer(palette="Set1", name="Experimental\nCondition") + 
   scale_fill_brewer(palette="Set1", name="Experimental\nCondition") + 
   xlab('Trial Type') + ylab('Average Amount Shared') + 
