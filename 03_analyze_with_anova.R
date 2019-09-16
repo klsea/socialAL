@@ -45,6 +45,7 @@ indiv_means <- dt %>%
 
 m1 <- aov(avg_amount ~ agegrp * trial_type + Error(id/trial_type), data = indiv_means)
 summary(m1)
+saveRDS(m1, here('output', 'age*tt_model.rds'))
 
 # Model 2 - Age Group * Condition * Stage (5 trials) ANOVA
 # create stage variable
@@ -57,3 +58,4 @@ indiv_means_stage <- dt %>%
 
 m2 <- aov(avg_amount ~ agegrp * trial_type * stage + Error(id/(trial_type*stage)) + agegrp, data = indiv_means_stage) 
 summary(m2)
+saveRDS(m1, here('output', 'age*tt*stage_model.rds'))

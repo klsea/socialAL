@@ -146,5 +146,12 @@ ggplot(grp_means_stage, aes(stage, avg_amount, colour = trial_type)) +
     strip.text.x = element_text(size = lg))
 ggsave(here('figs', 'grp_means_over_stage.png'))
 
-       
+# Graph 4 - Difference scores (by Age Group)
+library(tidyr)
+dw <- pivot_wider(indiv_means, id_cols = c(id, agegrp), names_from = trial_type, values_from = avg_amount)
+dw$tudiff <- dw$Trustworthy - dw$Untrustworthy
+dw$tndiff <- dw$Trustworthy - dw$Neutral
+
+ggplot(dw, aes(agegrp, tudiff)) + geom_point() + geom_violin(trim= FALSE)         
+ggplot(dw, aes(agegrp, tndiff)) + geom_point() + geom_violin(trim= FALSE)         
        
