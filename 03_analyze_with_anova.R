@@ -58,4 +58,4 @@ indiv_means_stage <- dt %>%
 
 m2 <- aov(avg_amount ~ agegrp * trial_type * stage + Error(id/(trial_type*stage)) + agegrp, data = indiv_means_stage) 
 summary(m2)
-saveRDS(m1, here('output', 'age*tt*stage_model.rds'))
+saveRDS(m2, here('output', 'age*tt*stage_model.rds'))
