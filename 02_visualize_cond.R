@@ -113,6 +113,38 @@ trial_type_by_time <- ggplot(d3, aes(tt_number, mean_amount, colour = trial_type
 ggsave(here('figs', 'grp_means_over_time.png'))
 
 # graph raw data
-ggplot(dt, aes(tt_number, amount_shared, colour = trial_type, fill = trial_type)) + 
-  geom_point() + geom_smooth(method=lm) + facet_grid(. ~ agegrp) +
-  xlab('Trial') + ylab('Amount $ Shared')
+# need to add something for overplotting
+#ggplot(dt, aes(tt_number, amount_shared, colour = trial_type, fill = trial_type)) + 
+#  geom_point() + geom_smooth(method=lm) + facet_grid(. ~ agegrp) +
+#  xlab('Trial') + ylab('Amount $ Shared')
+
+## Graph 3 - Change over stage
+dt <- add_stage(dt)
+
+# calculate individual mean summary table by stage
+indiv_means_stage <- dt %>% 
+  dplyr::group_by(id, agegrp, trial_type, stage) %>%
+  summarize(avg_amount = mean(amount_shared, na.rm = TRUE))
+
+grp_means_stage <- indiv_means_stage %>% 
+  dplyr::group_by(agegrp, trial_type, stage) %>%
+  summarize(sd_amount = sd(avg_amount), se_amount = sd(avg_amount)/sqrt(n()), 
+            avg_amount = mean(avg_amount))
+
+# graph trial_type over stage
+ggplot(grp_means_stage, aes(stage, avg_amount, colour = trial_type)) + 
+         geom_point() + geom_line() + 
+  geom_errorbar(aes(ymin = avg_amount - se_amount, ymax =avg_amount + se_amount, width=.1)) + 
+  facet_grid(.~agegrp) +   xlab('Trial') + ylab('Average $ Shared') + theme_minimal() + 
+  scale_fill_brewer(palette="Dark2", name="Condition") +
+  scale_colour_brewer(palette="Dark2", name="Condition") +
+  scale_x_continuous(breaks = c(1,2,3)) + 
+  coord_cartesian(ylim=c(0, 9)) + scale_y_continuous(breaks = c(0, 3, 6, 9)) + theme(
+    axis.title.x = element_text(size = lg), axis.text.x = element_text(size = sm),
+    axis.title.y = element_text(size = lg), axis.text.y = element_text(size = sm), 
+    legend.title = element_text(size = lg), legend.text = element_text(size = sm), 
+    strip.text.x = element_text(size = lg))
+ggsave(here('figs', 'grp_means_over_stage.png'))
+
+       
+       
