@@ -46,4 +46,14 @@ indiv_means <- dt %>%
 m1 <- aov(avg_amount ~ agegrp * trial_type + Error(id/trial_type), data = indiv_means)
 summary(m1)
 
-# Model 2 
+# Model 2 - Age Group * Condition * Stage (5 trials) ANOVA
+# create stage variable
+dt <- add_stage(dt)
+
+# calculate individual mean summary table by stage
+indiv_means_stage <- dt %>% 
+  dplyr::group_by(id, agegrp, trial_type, stage) %>%
+  summarize(avg_amount = mean(amount_shared, na.rm = TRUE))
+
+m2 <- aov(avg_amount ~ agegrp * trial_type * stage + Error(id/(trial_type*stage)) + agegrp, data = indiv_means_stage) 
+summary(m2)
