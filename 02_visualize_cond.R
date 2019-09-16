@@ -53,6 +53,8 @@ grpmeans <- indiv_means %>%
             se_amount = sd(avg_amount)/sqrt(n()))
 
 # graph group means
+lg = 18
+sm = 14
 age_grp_means <- ggplot(grpmeans, aes(trial_type, mean_amount, colour = agegrp, fill= agegrp)) + 
   geom_bar(position=position_dodge(), stat='identity') + 
   geom_errorbar(aes(ymin=mean_amount - se_amount, ymax = mean_amount + se_amount), 
@@ -60,13 +62,16 @@ age_grp_means <- ggplot(grpmeans, aes(trial_type, mean_amount, colour = agegrp, 
   scale_fill_brewer(palette="Set1", name="Age Group") + 
   scale_colour_brewer(palette="Set1", name="Age Group") +
   xlab('Trial Type') + ylab('Average $ Shared') + 
-  coord_cartesian(ylim=c(0, 9)) + scale_y_continuous(breaks = c(3, 6, 9))
-ggsave(here('figs', 'age_grp_means.pdf'))
+  coord_cartesian(ylim=c(0, 9)) + scale_y_continuous(breaks = c(3, 6, 9)) + theme(
+  axis.title.x = element_text(size = lg), axis.text.x = element_text(size = sm),
+  axis.title.y = element_text(size = lg), axis.text.y = element_text(size = sm), 
+  legend.title = element_text(size = lg), legend.text = element_text(size = sm)
+)
+#ggsave(here('figs', 'age_grp_means.pdf'))
+ggsave(here('figs', 'age_grp_means.png'))
 
 # make it a violin plot
 library(Hmisc)
-lg = 18
-sm = 14
 violin <- ggplot(indiv_means, aes(trial_type, avg_amount, color = agegrp)) + 
   geom_violin(trim= FALSE) + geom_boxplot(width = 0.1, position = position_dodge(.9)) + 
   scale_color_brewer(palette="Set1", name="Age Group") + 
