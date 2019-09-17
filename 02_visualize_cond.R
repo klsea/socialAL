@@ -8,6 +8,7 @@ library(ggplot2)
 
 # load source functions
 source(here('scr', 'add_tt_number.R'))
+source(here('scr', 'concat_clean.R'))
 
 # set hard-coded variables
 
@@ -30,21 +31,26 @@ grpmeans <- indiv_means %>%
   summarise(mean_amount = mean(avg_amount), sd_amount = sd(avg_amount), 
             se_amount = sd(avg_amount)/sqrt(n()))
 
-# graph group means
-lg = 18
+# graph constants
+lg = 18 # text size
 sm = 14
+custom_plot = list(theme(
+  axis.title.x = element_text(size = lg), axis.text.x = element_text(size = sm),
+  axis.title.y = element_text(size = lg), axis.text.y = element_text(size = sm), 
+  legend.title = element_text(size = lg), legend.text = element_text(size = sm))
+  
+)
+
+# graph group means
 age_grp_means <- ggplot(grpmeans, aes(trial_type, mean_amount, colour = agegrp, fill= agegrp)) + 
   geom_bar(position=position_dodge(), stat='identity') + 
   geom_errorbar(aes(ymin=mean_amount - se_amount, ymax = mean_amount + se_amount), 
                 width = .2, position=position_dodge(.9)) + theme_minimal() + 
   scale_fill_brewer(palette="Set1", name="Age Group") + 
   scale_colour_brewer(palette="Set1", name="Age Group") +
-  xlab('Trial Type') + ylab('Average $ Shared') + 
-  coord_cartesian(ylim=c(0, 9)) + scale_y_continuous(breaks = c(3, 6, 9)) + theme(
-  axis.title.x = element_text(size = lg), axis.text.x = element_text(size = sm),
-  axis.title.y = element_text(size = lg), axis.text.y = element_text(size = sm), 
-  legend.title = element_text(size = lg), legend.text = element_text(size = sm)
-)
+  xlab('Trial Type') + ylab('Average $ Shared') + coord_cartesian(ylim=c(0, 9)) + 
+  scale_y_continuous(breaks = c(0,3, 6, 9)) + custom_plot
+age_grp_means
 #ggsave(here('figs', 'age_grp_means.pdf'))
 ggsave(here('figs', 'age_grp_means.png'))
 
@@ -55,11 +61,7 @@ violin <- ggplot(indiv_means, aes(trial_type, avg_amount, color = agegrp)) +
   scale_color_brewer(palette="Set1", name="Age Group") + 
   scale_fill_brewer(palette="Set1", name="Age Groupn") + 
   xlab('Trial Type') + ylab('Average $ Shared') + 
-  scale_y_continuous(breaks = c(3, 6, 9)) + theme_minimal() + theme(
-    axis.title.x = element_text(size = lg), axis.text.x = element_text(size = sm),
-    axis.title.y = element_text(size = lg), axis.text.y = element_text(size = sm), 
-    legend.title = element_text(size = lg), legend.text = element_text(size = sm)
-    )
+  scale_y_continuous(breaks = c(0,3, 6, 9)) + theme_minimal() + custom_plot
 violin
 #ggsave(here('figs', 'age_grp_means_violin.pdf'))
 ggsave(here('figs', 'age_grp_means_violin.png'))
@@ -82,19 +84,23 @@ trial_type_by_time <- ggplot(d3, aes(tt_number, mean_amount, colour = trial_type
   scale_fill_brewer(palette="Dark2", name="Condition") +
   scale_colour_brewer(palette="Dark2", name="Condition") +
   scale_x_continuous(breaks = c(3, 6, 9, 12, 15)) + 
-  coord_cartesian(ylim=c(0, 9)) + scale_y_continuous(breaks = c(3, 6, 9)) + theme(
-    axis.title.x = element_text(size = lg), axis.text.x = element_text(size = sm),
-    axis.title.y = element_text(size = lg), axis.text.y = element_text(size = sm), 
-    legend.title = element_text(size = lg), legend.text = element_text(size = sm), 
-    strip.text.x = element_text(size = lg))
+  coord_cartesian(ylim=c(0, 9)) + scale_y_continuous(breaks = c(3, 6, 9)) + custom_plot + 
+  theme(strip.text.x = element_text(size=lg))
 #ggsave(here('figs', 'grp_means_over_time.pdf'))
 ggsave(here('figs', 'grp_means_over_time.png'))
 
 # graph raw data
 # need to add something for overplotting
-#ggplot(dt, aes(tt_number, amount_shared, colour = trial_type, fill = trial_type)) + 
-#  geom_point() + geom_smooth(method=lm) + facet_grid(. ~ agegrp) +
-#  xlab('Trial') + ylab('Amount $ Shared')
+ggplot(dt, aes(tt_number, amount_shared, colour = trial_type, fill = trial_type)) + 
+  geom_smooth(method=lm) + facet_grid(. ~ agegrp) +
+  xlab('Trial') + ylab('Amount $ Shared') + geom_jitter(size=1, alpha=0.2, width=0.3) + 
+  scale_fill_brewer(palette="Dark2", name="Condition") +
+  scale_colour_brewer(palette="Dark2", name="Condition") +
+  scale_x_continuous(breaks = c(3, 6, 9, 12, 15)) + 
+  coord_cartesian(ylim=c(-1, 10)) + scale_y_continuous(breaks = c(0,3, 6, 9)) + 
+  theme_minimal() + custom_plot + theme(strip.text.x = element_text(size=lg)) + 
+  theme(legend.position = 'none')
+ggsave(here('figs', 'all_data_over_time_no_legend.png'))
 
 ## Graph 3 - Change over stage
 dt <- add_stage(dt)
@@ -117,11 +123,7 @@ ggplot(grp_means_stage, aes(stage, avg_amount, colour = trial_type)) +
   scale_fill_brewer(palette="Dark2", name="Condition") +
   scale_colour_brewer(palette="Dark2", name="Condition") +
   scale_x_continuous(breaks = c(1,2,3)) + 
-  coord_cartesian(ylim=c(0, 9)) + scale_y_continuous(breaks = c(0, 3, 6, 9)) + theme(
-    axis.title.x = element_text(size = lg), axis.text.x = element_text(size = sm),
-    axis.title.y = element_text(size = lg), axis.text.y = element_text(size = sm), 
-    legend.title = element_text(size = lg), legend.text = element_text(size = sm), 
-    strip.text.x = element_text(size = lg))
+  coord_cartesian(ylim=c(0, 9)) + scale_y_continuous(breaks = c(0, 3, 6, 9)) + custom_plot
 ggsave(here('figs', 'grp_means_over_stage.png'))
 
 # Graph 4 - Difference scores (by Age Group)
@@ -130,6 +132,14 @@ dw <- pivot_wider(indiv_means, id_cols = c(id, agegrp), names_from = trial_type,
 dw$tudiff <- dw$Trustworthy - dw$Untrustworthy
 dw$tndiff <- dw$Trustworthy - dw$Neutral
 
-ggplot(dw, aes(agegrp, tudiff)) + geom_point() + geom_violin(trim= FALSE)         
-ggplot(dw, aes(agegrp, tndiff)) + geom_point() + geom_violin(trim= FALSE)         
+ggplot(dw, aes(agegrp, tudiff, color = agegrp)) + geom_violin(trim= FALSE) + geom_point(alpha = .5) + 
+  scale_color_brewer(palette="Set1") +  theme_minimal() +
+  xlab('Age Group') + ylab('Difference in Trust \n(Trustworthy - Untrustworthy)') + 
+  geom_hline(aes(yintercept = 0)) + theme(legend.position = 'none') + custom_plot 
+ggsave(here('figs', 'grp_means_tu_diff_score.png'))
+
+ggplot(dw, aes(agegrp, tndiff, color = agegrp)) + geom_violin(trim= FALSE) + geom_point(alpha = .5) + 
+  scale_color_brewer(palette="Set1") + theme_minimal() + 
+  xlab('Age Group') + ylab('Difference in Trust \n(Trustworthy - Neutral)') + 
+  geom_hline(aes(yintercept = 0)) + theme(legend.position = 'none') + custom_plot
        
