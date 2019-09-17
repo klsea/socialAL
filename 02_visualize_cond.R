@@ -14,29 +14,7 @@ source(here('scr', 'add_tt_number.R'))
 # read data in and 
 # concatenate data for group visualization
 files <- list.files(here('data', 'modeling'), pattern = ".csv")
-
-dt <- data.frame()
-for (f in files) {
-  dt1 <- read.csv(here('data', 'modeling', f))
-  sub <- strsplit(f, '[.]')[[1]][1] # pulls sub number out of file name
-  dt1$id <- sub
-  dt1$grp <- floor(as.numeric(strsplit(sub, '[-]')[[1]][2])/1000) #1 is YA, 2 is OA
-  dt <- rbind(dt,dt1)
-}
-rm(dt1, sub, files, f)
-
-# Convert response_key to $$ shared
-dt <- dt %>% 
-  mutate(amount_shared = (as.numeric(response_key) - 1) * 3)
-
-# Convert group # to meaningful label
-dt <- dt %>% 
-  mutate(agegrp = ifelse(grp == 1, 'Younger', 'Older'))
-
-# reorder trial_type and agegrp factors
-dt$trial_type <- factor(dt$trial_type, levels = c("Untrustworthy", "Neutral", "Trustworthy"))
-dt$agegrp <- factor(dt$agegrp, levels = c("Younger", "Older"))
-
+dt <- concat_clean(files)
 
 ## Graph 1 - Group means
 ## ---------------------
