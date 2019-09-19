@@ -36,3 +36,4 @@ for (f in files) {
   fname <- here("data", "modeling", paste0("sub-", name, ".csv"))
   write.csv(c_dt, fname, row.names = FALSE)
 }
+
