@@ -29,3 +29,14 @@ concat_clean <- function(file_list) {
   return (dt)
 }
 
+clean_param <- function(data) {
+  data$sub <- as.character(data$id)
+  data <- separate(data, into = c('A', 'n'), col = sub, sep = '[-]')
+  data <- data %>% 
+    mutate(grp = floor(as.numeric(n)/1000)) %>%
+    mutate(agegrp = ifelse(grp == 1, 'Younger', 'Older'))
+  data$agegrp <- factor(data$agegrp)
+  data$agegrp <- factor(data$agegrp, levels = c('Younger', 'Older'))
+  data <- data[c(1,8, 2:4)]
+  data <- gather(data, parameter, estimate, alpha_gain:beta, factor_key = TRUE)
+}
