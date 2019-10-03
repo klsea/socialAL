@@ -17,7 +17,7 @@ path_to_data <- "./task/data/"
 files <- list.files(path_to_data, pattern = ".csv")
 #files <- files[- (grep("button", files))]
 
-for (f in files) {
+for (f in files[1:2]) {
   dt <- read.csv(paste0(path_to_data, f))
   
   # isolate conditioning runs and convert to bids
@@ -48,18 +48,40 @@ for (f in files) {
   
   dfnames <- dfnames[which(!is.na(dfnames))]
   
+  # convert NA to n/a
+  na.convert <- function(vname)
+  {
+    # enter list
+    res <- vname[[1]]
+    
+    if(any(is.na(res)))
+    {
+      # remove factors and white space
+      res <- trimws(apply(res,2,as.character))
+      
+      # NA indicies
+      ind <- which(is.na(res), arr.ind = TRUE)
+      
+      # loop through
+      for(i in 1:nrow(ind))
+      {res[ind[i,1],ind[i,2]] <- "n/a"}
+    }
+    
+    return(list(res))
+  }
+  
   for (x in 1:2) {
     fname <- here("ScanningData", "BIDS", paste("sub-",name,sep=""), "func",
                   paste0("sub-", name, "_task-cond_run-0", x, "_events.tsv"))
     vname <- dfnames[x]
-    write.table(vname, fname, sep = "\t", row.names = FALSE)
+    write.table(na.convert(vname), fname, sep = "\t", row.names = FALSE, quote = FALSE)
   }
   
   for (x in 1:(length(dfnames)-2)) {
     fname <- here("ScanningData", "BIDS", paste("sub-",name,sep=""), "func",
                   paste0("sub-", name, "_task-gen_run-0", x, "_events.tsv"))
     vname <- dfnames[x + 2]
-    write.table(vname, fname, sep = "\t", row.names = FALSE)
+    write.table(na.convert(vname), fname, sep = "\t", row.names = FALSE, quote = FALSE)
   }
   rm(f, b_c_run_1, b_c_run_2, b_g_run_1, b_g_run_2, b_g_run_3, b_g_run_4)
 }
