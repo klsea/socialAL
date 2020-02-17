@@ -14,7 +14,7 @@ source(here::here('scr', 'clean_single_alpha.R'))
 
 # read data in 
 dt <- read.csv(here::here('output', 'model_params.csv' ))
-d2 <- read.csv(here::here('output', 'single_alpha_model_params.csv' ))[1:3]
+d2 <- read.csv(here::here('output', 'single_alpha_model_params.csv' ))
 
 # create age group labels
 dt <- clean_param(dt)
