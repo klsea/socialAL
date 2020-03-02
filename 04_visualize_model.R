@@ -13,18 +13,22 @@ source(here::here('scr', 'clean_single_alpha.R'))
 # set hard-coded variables
 
 # read data in 
-dt <- read.csv(here::here('output', 'model_params.csv' ))
+dt <- read.csv(here::here('output', 'two_alpha_model_params.csv' ))
 d2 <- read.csv(here::here('output', 'single_alpha_model_params.csv' ))
 d3 <- read.csv(here::here('output', 'baseline_model_params.csv'))
 
 # create age group labels
 dt <- clean_param(dt)
+dt <- gather(dt, parameter, estimate, alpha_gain:beta)
 
 se <- function(sd,n) {sd/sqrt(n())}
+
 grpmeans <- dt %>% 
   dplyr::group_by(agegrp, parameter) %>%
   summarise(mean = mean(estimate), sd = sd(estimate), 
             se= sd(estimate)/sqrt(n()))
+alphas <- grpmeans[which(grpmeans$parameter != 'beta'),]
+beta <- grpmeans[which(grpmeans$parameter == 'beta'),]
 
 # graph constants
 lg = 18 # text size
@@ -41,6 +45,8 @@ ggplot(grpmeans, aes(parameter, mean, fill = agegrp)) +
                                             width = .2, position=position_dodge(.9)) + 
   scale_fill_brewer(palette="Set1", name="Age Group") + 
   scale_colour_brewer(palette="Set1", name="Age Group") + theme_minimal() 
+
+
 
 # Graph 2 - violin plots group means
 parameters <- ggplot(dt, aes(parameter, estimate, colour = agegrp)) +
