@@ -38,3 +38,12 @@ d5 <- merge(dt, y, by = 'id')
 
 # proportions
 table(d5$agegrp, d5$win)
+d6 <- as.data.frame(table(d5$agegrp, d5$win))
+d6$Var2 <- gsub('AIC_', '', d6$Var2)
+colnames(d6) <- c("Age", "Model", "Frequency")
+d6$Model <- factor(d6$Model, levels = c('baseline', 'single', 'double'))
+
+ggplot(d6, aes(Model, Frequency, fill = Age)) + geom_bar(stat="identity", position=position_dodge()) + 
+  scale_fill_brewer(palette="Set1") + theme_minimal() + ggtitle('Best-Fitting Model')
+
+ggsave(here('figs', 'best-fit_model.png'))

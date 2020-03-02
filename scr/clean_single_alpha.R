@@ -4,7 +4,7 @@ clean_single_alpha <- function(data) {
   data$agegrp <- factor(data$agegrp)
   data$agegrp <- factor(data$agegrp, levels = c('Younger', 'Older'))
   data$subnum <- NULL
-  data <- gather(data, parameter, estimate, alpha:beta)
+  #data <- gather(data, parameter, estimate, alpha:beta)
   return(data)
 }
 
