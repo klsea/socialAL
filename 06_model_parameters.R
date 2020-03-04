@@ -16,11 +16,17 @@ source(here::here('scr', 'clean_single_alpha.R'))
 dt <- read.csv(here::here('output', 'two_alpha_model_params.csv' ))
 d2 <- read.csv(here::here('output', 'single_alpha_model_params.csv'))
 d3 <- read.csv(here::here('output', 'baseline_model_params.csv'))
+d4 <- read.csv(here::here('output', 'model_comparison.csv'))[c(1,12)]
 
 # create age group labels
 dt <- clean_param(dt)
 d2 <- clean_single_alpha(d2)
 d3 <- clean_single_alpha(d3)
+
+# uncommenting the lines below allows analysis of 
+# only participants best-fit by the double alpha model
+dt <- merge(dt, d4, by='id')
+dt <- dt[which(dt$win == 'double'),] 
 
 # compare parameters of 2 alpha model
 older <- dt[which(dt$agegrp=='Older'),]

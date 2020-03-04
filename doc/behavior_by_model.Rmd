@@ -1,0 +1,20 @@
+---
+title: "behavior_by_model_fit"
+author: "Kendra Seaman"
+date: "3/4/2020"
+output: html_document
+---
+
+This is a quick and dirty analysis of the behavioral data by model fit group.
+
+### Simple bar graph
+
+![](../figs/2alpha_beh_age_grp_means.png){ width=33% } ![](../figs/1alpha_beh_age_grp_means.png){ width=33% } ![](../figs/baseline_beh_age_grp_means.png){ width=33% }
+
+### Change over time
+
+![](../figs/2alpha_all_beh_over_time.png){ width=33% } ![](../figs/1alpha_all_beh_over_time.png){ width=33% } ![](../figs/baseline_all_beh_over_time.png){ width=33% }
+
+### Trustworthy - Untrustworthy
+
+![](../figs/2alpha_grp_means_tu_diff_score.png){ width=33% } ![](../figs/1alpha_grp_means_tu_diff_score.png){ width=33% } ![](../figs/baseline_grp_means_tu_diff_score.png){ width=33% }
