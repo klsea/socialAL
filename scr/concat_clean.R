@@ -37,6 +37,7 @@ clean_param <- function(data) {
     mutate(agegrp = ifelse(grp == 1, 'Younger', 'Older'))
   data$agegrp <- factor(data$agegrp)
   data$agegrp <- factor(data$agegrp, levels = c('Younger', 'Older'))
-  data <- data[c(1,8, 2:4)]
-  data <- gather(data, parameter, estimate, alpha_gain:beta, factor_key = TRUE)
+  data$A <- NULL; data$n <- NULL; data$grp <- NULL
+  data <- data[c(1, ncol(data), 2:(ncol(data)-1))]
+  return(data)
 }

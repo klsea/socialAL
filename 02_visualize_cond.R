@@ -14,8 +14,15 @@ source(here('scr', 'concat_clean.R'))
 
 # read data in and 
 # concatenate data for group visualization
-files <- list.files(here('data', 'modeling'), pattern = ".csv")
+files <- list.files(here::here('data', 'modeling'), pattern = ".csv")
 dt <- concat_clean(files)
+d1 <- read.csv(here::here('output', 'model_comparison.csv'))[c(1,12)]
+dt <- merge(dt, d1, by = 'id')
+
+# use the following to isolate subsets of data
+#dt <- dt[which(dt$win == 'double'),]
+#dt <- dt[which(dt$win == 'single'),]
+dt <- dt[which(dt$win == 'baseline'),]
 
 ## Graph 1 - Group means
 ## ---------------------
@@ -35,10 +42,10 @@ grpmeans <- indiv_means %>%
 lg = 18 # text size
 sm = 14
 custom_plot = list(theme(
+  plot.title = element_text(size = 24),
   axis.title.x = element_text(size = lg), axis.text.x = element_text(size = sm),
   axis.title.y = element_text(size = lg), axis.text.y = element_text(size = sm), 
   legend.title = element_text(size = lg), legend.text = element_text(size = sm))
-  
 )
 
 # graph group means
@@ -49,10 +56,11 @@ age_grp_means <- ggplot(grpmeans, aes(trial_type, mean_amount, colour = agegrp, 
   scale_fill_brewer(palette="Set1", name="Age Group") + 
   scale_colour_brewer(palette="Set1", name="Age Group") +
   xlab('Trial Type') + ylab('Average $ Shared') + coord_cartesian(ylim=c(0, 9)) + 
-  scale_y_continuous(breaks = c(0,3, 6, 9)) + custom_plot
+  scale_y_continuous(breaks = c(0,3, 6, 9)) + custom_plot + 
+  ggtitle('Baseline Model') + theme(plot.title = element_text(hjust = 0.5))
 age_grp_means
-#ggsave(here('figs', 'age_grp_means.pdf'))
-ggsave(here('figs', 'age_grp_means.png'))
+#ggsave(here::here('figs', 'age_grp_means.png'))
+ggsave(here::here('figs', 'baseline_beh_age_grp_means.png'))
 
 # make it a violin plot
 library(Hmisc)
@@ -63,8 +71,7 @@ violin <- ggplot(indiv_means, aes(trial_type, avg_amount, color = agegrp)) +
   xlab('Trial Type') + ylab('Average $ Shared') + 
   scale_y_continuous(breaks = c(0,3, 6, 9)) + theme_minimal() + custom_plot
 violin
-#ggsave(here('figs', 'age_grp_means_violin.pdf'))
-ggsave(here('figs', 'age_grp_means_violin.png'))
+#ggsave(here::here('figs', 'age_grp_means_violin.png'))
 
 ## Graph 2 - Change over time
 ## --------------------------
@@ -86,8 +93,8 @@ trial_type_by_time <- ggplot(d3, aes(tt_number, mean_amount, colour = trial_type
   scale_x_continuous(breaks = c(3, 6, 9, 12, 15)) + 
   coord_cartesian(ylim=c(0, 9)) + scale_y_continuous(breaks = c(3, 6, 9)) + custom_plot + 
   theme(strip.text.x = element_text(size=lg))
-#ggsave(here('figs', 'grp_means_over_time.pdf'))
-ggsave(here('figs', 'grp_means_over_time.png'))
+trial_type_by_time
+#ggsave(here::here('figs', 'grp_means_over_time.png'))
 
 # graph raw data
 # need to add something for overplotting
@@ -99,8 +106,9 @@ ggplot(dt, aes(tt_number, amount_shared, colour = trial_type, fill = trial_type)
   scale_x_continuous(breaks = c(3, 6, 9, 12, 15)) + 
   coord_cartesian(ylim=c(-1, 10)) + scale_y_continuous(breaks = c(0,3, 6, 9)) + 
   theme_minimal() + custom_plot + theme(strip.text.x = element_text(size=lg)) + 
-  theme(legend.position = 'none')
-ggsave(here('figs', 'all_data_over_time_no_legend.png'))
+  theme(legend.position = 'top')
+#ggsave(here::here('figs', 'all_data_over_time_no_legend.png'))
+ggsave(here::here('figs', 'baseline_all_beh_over_time.png'))
 
 ## Graph 3 - Change over stage
 dt <- add_stage(dt)
@@ -124,7 +132,7 @@ ggplot(grp_means_stage, aes(stage, avg_amount, colour = trial_type)) +
   scale_colour_brewer(palette="Dark2", name="Condition") +
   scale_x_continuous(breaks = c(1,2,3)) + 
   coord_cartesian(ylim=c(0, 9)) + scale_y_continuous(breaks = c(0, 3, 6, 9)) + custom_plot
-ggsave(here('figs', 'grp_means_over_stage.png'))
+#ggsave(here::here('figs', 'grp_means_over_stage.png'))
 
 # Graph 4 - Difference scores (by Age Group)
 library(tidyr)
@@ -136,7 +144,8 @@ ggplot(dw, aes(agegrp, tudiff, color = agegrp)) + geom_violin(trim= FALSE) + geo
   scale_color_brewer(palette="Set1") +  theme_minimal() +
   xlab('Age Group') + ylab('Difference in Trust \n(Trustworthy - Untrustworthy)') + 
   geom_hline(aes(yintercept = 0)) + theme(legend.position = 'none') + custom_plot 
-ggsave(here('figs', 'grp_means_tu_diff_score.png'))
+#ggsave(here::here('figs', 'grp_means_tu_diff_score.png'))
+ggsave(here::here('figs', 'baseline_grp_means_tu_diff_score.png'))
 
 ggplot(dw, aes(agegrp, tndiff, color = agegrp)) + geom_violin(trim= FALSE) + geom_point(alpha = .5) + 
   scale_color_brewer(palette="Set1") + theme_minimal() + 
