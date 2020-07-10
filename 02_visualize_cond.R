@@ -7,8 +7,9 @@ library(tidyverse)
 library(ggplot2)
 
 # load source functions
-source(here('scr', 'add_tt_number.R'))
-source(here('scr', 'concat_clean.R'))
+source(here::here('scr', 'add_tt_number.R'))
+source(here::here('scr', 'concat_clean.R'))
+source(here::here('scr', 'cut_data.R'))
 
 # set hard-coded variables
 
@@ -18,11 +19,14 @@ files <- list.files(here::here('data', 'modeling'), pattern = ".csv")
 dt <- concat_clean(files)
 d1 <- read.csv(here::here('output', 'model_comparison.csv'))[c(1,12)]
 dt <- merge(dt, d1, by = 'id')
+#cut <- read.csv(here::here('output', 'socialAL_cut.csv'))
+#dt <- cut_data(dt, cut$x)
 
 # use the following to isolate subsets of data
 #dt <- dt[which(dt$win == 'double'),]
 #dt <- dt[which(dt$win == 'single'),]
-dt <- dt[which(dt$win == 'baseline'),]
+#dt <- dt[which(dt$win == 'baseline'),]
+dt <- dt[which(dt$win != 'baseline'),]
 
 ## Graph 1 - Group means
 ## ---------------------
@@ -56,11 +60,11 @@ age_grp_means <- ggplot(grpmeans, aes(trial_type, mean_amount, colour = agegrp, 
   scale_fill_brewer(palette="Set1", name="Age Group") + 
   scale_colour_brewer(palette="Set1", name="Age Group") +
   xlab('Trial Type') + ylab('Average $ Shared') + coord_cartesian(ylim=c(0, 9)) + 
-  scale_y_continuous(breaks = c(0,3, 6, 9)) + custom_plot + 
-  ggtitle('Baseline Model') + theme(plot.title = element_text(hjust = 0.5))
+  scale_y_continuous(breaks = c(0,3, 6, 9)) + custom_plot #+ 
+  #ggtitle('Baseline Model') + theme(plot.title = element_text(hjust = 0.5))
 age_grp_means
 #ggsave(here::here('figs', 'age_grp_means.png'))
-ggsave(here::here('figs', 'baseline_beh_age_grp_means.png'))
+#ggsave(here::here('figs', 'baseline_beh_age_grp_means.png'))
 
 # make it a violin plot
 library(Hmisc)

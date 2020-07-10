@@ -44,7 +44,22 @@ d6 <- as.data.frame(table(d5$agegrp, d5$win))
 colnames(d6) <- c("Age", "Model", "Frequency")
 d6$Model <- factor(d6$Model, levels = c('baseline', 'single', 'double'))
 
-ggplot(d6, aes(Model, Frequency, fill = Age)) + geom_bar(stat="identity", position=position_dodge()) + 
-  scale_fill_brewer(palette="Set1") + theme_minimal() + ggtitle('Best-Fitting Model')
+# graph
+# graph constants
+lg = 26 # text size
+md = 20
+sm = 14
+custom_plot = list(theme(
+  plot.title = element_text(size = lg, hjust = 0.5),
+  axis.title.x = element_text(size = md), axis.text.x = element_text(size = sm),
+  axis.title.y = element_text(size = md), axis.text.y = element_text(size = sm), 
+  legend.title = element_text(size = md), legend.text = element_text(size = sm), 
+  legend.position='top', strip.text.x = element_text(size=md))
+)
 
-#ggsave(here('figs', 'best-fit_model.png'))
+ggplot(d6, aes(Model, Frequency, fill = Age)) + 
+  geom_bar(stat="identity", position=position_dodge()) + 
+  scale_fill_brewer(palette="Set1") + theme_minimal() + ggtitle('Best-Fitting Model') +
+  custom_plot
+
+ggsave(here('figs', 'best-fit_model.png'))

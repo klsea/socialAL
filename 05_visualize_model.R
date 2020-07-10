@@ -38,36 +38,40 @@ alphas <- grpmeans[which(grpmeans$parameter != 'beta'),]
 beta <- grpmeans[which(grpmeans$parameter == 'beta'),]
 
 # graph constants
-lg = 18 # text size
+lg = 26 # text size
+md = 20
 sm = 14
 custom_plot = list(theme(
+  plot.title = element_text(size = lg, hjust = 0.5),
   axis.title.x = element_text(size = lg), axis.text.x = element_text(size = sm),
   axis.title.y = element_text(size = lg), axis.text.y = element_text(size = sm), 
-  legend.title = element_text(size = lg), legend.text = element_text(size = sm))
+  legend.title = element_text(size = lg), legend.text = element_text(size = sm), 
+  legend.position='top', strip.text.x = element_text(size=md))
 )
+
 # Graph 1 - bar graph group means
 ggplot(grpmeans, aes(parameter, mean, fill = agegrp)) + 
   geom_bar(stat='identity', position=position_dodge()) + 
   geom_errorbar(aes(ymin=mean - se, ymax = mean + se), 
                                             width = .2, position=position_dodge(.9)) + 
   scale_fill_brewer(palette="Set1", name="Age Group") + 
-  scale_colour_brewer(palette="Set1", name="Age Group") + theme_minimal() 
+  scale_colour_brewer(palette="Set1", name="Age Group") + theme_minimal() + custom_plot
 
 ggplot(alphas, aes(parameter, mean, fill = agegrp)) + 
   geom_bar(stat='identity', position=position_dodge()) + 
   geom_errorbar(aes(ymin=mean - se, ymax = mean + se), 
                 width = .2, position=position_dodge(.9)) + 
   scale_fill_brewer(palette="Set1", name="Age Group") + 
-  scale_colour_brewer(palette="Set1", name="Age Group") + theme_minimal() 
-#ggsave(here('figs', '2alpha_alpha_age_grp_means.png'))
+  scale_colour_brewer(palette="Set1", name="Age Group") + theme_minimal() +custom_plot
+ggsave(here('figs', '2alpha_alpha_age_grp_means.png'))
 
 ggplot(beta, aes(parameter, mean, fill = agegrp)) + 
   geom_bar(stat='identity', position=position_dodge()) + 
   geom_errorbar(aes(ymin=mean - se, ymax = mean + se), 
                 width = .2, position=position_dodge(.9)) + 
   scale_fill_brewer(palette="Set1", name="Age Group") + 
-  scale_colour_brewer(palette="Set1", name="Age Group") + theme_minimal() 
-#ggsave(here('figs', '2alpha_beta_age_grp_means.png'))
+  scale_colour_brewer(palette="Set1", name="Age Group") + theme_minimal() +custom_plot
+ggsave(here('figs', '2alpha_beta_age_grp_means.png'), width = 5.5)
 
 # Graph 2 - violin plots group means
 # parameters <- ggplot(dt, aes(parameter, estimate, colour = agegrp)) +
@@ -92,7 +96,7 @@ ggplot(singlegrpmeans, aes(parameter, mean, fill = agegrp)) +
   geom_errorbar(aes(ymin=mean - se, ymax = mean + se), 
                 width = .2, position=position_dodge(.9)) + 
   scale_fill_brewer(palette="Set1", name="Age Group") + 
-  scale_colour_brewer(palette="Set1", name="Age Group") + theme_minimal() 
+  scale_colour_brewer(palette="Set1", name="Age Group") + theme_minimal() + custom_plot
 
 ggsave(here('figs', '1alpha_age_grp_means.png'))
 
