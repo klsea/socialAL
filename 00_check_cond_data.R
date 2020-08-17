@@ -1,4 +1,5 @@
-# Group-level visualizations
+# Quality control of conditioning phase behavior
+# Using criteria from Gillan 2016 (could also add Decker 2016)
 # 3.4.20 KLS
 
 # load required packages
@@ -31,7 +32,7 @@ mt <- mt[which(mt$exclude == 1),]
 st <- summarySE(dt, 'trial_earnings', groupvars=c('id', 'response_key'))[1:3]
 st <- st[which(st$response_key != 'None'),]
 st$perChoice <- round(st$N/45,2)
-st$exclude <- ifelse(st$perChoice < .90, 0, 1)
+st$exclude <- ifelse(st$perChoice < .95, 0, 1)
 st <- st[which(st$exclude == 1),]
 # 4 participants made the same response on >90% of trials
 
@@ -45,4 +46,13 @@ rt <- rt[which(rt$slow == 1 | rt$excess == 1),]
 # 1 person responded too slowly for age group, 1 person responded too fast for age group
 
 cut <- c(as.character(st$id), as.character(rt$id), as.character(mt$id))
-write.csv(cut, here::here('output', 'socialAL_cut.csv'), row.names = FALSE)
+# 2008 is in there 2x
+#write.csv(cut, here::here('output', 'socialAL_cut.csv'), row.names = FALSE)
+
+# make data file for subsequent analyses
+for (c in cut) {
+  dt <- dt[which(dt$id != c), ]
+}
+
+write.csv(dt, here::here('data', 'socialAL_clean_data.csv'), row.names = FALSE)
+

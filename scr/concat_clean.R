@@ -3,7 +3,7 @@ concat_clean <- function(file_list) {
   library(tidyverse)
   dt <- data.frame()
   for (f in file_list) {
-    dt1 <- read.csv(here('data', 'modeling', f))
+    dt1 <- read.csv(here::here('data', 'modeling', f))
     sub <- strsplit(f, '[.]')[[1]][1] # pulls sub number out of file name
     dt1$id <- sub
     dt1$grp <- floor(as.numeric(strsplit(sub, '[-]')[[1]][2])/1000) #1 is YA, 2 is OA
