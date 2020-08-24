@@ -27,6 +27,13 @@ dt <- merge(d4, d3[c(1,3)], by = 'id')
 colnames(dt) <- c('id', 'agegrp', 'llh_double', 'llh_single', 'llh_baseline')
 rm(d1,d2,d3,d4)
 
+# remove excluded participants
+cut <- read.csv(here::here('output', 'socialAL_cut.csv'), header = F)$V1
+cut <- c(as.character(cut), 'sub-2040') #sub-2040 does not exist, sub-2039 was accidently copied 2x
+for (c in cut) {
+  dt <- dt[which(dt$id != c), ]
+}
+
 # caluclate AIC for each model
 dt$AIC_double <- calc_AIC(45, 3, dt$llh_double)
 dt$AIC_single <- calc_AIC(45, 2, dt$llh_single)

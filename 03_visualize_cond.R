@@ -1,5 +1,5 @@
 # Group-level visualizations
-# 9.13.19 KLS
+# 9.13.19 KLS update 8.17.20
 
 # load required packages
 library(here)
@@ -8,25 +8,24 @@ library(ggplot2)
 
 # load source functions
 source(here::here('scr', 'add_tt_number.R'))
-source(here::here('scr', 'concat_clean.R'))
-source(here::here('scr', 'cut_data.R'))
 
 # set hard-coded variables
 
-# read data in and 
-# concatenate data for group visualization
-files <- list.files(here::here('data', 'modeling'), pattern = ".csv")
-dt <- concat_clean(files)
+# read in and concatenate data for group visualization
+dt <- read.csv(here::here('data', 'socialAL_clean_data.csv'))
 d1 <- read.csv(here::here('output', 'model_comparison.csv'))[c(1,12)]
 dt <- merge(dt, d1, by = 'id')
-#cut <- read.csv(here::here('output', 'socialAL_cut.csv'))
-#dt <- cut_data(dt, cut$x)
+rm(d1)
+
+# reorder trial_type and age group factors
+dt$trial_type <- factor(dt$trial_type, levels = c('Untrustworthy', 'Neutral', 'Trustworthy'))
+dt$agegrp <- factor(dt$agegrp, levels = c('Younger', 'Older'))
 
 # use the following to isolate subsets of data
 #dt <- dt[which(dt$win == 'double'),]
 #dt <- dt[which(dt$win == 'single'),]
 #dt <- dt[which(dt$win == 'baseline'),]
-dt <- dt[which(dt$win != 'baseline'),]
+#dt <- dt[which(dt$win != 'baseline'),]
 
 ## Graph 1 - Group means
 ## ---------------------

@@ -7,22 +7,22 @@ library(tidyverse)
 
 # load source functions
 source(here('scr', 'add_tt_number.R'))
-source(here('scr', 'concat_clean.R'))
+#source(here('scr', 'concat_clean.R'))
 
 # set hard-coded variables
 
 # read data in and 
 # concatenate data for group analyses
-files <- list.files(here('data', 'modeling'), pattern = ".csv")
-dt <- concat_clean(files)
+dt <- read.csv(here::here('data', 'socialAL_clean_data.csv'))
 d1 <- read.csv(here::here('output', 'model_comparison.csv'))[c(1,12)]
 dt <- merge(dt, d1, by = 'id')
+rm(d1)
 
 # use the following to isolate subsets of data
 #dt <- dt[which(dt$win == 'double'),]
 #dt <- dt[which(dt$win == 'single'),]
 #dt <- dt[which(dt$win == 'baseline'),]
-dt <- dt[which(dt$win != 'baseline'),]
+#dt <- dt[which(dt$win != 'baseline'),]
 
 # Model 1 - Age Group * Condition (trial_type) ANOVA
 # calculate individual means summary table

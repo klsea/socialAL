@@ -45,9 +45,9 @@ rt$slow <- ifelse(rt$scaledRT < -2, 1, 0)
 rt <- rt[which(rt$slow == 1 | rt$excess == 1),]
 # 1 person responded too slowly for age group, 1 person responded too fast for age group
 
-cut <- c(as.character(st$id), as.character(rt$id), as.character(mt$id))
-# 2008 is in there 2x
-#write.csv(cut, here::here('output', 'socialAL_cut.csv'), row.names = FALSE)
+cut <- c(as.character(st$id), as.character(rt$id), as.character(mt$id)) # 2008 is in there 2x
+cut <- c(cut, 'sub-1031', 'sub-2014') # MoCA score < 26
+write.table(cut, here::here('output', 'socialAL_cut.csv'), row.names = FALSE, col.names = FALSE)
 
 # make data file for subsequent analyses
 for (c in cut) {
