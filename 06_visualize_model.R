@@ -30,6 +30,13 @@ dt <- gather(dt, parameter, estimate, alpha_gain:beta)
 
 se <- function(sd,n) {sd/sqrt(n())}
 
+# remove excluded participants
+cut <- read.csv(here::here('output', 'socialAL_cut.csv'), header = F)$V1
+cut <- c(as.character(cut), 'sub-2040') #sub-2040 does not exist, sub-2039 was accidently copied 2x
+for (c in cut) {
+  dt <- dt[which(dt$id != c), ]
+}
+
 grpmeans <- dt %>% 
   dplyr::group_by(agegrp, parameter) %>%
   summarise(mean = mean(estimate), sd = sd(estimate), 
@@ -107,3 +114,4 @@ parameters <- ggplot(d1, aes(parameter, estimate, colour = agegrp)) +
 
 parameters+ geom_violin(trim= FALSE) + geom_boxplot(width = 0.1, position = position_dodge(.9))
 parameters + geom_violin(trim= FALSE) + geom_dotplot(binaxis='y', stackdir='center', dotsize=1, position = position_dodge(.9), aes(fill = agegrp))
+
