@@ -6,9 +6,6 @@ library(here)
 library(tidyverse)
 library(rstatix)
 library(ggpubr)
-library(abind)
-
-#library(ggplot2)
 
 # load source functions
 
@@ -31,18 +28,15 @@ table(dt$AgeGroup_YA1OA2)
 # numbers in each age group
 table(dt$AgeGroup_YA1OA2, dt$Gender_0M1F)
 
-# age mean, range by group
-dt %>% group_by(AgeGroup_YA1OA2) %>% 
-  summarize(
-  age_mean = mean(Age), 
-  age_min = min(Age), 
-  age_max = max(Age), 
-  edu_mean = mean(YearsEdu)
-)
+# age mean, range by group for text
+dt %>% group_by(AgeGroup_YA1OA2) %>% summarize(age_min = min(Age), age_max = max(Age))
 
-# other group means
+#### Make Table ####
+
+# group means ####
 means <- dt %>% group_by(AgeGroup_YA1OA2) %>% 
   summarize(
+    Age = mean(Age), 
     Education= mean(YearsEdu), 
     SES_USA = mean(SES_USA), 
     SES_Community= mean(SES_Community), 
@@ -62,8 +56,10 @@ means <- as.data.frame(t(means))
 means$Younger <- as.numeric(means$Younger)
 means$Older <- as.numeric(means$Older)
 
+# group standard devs ####
 sds <- dt %>% group_by(AgeGroup_YA1OA2) %>% 
   summarize(
+    Age = sd(Age),
     Education= sd(YearsEdu), 
     SES_USA = sd(SES_USA), 
     SES_Community= sd(SES_Community), 
@@ -83,115 +79,56 @@ sds <- as.data.frame(t(sds))
 sds$Younger <- as.numeric(sds$Younger)
 sds$Older <- as.numeric(sds$Older)
 
-#table <- abind(means, sds, along = 0)
-table <- matrix(nrow= nrow(means), ncol = ncol(means))
+# create table ####
+table <- matrix(nrow= nrow(means), ncol = ncol(means) + 3)
 for (x in 1:nrow(means)){
   for (y in 1:ncol(means)){
-    table[x,y] <- paste0(round(means[x,y], 2), ' (', round(sds[x,y], 2), ')')
+    table[x,y+1] <- paste0(round(means[x,y], 2), ' (', round(sds[x,y], 2), ')')
   }
 }
-colnames(table) <- c("Younger", "Older")
-rownames(table) <- rownames(means)
-#table$tvalue <- NA
-#table$significance<- NA
+colnames(table) <- c("Variable", "Younger", "Older","t value", "p value")
+table <- as.data.frame(table)
+table$Variable <- rownames(means)
 
+#### Functions to compare group means ####
 # Group comparisons - https://www.datanovia.com/en/lessons/t-test-in-r/
-#### Make all this junk below a function!!!###
 
-# eduation
-dt %>% group_by(AgeGroup_YA1OA2) %>% get_summary_stats(YearsEdu, type = "mean_sd") 
+graph <- function(data, variable, variname) {
+  # variable and variname need to be in quotes
+  ggboxplot(data, x = 'AgeGroup_YA1OA2', y = variable, ylab = variname, xlab = 'Groups', add = 'jitter')
+}
 
-# ed <- ggboxplot(
-# dt, x = "AgeGroup_YA1OA2", y = "YearsEdu", 
-#   ylab = "YearsEdu", xlab = "Groups", add = "jitter"
-# )
-# ed
+compare <- function(data, formula) {
+  # formula is the comparison in quotes - e.g. 'age ~ weight'
+  ltest <- dt %>% levene_test(as.formula(formula))
+  ifelse(ltest$p > 0.05, 
+                 ttest <- dt %>% t_test(as.formula(formula), var.equal = TRUE) %>% add_significance(),
+                 ttest <- dt %>%  t_test(as.formula(formula), var.equal = FALSE) %>% add_significance()
+  )
+  return(ttest)
+}
 
-dt %>% levene_test(YearsEdu ~ AgeGroup_YA1OA2)
+add_to_table <- function(table, row, ttest) {
+  table[row,4] <- round(ttest$statistic, 2)
+  ifelse(ttest$p.signif == 'ns', 
+    table[row,5] <- round(ttest$p, 3), 
+    table[row,5] <- paste0(round(ttest$p, 3), '*')
+  )
+  return(table)
+}
 
-edcomp <- dt %>%  t_test(YearsEdu ~ AgeGroup_YA1OA2, var.equal = TRUE) %>% add_significance()
-demotable[2,3] <- edcomp$statistic
-demotable[2,4] <- edcomp$p
-rm(edcomp)
+#### Using functions to add demo comparisons to table ####
+# Eduation
+graph(dt, 'YearsEdu', 'Years of Education')
+ed <- compare(dt, 'YearsEdu ~ AgeGroup_YA1OA2')
+table <- add_to_table(table, 3, ed)
+rm(ed)
 
+#### Using functions to add neuro comparisons to table ####
 # MoCA
-dt %>% group_by(AgeGroup_YA1OA2) %>%  get_summary_stats(MoCA, type = "mean_sd") 
+graph(dt, 'MoCA', 'MoCA Score')
+moca <- compare(dt, 'MoCA ~ AgeGroup_YA1OA2')
+table <- add_to_table(table, 9, moca)
+rm(moca)
 
-# moca <- ggboxplot(
-#   dt, x = "AgeGroup_YA1OA2", y = "MoCA", 
-#   ylab = "MoCA", xlab = "Groups", add = "jitter"
-# )
-# moca
 
-dt %>% levene_test(MoCA ~ AgeGroup_YA1OA2)
-
-moca<- dt %>% t_test(MoCA ~ AgeGroup_YA1OA2, var.equal = TRUE) %>% add_significance()
-mocacomp <- dt %>%  t_test(YearsEdu ~ AgeGroup_YA1OA2, var.equal = TRUE) %>% add_significance()
-demotable[8,3] <- mocacomp$statistic
-demotable[8,4] <- mocacomp$p
-rm(mocacomp)
-
-# Digit comparison
-# dt %>% group_by(AgeGroup_YA1OA2) %>%  get_summary_stats() 
-# 
-# dcompare <- ggboxplot(
-#   dt, x = "AgeGroup_YA1OA2", y = "Digit.Total", 
-#   ylab = "Digit.Total", xlab = "Groups", add = "jitter"
-# )
-# dcompare
-# 
-# dt %>% levene_test(Digit.Total ~ AgeGroup_YA1OA2)
-# 
-# dt %>% t_test(Digit.Total ~ AgeGroup_YA1OA2, var.equal = TRUE) %>% add_significance()
-
-# Digit Span Total
-dt %>% group_by(AgeGroup_YA1OA2) %>% get_summary_stats(Digit.Total, type = "mean_sd")
-
-# dstotal <- ggboxplot(
-#   dt, x = "AgeGroup_YA1OA2", y = "Digit.Total", 
-#   ylab = "Digit.Total", xlab = "Groups", add = "jitter"
-# )
-# dstotal
-
-dt %>% levene_test(Digit.Total ~ AgeGroup_YA1OA2)
-
-dt %>% t_test(Digit.Total ~ AgeGroup_YA1OA2, var.equal = TRUE) %>% add_significance()
-
-#Shipley
-dt %>% group_by(AgeGroup_YA1OA2) %>%  get_summary_stats(Shipley, type = "mean_sd") 
-
-# shipley <- ggboxplot(
-#   dt, x = "AgeGroup_YA1OA2", y = "Shipley", 
-#   ylab = "Shipley", xlab = "Groups", add = "jitter"
-# )
-# shipley
-
-dt %>% levene_test(Shipley ~ AgeGroup_YA1OA2)
-
-dt %>% t_test(Shipley ~ AgeGroup_YA1OA2, var.equal = TRUE) %>% add_significance()
-
-#SMQ_IS
-dt %>% group_by(AgeGroup_YA1OA2) %>%  get_summary_stats(SMQ_IS, type = "mean_sd") 
-
-# SMQ_IS <- ggboxplot(
-#   dt, x = "AgeGroup_YA1OA2", y = "SMQ_IS", 
-#   ylab = "SMQ_IS", xlab = "Groups", add = "jitter"
-# )
-# SMQ_IS
-
-dt %>% levene_test(SMQ_IS ~ AgeGroup_YA1OA2)
-
-dt %>% t_test(SMQ_IS ~ AgeGroup_YA1OA2, var.equal = TRUE) %>% add_significance()
-
-#SMQ_ER
-dt %>% group_by(AgeGroup_YA1OA2) %>%  get_summary_stats(SMQ_ER, type = "mean_sd") 
-
-# SMQ_ER <- ggboxplot(
-#   dt, x = "AgeGroup_YA1OA2", y = "SMQ_ER", 
-#   ylab = "SMQ_ER", xlab = "Groups", add = "jitter"
-# )
-# SMQ_ER
-
-dt %>% levene_test(SMQ_ER ~ AgeGroup_YA1OA2)
-
-dt %>% t_test(SMQ_ER ~ AgeGroup_YA1OA2, var.equal = TRUE) %>% add_significance()
