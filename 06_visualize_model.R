@@ -23,7 +23,7 @@ d5 <- read.csv(here::here('output', 'model_comparison.csv'))[c(1,15)]
 
 # clear model names
 
-# graph constants
+# graph constants ####
 lg = 26 # text size
 md = 20
 sm = 14
@@ -87,16 +87,17 @@ ggsave(here('figs', '2alpha_beta_age_grp_means.png'), width = 5.5)
 
 # single alpha model ####
 d1 <- clean_single_alpha(d2)
+d1 <- merge(d1, d5, by='id')
 d1 <- gather(d1, parameter, estimate, alpha:beta)
+
+d1 <- d1[which(d1$win == 'single'),] 
+# uncommenting the line above allows graphing of 
+# only participants best-fit by the single alpha model
 
 singlegrpmeans <- d1 %>% 
   dplyr::group_by(agegrp, parameter) %>%
   summarise(mean = mean(estimate), sd = sd(estimate), 
             se= sd(estimate)/sqrt(n()))
-
-d1 <- d1[which(d1$win == 'single'),] 
-# uncommenting the line above allows graphing of 
-# only participants best-fit by the single alpha model
 
 # Graph 1 - bar graph group means
 ggplot(singlegrpmeans, aes(parameter, mean, fill = agegrp)) + 
@@ -110,7 +111,12 @@ ggsave(here('figs', '1alpha_age_grp_means.png'))
 
 # double alpha with decay model ####
 d7 <- clean_single_alpha(d4)
+d7 <- merge(d7, d5, by='id')
 d7 <- gather(d7, parameter, estimate, alpha_gain:decay)
+
+d7 <- d7[which(d7$win == 'decay'),] 
+# uncommenting the line above allows graphing of 
+# only participants best-fit by the decay + double alpha model
 
 decaygrpmeans <- d7 %>% 
   dplyr::group_by(agegrp, parameter) %>%
@@ -118,10 +124,6 @@ decaygrpmeans <- d7 %>%
             se= sd(estimate)/sqrt(n()))
 alphas <- decaygrpmeans[which(decaygrpmeans$parameter != 'beta'),]
 beta <- decaygrpmeans[which(decaygrpmeans$parameter == 'beta'),]
-
-d7 <- d7[which(d7$win == 'decay'),] 
-# uncommenting the line above allows graphing of 
-# only participants best-fit by the decay + double alpha model
 
 # Graph 1 - bar graph group means
 ggplot(decaygrpmeans, aes(parameter, mean, fill = agegrp)) + 
