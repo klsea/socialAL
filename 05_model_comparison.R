@@ -16,16 +16,22 @@ source(here::here('scr', 'AIC_functions.R'))
 d1 <- read.csv(here::here('output', 'two_alpha_model_params.csv' ))
 d2 <- read.csv(here::here('output', 'single_alpha_model_params.csv' ))
 d3 <- read.csv(here::here('output', 'baseline_model_params.csv'))
+o4 <- read.csv(here::here('output', 'two_alpha_with_decay_model_params_older.csv'))
+y4 <- read.csv(here::here('output', 'two_alpha_with_decay_model_params_younger.csv'))
+d4 <- rbind(o4, y4); rm(o4, y4)
 
 d1 <- clean_param(d1)
 
 #merge data frames with each other - update once all subjects run with initial model
-d4 <- merge(d1[c(1:2,6)], d2[c(1,4)], by = 'id')
-colnames(d4) <- c('id', 'agegrp', 'llh_double', 'llh_single')
+d6 <- merge(d1[c(1:2,6)], d2[c(1,4)], by = 'id')
+colnames(d6) <- c('id', 'agegrp', 'llh_double', 'llh_single')
 
-dt <- merge(d4, d3[c(1,3)], by = 'id')
-colnames(dt) <- c('id', 'agegrp', 'llh_double', 'llh_single', 'llh_baseline')
-rm(d1,d2,d3,d4)
+d7 <- merge(d6, d3[c(1,3)], by = 'id')
+colnames(d7) <- c('id', 'agegrp', 'llh_double', 'llh_single', 'llh_baseline')
+
+dt <- merge(d7, d4[c(1,6)], by = 'id')
+colnames(dt) <- c('id', 'agegrp', 'llh_double', 'llh_single', 'llh_baseline', 'llh_decay')
+rm(d1,d2,d3,d4,d6,d7)
 
 # remove excluded participants
 cut <- read.csv(here::here('output', 'socialAL_cut.csv'), header = F)$V1
@@ -38,18 +44,19 @@ for (c in cut) {
 dt$AIC_double <- calc_AIC(45, 3, dt$llh_double)
 dt$AIC_single <- calc_AIC(45, 2, dt$llh_single)
 dt$AIC_baseline <- calc_AIC(45, 1, dt$llh_baseline)
+dt$AIC_decay <- calc_AIC(45, 4, dt$llh_decay)
 
 # calculate Weight AIC for each model and choose the winning weight
-y <- winningWeight(dt$id, dt[grep('AIC_double', colnames(dt)):grep('AIC_baseline', colnames(dt))])
-d5 <- merge(dt, y, by = 'id')
-d5$win <- gsub('AIC_', '', d5$win)
-write.csv(d5, here::here('output', 'model_comparison.csv'), row.names = FALSE)
+y <- winningWeight(dt$id, dt[grep('AIC_double', colnames(dt)):grep('AIC_decay', colnames(dt))])
+d8 <- merge(dt, y, by = 'id')
+d8$win <- gsub('AIC_', '', d8$win)
+write.csv(d8, here::here('output', 'model_comparison.csv'), row.names = FALSE)
 
 # proportions
-table(d5$agegrp, d5$win)
-d6 <- as.data.frame(table(d5$agegrp, d5$win))
-colnames(d6) <- c("Age", "Model", "Frequency")
-d6$Model <- factor(d6$Model, levels = c('baseline', 'single', 'double'))
+table(d8$agegrp, d8$win)
+d9 <- as.data.frame(table(d8$agegrp, d8$win))
+colnames(d9) <- c("Age", "Model", "Frequency")
+d9$Model <- factor(d9$Model, levels = c('baseline', 'single', 'double', 'decay'))
 
 # graph
 # graph constants
@@ -64,7 +71,7 @@ custom_plot = list(theme(
   legend.position='top', strip.text.x = element_text(size=md))
 )
 
-ggplot(d6, aes(Model, Frequency, fill = Age)) + 
+ggplot(d9, aes(Model, Frequency, fill = Age)) + 
   geom_bar(stat="identity", position=position_dodge()) + 
   scale_fill_brewer(palette="Set1") + theme_minimal() + ggtitle('Best-Fitting Model') +
   custom_plot
