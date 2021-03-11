@@ -1,7 +1,7 @@
 # Demo and questionnaire Data
 # 9.14.20
 
-# load required packages
+# load required packages ####
 library(here)
 library(tidyverse)
 library(rstatix)
@@ -26,12 +26,10 @@ dt$Digit.Total = dt$Digit.Span.Forward + dt$Digit.Span.Backward
 table(dt$AgeGroup_YA1OA2)
 
 # numbers in each age group
-table(dt$AgeGroup_YA1OA2, dt$Gender_0M1F)
+breakdown <- table(dt$AgeGroup_YA1OA2, dt$Gender_0M1F)
 
 # age mean, range by group for text
 dt %>% group_by(AgeGroup_YA1OA2) %>% summarize(age_min = min(Age), age_max = max(Age))
-
-#### Make Table ####
 
 # group means ####
 means <- dt %>% group_by(AgeGroup_YA1OA2) %>% 
@@ -118,11 +116,47 @@ add_to_table <- function(table, row, ttest) {
 }
 
 #### Using functions to add demo comparisons to table ####
+# Age
+graph(dt, 'Age', 'Age in Years')
+age <- compare(dt, 'Age ~ AgeGroup_YA1OA2')
+table <- add_to_table(table, 2, age)
+rm(age)
+
 # Eduation
 graph(dt, 'YearsEdu', 'Years of Education')
 ed <- compare(dt, 'YearsEdu ~ AgeGroup_YA1OA2')
 table <- add_to_table(table, 3, ed)
 rm(ed)
+
+# SES US
+graph(dt, 'SES_USA', 'SES compared to USA')
+ses1 <- compare(dt, 'SES_USA ~ AgeGroup_YA1OA2')
+table <- add_to_table(table, 4, ses1)
+rm(ses1)
+
+# SES Community
+graph(dt, 'SES_Community', 'SES compared to own community')
+ses2 <- compare(dt, 'SES_Community ~ AgeGroup_YA1OA2')
+table <- add_to_table(table, 5, ses1)
+rm(ses2)
+
+#Political Ideology Economic
+graph(dt, 'Political.ideology_Economic', 'Economic Political Ideology')
+pi1 <- compare(dt, 'Political.ideology_Economic ~ AgeGroup_YA1OA2')
+table <- add_to_table(table, 6, pi1)
+rm(pi1)
+
+#Political Ideology Social
+graph(dt, 'Political.ideology_Social', 'Social Political Ideology')
+pi2 <- compare(dt, 'Political.ideology_Social ~ AgeGroup_YA1OA2')
+table <- add_to_table(table, 7, pi2)
+rm(pi2)
+
+#Political Ideology Foreign Policy
+graph(dt, 'Political.ideology_ForeignPolicy', 'Foreign Policy Political Ideology')
+pi3 <- compare(dt, 'Political.ideology_ForeignPolicy ~ AgeGroup_YA1OA2')
+table <- add_to_table(table, 8, pi3)
+rm(pi3)
 
 #### Using functions to add neuro comparisons to table ####
 # MoCA
@@ -131,4 +165,45 @@ moca <- compare(dt, 'MoCA ~ AgeGroup_YA1OA2')
 table <- add_to_table(table, 9, moca)
 rm(moca)
 
+# Digit Comparison Accuracy
+graph(dt, 'Digit.Comparison.Correct', 'Digit Comparison Accuracy')
+dc1 <- compare(dt, 'Digit.Comparison.Correct ~ AgeGroup_YA1OA2')
+table <- add_to_table(table, 10, dc1)
+rm(dc1)
 
+# Digit Comparison Errors
+graph(dt, 'Digit.Comparison.Error', 'Digit Comparison Errors')
+dc2 <- compare(dt, 'Digit.Comparison.Error ~ AgeGroup_YA1OA2')
+table <- add_to_table(table, 11, dc2)
+rm(dc2)
+
+# Digit Span Total
+graph(dt, 'Digit.Total', 'Digit Span Total')
+ds <- compare(dt, 'Digit.Total ~ AgeGroup_YA1OA2')
+table <- add_to_table(table, 12, ds)
+rm(ds)
+
+# Shipley
+graph(dt, 'Shipley', 'Shipley Vocabulary')
+vocab <- compare(dt, 'Shipley ~ AgeGroup_YA1OA2')
+table <- add_to_table(table, 13, vocab)
+rm(vocab)
+
+# SMQ-IS
+graph(dt, 'SMQ_IS', 'Information Seeking Social Motive')
+smq1 <- compare(dt, 'SMQ_IS ~ AgeGroup_YA1OA2')
+table <- add_to_table(table, 14, smq1)
+rm(smq1)
+
+# SMQ-ER
+graph(dt, 'SMQ_ER', 'Emotion Regulation Social Motive')
+smq2 <- compare(dt, 'SMQ_ER ~ AgeGroup_YA1OA2')
+table <- add_to_table(table, 15, smq2)
+rm(smq2)
+
+#### Clean up table ####
+table[1,1] <- 'N'
+table[1,2] <- paste0(breakdown[1,1], 'M/', breakdown[1,2], 'F')
+table[1,3] <- paste0(breakdown[2,1], 'M/', breakdown[2,2], 'F')
+table[1,4] <- round(chisq_test(breakdown)$statistic, 2)
+table[1,5] <- chisq_test(breakdown)$p
