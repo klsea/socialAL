@@ -50,6 +50,9 @@ m3 = lmer(amount_shared ~ agegrp * trial_type * z_partner_trial_number + (1 + tr
 AIC(m1, m2, m3)
 anova(m1, m2, m3, test="Chisq")
 
+# save model 3
+saveRDS(m3, file = here::here('output', 'model3.rds'))
+
 # summary model 3 ####
 summary(m3)
 r.squaredGLMM(m3)
