@@ -92,7 +92,7 @@ decaydecay = t.test(older$decay, younger$decay)
 # 2 alpha with priors model ####
 
 # uncommenting the lines below allows analysis of 
-# only participants best-fit by the double alpha model
+# only participants best-fit by the double alpha model with priors
 #d5 <- merge(d5, d6, by='id')
 #d5 <- d4[which(d5$win == 'prior'),] 
 
