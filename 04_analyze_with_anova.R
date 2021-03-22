@@ -34,10 +34,14 @@ m1 <- aov(avg_amount ~ agegrp * trial_type + Error(id/trial_type), data = indiv_
 summary(m1)
 #saveRDS(m1, here('output', 'age*tt_model.rds'))
 
-# follow-up t-tests
+# follow-up t-tests partner type
+t.test(d1$Trustworthy, d1$Neutral, paired = TRUE)
+t.test(d1$Untrustworthy, d1$Neutral, paired = TRUE)
+
+# follow-up t-tests age group
 d1 <- spread(indiv_means, trial_type, avg_amount)
-t.test(d1$Untrustworthy[d1$agegrp == 'Older'], d1$Untrustworthy[d1$agegrp == 'Younger'])
 t.test(d1$Trustworthy[d1$agegrp == 'Older'], d1$Trustworthy[d1$agegrp == 'Younger'])
+t.test(d1$Untrustworthy[d1$agegrp == 'Older'], d1$Untrustworthy[d1$agegrp == 'Younger'])
 
 
 # Model 2 - Age Group * Condition * Stage (5 trials) ANOVA
