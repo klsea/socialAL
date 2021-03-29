@@ -8,6 +8,7 @@ library(lme4)
 library(MuMIn) #get r squared values
 library(sjPlot)
 library(emmeans)
+library(lmerTest)
 
 # load source functions
 source(here::here('scr', 'add_partner_trial.R'))

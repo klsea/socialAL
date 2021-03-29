@@ -35,8 +35,8 @@ d5 <- clean_single_alpha(d5)
 # 2 alpha model ####
 # uncommenting the lines below allows analysis of 
 # only participants best-fit by the double alpha model
-#dt <- merge(dt, d6, by='id')
-#dt <- dt[which(dt$win == 'double'),] 
+dt <- merge(dt, d6, by='id')
+dt <- dt[which(dt$win == 'double'),] 
 
 # compare parameters of 2 alpha model
 older <- dt[which(dt$agegrp=='Older'),]
@@ -46,6 +46,10 @@ a2gain = t.test(older$alpha_gain, younger$alpha_gain)
 a2loss = t.test(older$alpha_loss, younger$alpha_loss)
 a2beta = t.test(older$beta, younger$beta)
 
+# compare alphas to each other
+a2alphas = t.test(dt$alpha_gain, dt$alpha_loss, paired = TRUE)
+a2alphasYA = t.test(younger$alpha_gain, younger$alpha_loss)
+a2alphasOA = t.test(older$alpha_gain, older$alpha_loss)
 
 # 1 alpha model ####
 # uncommenting the lines below allows analysis of 

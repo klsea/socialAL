@@ -22,6 +22,8 @@ resp_summary <- dt %>%
   group_by(id) %>%
   summarize(n_resp = sum(respond == 1), agegrp = mean(grp))
 
+write.csv(resp_summary, here::here('output', 'responses.csv'))
+
 # how many per age group
 resp_summary %>% group_by(agegrp) %>% summarize(count=n())
 
