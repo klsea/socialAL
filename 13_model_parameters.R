@@ -12,7 +12,7 @@ source(here::here('scr', 'clean_single_alpha.R'))
 
 # set hard-coded variables
 
-# read data in 
+# read data in ####
 dt <- read.csv(here::here('output', 'two_alpha_model_params.csv' ))
 d2 <- read.csv(here::here('output', 'single_alpha_model_params.csv'))
 d3 <- read.csv(here::here('output', 'baseline_model_params.csv'))
@@ -82,14 +82,17 @@ basebeta = t.test(older$beta, younger$beta)
 # uncommenting the lines below allows analysis of 
 # only participants best-fit by the double alpha model
 d4 <- merge(d4, d6, by='id')
-d4 <- d4[which(d4$win == 'decay'),] 
+#d4 <- d4[which(d4$win == 'decay'),] 
 
 # compare parameters of 2 alpha model
 older <- d4[which(d4$agegrp=='Older'),]
 younger <- d4[which(d4$agegrp=='Younger'),]
 
-decaygain = t.test(older$alpha_gain, younger$alpha_gain)
-decayloss = t.test(older$alpha_loss, younger$alpha_loss)
+alphas <- gather(d4[c(1:3,7)], condition, alpha, alpha_gain:alpha_loss, factor_key = TRUE)
+alphas$condition <- substr(as.character(alphas$condition), 7, 10)
+alphas$condition <- as.factor(alphas$condition)
+decayalpha = aov(alpha ~ agegrp * condition, data = alphas)
+
 decaybeta = t.test(older$beta, younger$beta)
 decaydecay = t.test(older$decay, younger$decay)
 

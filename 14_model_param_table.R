@@ -200,4 +200,4 @@ o0[5,10] <- paste0(round(t5$AIC_mean[2],2), ' (', round(t5$AIC_sd[2],2), ')')
 # full table ####
 table <- cbind(y0,o0[2:10])
 table <- rbind(c('', 'Younger', '', '','','','','','','', 'Older', '','','','','','','','','', ''), table)
-write.csv(table, here::here('output', 'model_parameter_grpmeans.csv'))
+write.csv(table, here::here('figs', 'model_parameter_grpmeans.csv'))
