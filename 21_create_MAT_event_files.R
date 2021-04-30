@@ -5,13 +5,14 @@
 # load required packages
 library(here)
 library(R.matlab)
+library(matlab)
 
 # load source functions
 source(here::here('scr', 'convert.R'))
 source(here::here('scr', 'pull_onsets.R'))
 
 # set hard-coded variables
-bids <- '~/Box/SocialAL/ScanningData/BIDS/'
+bids <- '~/Box/SocialAL/ScanningData/BIDS/' # change this path to the path on your local machine
 
 # create directories - only need to run this code once
 #dir.create(here::here('output', 'eventfiles'))
@@ -51,16 +52,18 @@ for(i in 1:length(part)) {
   target$onset <- target$onset - target$onset[1]
 
   ## Make GLM .mat files ####
-  names <- matrix(c("trust","untrust","neutral"),ncol = 3)
+  names <- matrix(c("trust","untrust","neutral"),ncol = 3) 
   
-  durations <- matrix(c(0,0,0),ncol = 3)
+  durations <- matrix(c("0","0","0"),ncol = 3)
   
   # create "Feedback" files
   onsets <- pull_onsets(target, 'Feedback')
-  
+  #onsets <- array(onsets, dim = c(15, 1, 3))
+
   # Save "Feedback" .mat file
   writeMat(here::here('output', 'eventfiles', 'glm', part[i], paste0(part[i], '_feedback.mat', sep='')), 
-                      names = names, durations = durations, onsets = onsets)
+           #file = file)           
+           names = names, durations = durations, onsets = onsets)
   
   # create "Decision" files # this is the decision phase where they are not allowed to respond
   onsets <- pull_onsets(target, "Decision")
