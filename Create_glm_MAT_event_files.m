@@ -72,6 +72,7 @@ for i = 1:length(part)
     %adjust onset values to start with 0 
     combined.onset = combined.onset - combined.onset(1);
     combined.event = categorical(cellstr(combined.event));
+    combined.trial_type = categorical(cellstr(combined.trial_type));
     
     % save combined file
     fname = join([socialAL, '/output/eventfiles/glm/', part{i}, '/', part{i}, '_combined.txt']);
@@ -82,27 +83,18 @@ for i = 1:length(part)
     durations = {0,0,0};
  
     % feedback % make this a function???
-    new = subset_by_event(combined, 'Feedback');
-    onsets = num2cell(reshape(new.onset, [], 3), 1);
+    fdb = subset_by_event(combined, 'Feedback');
+    onsets = onsets_by_cond(fdb);
     fname = join([socialAL, '/output/eventfiles/glm/', part{i}, '/', part{i}, '_feedback.mat']);
     save(fname, 'names', 'durations', 'onsets')
     clear new fname onsets
  
     % view - this is the decision phase where they are not allowed to
     % respond?
-    new = subset_by_event(combined, 'Decision');
-    onsets = num2cell(reshape(new.onset, [], 3), 1);
+    dec = subset_by_event(combined, 'Decision');
+    onsets = onsets_by_cond(dec); 
     fname = join([socialAL, '/output/eventfiles/glm/', part{i}, '/', part{i}, '_decision.mat']);
     save(fname, 'names', 'durations', 'onsets')
     clear fname onsets
-    
-    % decision start - this is when they are allowed to start responding? (response = time of response)
-    % this uses the same subsetted data as the decision phase
-    new.response = new.onset + new.duration;
-    onsets = num2cell(reshape(new.response, [], 3), 1);
-    fname = join([socialAL, '/output/eventfiles/glm/', part{i}, '/', part{i}, '_decision_start.mat']);
-    save(fname, 'names', 'durations', 'onsets')
-    clear new fname onsets
-    
-    
+     
 end

@@ -1,12 +1,12 @@
 onset,duration,event,trial_type,response_time,response_key,stim_file,trial_earnings
-0,1.781304,Decision,Trustworthy  ,1.781304,1,images/A1f01.jpg,9
-1.8123335,8.218696,Response,Trustworthy  ,1.781304,1,images/A1f01.jpg,9
-10.0283051,2,Thinking,Trustworthy  ,1.781304,1,images/A1f01.jpg,9
-10.0490356,2,Feedback,Trustworthy  ,1.781304,1,images/A1f01.jpg,9
-14.0720313,1.180558,Decision,Neutral      ,1.180558,2,images/B1f01.jpg,12
-15.2626085,4.819442,Response,Neutral      ,1.180558,2,images/B1f01.jpg,12
-20.0790127,2,Thinking,Neutral      ,1.180558,2,images/B1f01.jpg,12
-22.0819757,2,Feedback,Neutral      ,1.180558,2,images/B1f01.jpg,12
+0,1.781304,Decision,Trustworthy,1.781304,1,images/A1f01.jpg,9
+1.8123335,8.218696,Response,Trustworthy,1.781304,1,images/A1f01.jpg,9
+10.0283051,2,Thinking,Trustworthy,1.781304,1,images/A1f01.jpg,9
+10.0490356,2,Feedback,Trustworthy,1.781304,1,images/A1f01.jpg,9
+14.0720313,1.180558,Decision,Neutral,1.180558,2,images/B1f01.jpg,12
+15.2626085,4.819442,Response,Neutral,1.180558,2,images/B1f01.jpg,12
+20.0790127,2,Thinking,Neutral,1.180558,2,images/B1f01.jpg,12
+22.0819757,2,Feedback,Neutral,1.180558,2,images/B1f01.jpg,12
 28.0894764,1.511318,Decision,Untrustworthy,1.511318,3,images/C1f01.jpg,3
 29.6128131,4.488682,Response,Untrustworthy,1.511318,3,images/C1f01.jpg,3
 34.0957187,2,Thinking,Untrustworthy,1.511318,3,images/C1f01.jpg,3
@@ -19,102 +19,102 @@ onset,duration,event,trial_type,response_time,response_key,stim_file,trial_earni
 69.6807929,8.449514,Response,Untrustworthy,1.550486,1,images/C1f01.jpg,9
 78.1302297,2,Thinking,Untrustworthy,1.550486,1,images/C1f01.jpg,9
 78.1364211,2,Feedback,Untrustworthy,1.550486,1,images/C1f01.jpg,9
-82.1336083,2.000444,Decision,Trustworthy  ,2.000444,2,images/A1f01.jpg,12
-84.1477606,3.999556,Response,Trustworthy  ,2.000444,2,images/A1f01.jpg,12
-88.1471739,2,Thinking,Trustworthy  ,2.000444,2,images/A1f01.jpg,12
-90.1502281,2,Feedback,Trustworthy  ,2.000444,2,images/A1f01.jpg,12
+82.1336083,2.000444,Decision,Trustworthy,2.000444,2,images/A1f01.jpg,12
+84.1477606,3.999556,Response,Trustworthy,2.000444,2,images/A1f01.jpg,12
+88.1471739,2,Thinking,Trustworthy,2.000444,2,images/A1f01.jpg,12
+90.1502281,2,Feedback,Trustworthy,2.000444,2,images/A1f01.jpg,12
 96.1509185,1.817398,Decision,Untrustworthy,1.817398,2,images/C1f01.jpg,6
 97.9817865,4.182602,Response,Untrustworthy,1.817398,2,images/C1f01.jpg,6
 102.1641894,2,Thinking,Untrustworthy,1.817398,2,images/C1f01.jpg,6
 104.1667381,2,Feedback,Untrustworthy,1.817398,2,images/C1f01.jpg,6
-118.1680958,1.750504,Decision,Neutral      ,1.750504,3,images/B1f01.jpg,3
-119.9320964,4.249496,Response,Neutral      ,1.750504,3,images/B1f01.jpg,3
-124.1813814,2,Thinking,Neutral      ,1.750504,3,images/B1f01.jpg,3
-126.1842261,2,Feedback,Neutral      ,1.750504,3,images/B1f01.jpg,3
+118.1680958,1.750504,Decision,Neutral,1.750504,3,images/B1f01.jpg,3
+119.9320964,4.249496,Response,Neutral,1.750504,3,images/B1f01.jpg,3
+124.1813814,2,Thinking,Neutral,1.750504,3,images/B1f01.jpg,3
+126.1842261,2,Feedback,Neutral,1.750504,3,images/B1f01.jpg,3
 132.1847326,3.035302,Decision,Untrustworthy,3.035302,1,images/C1f01.jpg,9
 135.2335996,6.964698,Response,Untrustworthy,3.035302,1,images/C1f01.jpg,9
 142.1990095,2,Thinking,Untrustworthy,3.035302,1,images/C1f01.jpg,9
 142.2100095,2,Feedback,Untrustworthy,3.035302,1,images/C1f01.jpg,9
-148.2185477,2.050535,Decision,Neutral      ,2.050535,2,images/B1f01.jpg,12
-150.2829253,3.949465,Response,Neutral      ,2.050535,2,images/B1f01.jpg,12
-154.2325094,2,Thinking,Neutral      ,2.050535,2,images/B1f01.jpg,12
-156.2349729,2,Feedback,Neutral      ,2.050535,2,images/B1f01.jpg,12
-168.2358623,1.400627,Decision,Trustworthy  ,1.400627,4,images/A1f01.jpg,18
-169.6502196,4.599373,Response,Trustworthy  ,1.400627,4,images/A1f01.jpg,18
-174.2496871,2,Thinking,Trustworthy  ,1.400627,4,images/A1f01.jpg,18
-176.252354,2,Feedback,Trustworthy  ,1.400627,4,images/A1f01.jpg,18
-182.2527119,2.650735,Decision,Trustworthy  ,2.650735,4,images/A1f01.jpg,18
-184.9173803,3.349265,Response,Trustworthy  ,2.650735,4,images/A1f01.jpg,18
-188.2668226,2,Thinking,Trustworthy  ,2.650735,4,images/A1f01.jpg,18
-190.2692533,2,Feedback,Trustworthy  ,2.650735,4,images/A1f01.jpg,18
-196.2699383,3.517082,Decision,Neutral      ,3.517082,1,images/B1f01.jpg,9
-199.8009661,6.482918,Response,Neutral      ,3.517082,1,images/B1f01.jpg,9
-206.2839747,2,Thinking,Neutral      ,3.517082,1,images/B1f01.jpg,9
-206.3011292,2,Feedback,Neutral      ,3.517082,1,images/B1f01.jpg,9
-210.3035858,2.100818,Decision,Trustworthy  ,2.100818,4,images/A1f01.jpg,18
-212.4181781,3.899182,Response,Trustworthy  ,2.100818,4,images/A1f01.jpg,18
-216.317605,2,Thinking,Trustworthy  ,2.100818,4,images/A1f01.jpg,18
-218.3200415,2,Feedback,Trustworthy  ,2.100818,4,images/A1f01.jpg,18
-230.3215353,2.733989,Decision,Neutral      ,2.733989,2,images/B1f01.jpg,12
-233.0687348,3.266011,Response,Neutral      ,2.733989,2,images/B1f01.jpg,12
-236.3348523,2,Thinking,Neutral      ,2.733989,2,images/B1f01.jpg,12
-238.3373707,2,Feedback,Neutral      ,2.733989,2,images/B1f01.jpg,12
-244.337727,1.817298,Decision,Trustworthy  ,1.817298,4,images/A1f01.jpg,18
-246.1689767,4.182702,Response,Trustworthy  ,1.817298,4,images/A1f01.jpg,18
-250.3519325,2,Thinking,Trustworthy  ,1.817298,4,images/A1f01.jpg,18
-252.3543731,2,Feedback,Trustworthy  ,1.817298,4,images/A1f01.jpg,18
+148.2185477,2.050535,Decision,Neutral,2.050535,2,images/B1f01.jpg,12
+150.2829253,3.949465,Response,Neutral,2.050535,2,images/B1f01.jpg,12
+154.2325094,2,Thinking,Neutral,2.050535,2,images/B1f01.jpg,12
+156.2349729,2,Feedback,Neutral,2.050535,2,images/B1f01.jpg,12
+168.2358623,1.400627,Decision,Trustworthy,1.400627,4,images/A1f01.jpg,18
+169.6502196,4.599373,Response,Trustworthy,1.400627,4,images/A1f01.jpg,18
+174.2496871,2,Thinking,Trustworthy,1.400627,4,images/A1f01.jpg,18
+176.252354,2,Feedback,Trustworthy,1.400627,4,images/A1f01.jpg,18
+182.2527119,2.650735,Decision,Trustworthy,2.650735,4,images/A1f01.jpg,18
+184.9173803,3.349265,Response,Trustworthy,2.650735,4,images/A1f01.jpg,18
+188.2668226,2,Thinking,Trustworthy,2.650735,4,images/A1f01.jpg,18
+190.2692533,2,Feedback,Trustworthy,2.650735,4,images/A1f01.jpg,18
+196.2699383,3.517082,Decision,Neutral,3.517082,1,images/B1f01.jpg,9
+199.8009661,6.482918,Response,Neutral,3.517082,1,images/B1f01.jpg,9
+206.2839747,2,Thinking,Neutral,3.517082,1,images/B1f01.jpg,9
+206.3011292,2,Feedback,Neutral,3.517082,1,images/B1f01.jpg,9
+210.3035858,2.100818,Decision,Trustworthy,2.100818,4,images/A1f01.jpg,18
+212.4181781,3.899182,Response,Trustworthy,2.100818,4,images/A1f01.jpg,18
+216.317605,2,Thinking,Trustworthy,2.100818,4,images/A1f01.jpg,18
+218.3200415,2,Feedback,Trustworthy,2.100818,4,images/A1f01.jpg,18
+230.3215353,2.733989,Decision,Neutral,2.733989,2,images/B1f01.jpg,12
+233.0687348,3.266011,Response,Neutral,2.733989,2,images/B1f01.jpg,12
+236.3348523,2,Thinking,Neutral,2.733989,2,images/B1f01.jpg,12
+238.3373707,2,Feedback,Neutral,2.733989,2,images/B1f01.jpg,12
+244.337727,1.817298,Decision,Trustworthy,1.817298,4,images/A1f01.jpg,18
+246.1689767,4.182702,Response,Trustworthy,1.817298,4,images/A1f01.jpg,18
+250.3519325,2,Thinking,Trustworthy,1.817298,4,images/A1f01.jpg,18
+252.3543731,2,Feedback,Trustworthy,1.817298,4,images/A1f01.jpg,18
 258.3551352,1.583809,Decision,Untrustworthy,1.583809,1,images/C1f01.jpg,9
 259.9527834,8.416191,Response,Untrustworthy,1.583809,1,images/C1f01.jpg,9
 268.369064,2,Thinking,Untrustworthy,1.583809,1,images/C1f01.jpg,9
 268.3816117,2,Feedback,Untrustworthy,1.583809,1,images/C1f01.jpg,9
-272.3885775,1.450353,Decision,Neutral      ,1.450353,4,images/B1f01.jpg,18
-273.8528864,4.549647,Response,Neutral      ,1.450353,4,images/B1f01.jpg,18
-278.4026046,2,Thinking,Neutral      ,1.450353,4,images/B1f01.jpg,18
-280.4053437,2,Feedback,Neutral      ,1.450353,4,images/B1f01.jpg,18
-286.4057151,1.650448,Decision,Neutral      ,1.650448,4,images/B1f01.jpg,18
-288.0701376,4.349552,Response,Neutral      ,1.650448,4,images/B1f01.jpg,18
-292.419778,2,Thinking,Neutral      ,1.650448,4,images/B1f01.jpg,18
-294.4222907,2,Feedback,Neutral      ,1.650448,4,images/B1f01.jpg,18
-300.4228756,1.300678,Decision,Neutral      ,1.300678,4,images/B1f01.jpg,18
-301.7374177,4.699322,Response,Neutral      ,1.300678,4,images/B1f01.jpg,18
-306.4367965,2,Thinking,Neutral      ,1.300678,4,images/B1f01.jpg,18
-308.4392573,2,Feedback,Neutral      ,1.300678,4,images/B1f01.jpg,18
-316.443323,1.417075,Decision,Neutral      ,1.417075,4,images/B1f01.jpg,18
-317.8709632,4.582925,Response,Neutral      ,1.417075,4,images/B1f01.jpg,18
-322.4537656,2,Thinking,Neutral      ,1.417075,4,images/B1f01.jpg,18
-324.4564298,2,Feedback,Neutral      ,1.417075,4,images/B1f01.jpg,18
+272.3885775,1.450353,Decision,Neutral,1.450353,4,images/B1f01.jpg,18
+273.8528864,4.549647,Response,Neutral,1.450353,4,images/B1f01.jpg,18
+278.4026046,2,Thinking,Neutral,1.450353,4,images/B1f01.jpg,18
+280.4053437,2,Feedback,Neutral,1.450353,4,images/B1f01.jpg,18
+286.4057151,1.650448,Decision,Neutral,1.650448,4,images/B1f01.jpg,18
+288.0701376,4.349552,Response,Neutral,1.650448,4,images/B1f01.jpg,18
+292.419778,2,Thinking,Neutral,1.650448,4,images/B1f01.jpg,18
+294.4222907,2,Feedback,Neutral,1.650448,4,images/B1f01.jpg,18
+300.4228756,1.300678,Decision,Neutral,1.300678,4,images/B1f01.jpg,18
+301.7374177,4.699322,Response,Neutral,1.300678,4,images/B1f01.jpg,18
+306.4367965,2,Thinking,Neutral,1.300678,4,images/B1f01.jpg,18
+308.4392573,2,Feedback,Neutral,1.300678,4,images/B1f01.jpg,18
+316.443323,1.417075,Decision,Neutral,1.417075,4,images/B1f01.jpg,18
+317.8709632,4.582925,Response,Neutral,1.417075,4,images/B1f01.jpg,18
+322.4537656,2,Thinking,Neutral,1.417075,4,images/B1f01.jpg,18
+324.4564298,2,Feedback,Neutral,1.417075,4,images/B1f01.jpg,18
 330.456905,2.600627,Decision,Untrustworthy,2.600627,2,images/C1f01.jpg,6
 333.0715232,3.399373,Response,Untrustworthy,2.600627,2,images/C1f01.jpg,6
 336.4710089,2,Thinking,Untrustworthy,2.600627,2,images/C1f01.jpg,6
 338.4735196,2,Feedback,Untrustworthy,2.600627,2,images/C1f01.jpg,6
-349.982456500004,1.85050210007466,Decision,Neutral      ,1.85050210007466,2,images/B1f01.jpg,12
-351.844607000067,4.14949789992534,Response,Neutral      ,1.85050210007466,2,images/B1f01.jpg,12
-355.994033900034,2,Thinking,Neutral      ,1.85050210007466,2,images/B1f01.jpg,12
-357.996430900009,2,Feedback,Neutral      ,1.85050210007466,2,images/B1f01.jpg,12
-365.997115100096,1.43373809999321,Decision,Neutral      ,1.43373809999321,4,images/B1f01.jpg,18
-367.444895900032,4.56626190000679,Response,Neutral      ,1.43373809999321,4,images/B1f01.jpg,18
-372.011178100077,2,Thinking,Neutral      ,1.43373809999321,4,images/B1f01.jpg,18
-374.013592700069,2,Feedback,Neutral      ,1.43373809999321,4,images/B1f01.jpg,18
+349.982456500004,1.85050210007466,Decision,Neutral,1.85050210007466,2,images/B1f01.jpg,12
+351.844607000067,4.14949789992534,Response,Neutral,1.85050210007466,2,images/B1f01.jpg,12
+355.994033900034,2,Thinking,Neutral,1.85050210007466,2,images/B1f01.jpg,12
+357.996430900009,2,Feedback,Neutral,1.85050210007466,2,images/B1f01.jpg,12
+365.997115100096,1.43373809999321,Decision,Neutral,1.43373809999321,4,images/B1f01.jpg,18
+367.444895900032,4.56626190000679,Response,Neutral,1.43373809999321,4,images/B1f01.jpg,18
+372.011178100077,2,Thinking,Neutral,1.43373809999321,4,images/B1f01.jpg,18
+374.013592700069,2,Feedback,Neutral,1.43373809999321,4,images/B1f01.jpg,18
 380.014265300068,1.35070399998222,Decision,Untrustworthy,1.35070399998222,2,images/C1f01.jpg,6
 381.378798799999,4.64929600001778,Response,Untrustworthy,1.35070399998222,2,images/C1f01.jpg,6
 386.028045499991,2,Thinking,Untrustworthy,1.35070399998222,2,images/C1f01.jpg,6
 388.030911500044,2,Feedback,Untrustworthy,1.35070399998222,2,images/C1f01.jpg,6
-394.031570100054,1.40048340009525,Decision,Trustworthy  ,1.40048340009525,4,images/A1f01.jpg,18
-395.445820100084,4.59951659990475,Response,Trustworthy  ,1.40048340009525,4,images/A1f01.jpg,18
-400.045091499984,2,Thinking,Trustworthy  ,1.40048340009525,4,images/A1f01.jpg,18
-402.048082200056,2,Feedback,Trustworthy  ,1.40048340009525,4,images/A1f01.jpg,18
-410.049188400097,1.48412929999176,Decision,Neutral      ,1.48412929999176,4,images/B1f01.jpg,0
-411.546189000076,4.51587070000824,Response,Neutral      ,1.48412929999176,4,images/B1f01.jpg,0
-416.062314300044,2,Thinking,Neutral      ,1.48412929999176,4,images/B1f01.jpg,0
-418.065239700084,2,Feedback,Neutral      ,1.48412929999176,4,images/B1f01.jpg,0
-424.065919600022,1.6504508999642,Decision,Trustworthy  ,1.6504508999642,4,images/A1f01.jpg,18
-425.729896800071,4.3495491000358,Response,Trustworthy  ,1.6504508999642,4,images/A1f01.jpg,18
-430.079302500063,2,Thinking,Trustworthy  ,1.6504508999642,4,images/A1f01.jpg,18
-432.082431800026,2,Feedback,Trustworthy  ,1.6504508999642,4,images/A1f01.jpg,18
-438.083088600021,1.63366779999342,Decision,Trustworthy  ,1.63366779999342,4,images/A1f01.jpg,18
-439.730073100017,4.36633220000658,Response,Trustworthy  ,1.63366779999342,4,images/A1f01.jpg,18
-444.096378400051,2,Thinking,Trustworthy  ,1.63366779999342,4,images/A1f01.jpg,18
-446.099565999992,2,Feedback,Trustworthy  ,1.63366779999342,4,images/A1f01.jpg,18
+394.031570100054,1.40048340009525,Decision,Trustworthy,1.40048340009525,4,images/A1f01.jpg,18
+395.445820100084,4.59951659990475,Response,Trustworthy,1.40048340009525,4,images/A1f01.jpg,18
+400.045091499984,2,Thinking,Trustworthy,1.40048340009525,4,images/A1f01.jpg,18
+402.048082200056,2,Feedback,Trustworthy,1.40048340009525,4,images/A1f01.jpg,18
+410.049188400097,1.48412929999176,Decision,Neutral,1.48412929999176,4,images/B1f01.jpg,0
+411.546189000076,4.51587070000824,Response,Neutral,1.48412929999176,4,images/B1f01.jpg,0
+416.062314300044,2,Thinking,Neutral,1.48412929999176,4,images/B1f01.jpg,0
+418.065239700084,2,Feedback,Neutral,1.48412929999176,4,images/B1f01.jpg,0
+424.065919600022,1.6504508999642,Decision,Trustworthy,1.6504508999642,4,images/A1f01.jpg,18
+425.729896800071,4.3495491000358,Response,Trustworthy,1.6504508999642,4,images/A1f01.jpg,18
+430.079302500063,2,Thinking,Trustworthy,1.6504508999642,4,images/A1f01.jpg,18
+432.082431800026,2,Feedback,Trustworthy,1.6504508999642,4,images/A1f01.jpg,18
+438.083088600021,1.63366779999342,Decision,Trustworthy,1.63366779999342,4,images/A1f01.jpg,18
+439.730073100017,4.36633220000658,Response,Trustworthy,1.63366779999342,4,images/A1f01.jpg,18
+444.096378400051,2,Thinking,Trustworthy,1.63366779999342,4,images/A1f01.jpg,18
+446.099565999992,2,Feedback,Trustworthy,1.63366779999342,4,images/A1f01.jpg,18
 452.100203900077,1.7673753000563,Decision,Untrustworthy,1.7673753000563,2,images/C1f01.jpg,6
 453.880813900093,4.2326246999437,Response,Untrustworthy,1.7673753000563,2,images/C1f01.jpg,6
 458.113569299984,2,Thinking,Untrustworthy,1.7673753000563,2,images/C1f01.jpg,6
@@ -123,14 +123,14 @@ onset,duration,event,trial_type,response_time,response_key,stim_file,trial_earni
 470.564534000065,3.56601179996505,Response,Untrustworthy,2.43398820003495,2,images/C1f01.jpg,6
 474.130676500094,2,Thinking,Untrustworthy,2.43398820003495,2,images/C1f01.jpg,6
 476.133687600089,2,Feedback,Untrustworthy,2.43398820003495,2,images/C1f01.jpg,6
-492.135181800057,2.35047950001899,Decision,Trustworthy  ,2.35047950001899,4,images/A1f01.jpg,18
-494.498521000091,3.64952049998101,Response,Trustworthy  ,2.35047950001899,4,images/A1f01.jpg,18
-498.148137199986,2,Thinking,Trustworthy  ,2.35047950001899,4,images/A1f01.jpg,18
-500.15083900007,2,Feedback,Trustworthy  ,2.35047950001899,4,images/A1f01.jpg,18
-506.151683200095,1.08385549997911,Decision,Trustworthy  ,1.08385549997911,4,images/A1f01.jpg,18
-507.248904499985,4.91614450002089,Response,Trustworthy  ,1.08385549997911,4,images/A1f01.jpg,18
-512.165108899996,2,Thinking,Trustworthy  ,1.08385549997911,4,images/A1f01.jpg,18
-514.16828070005,2,Feedback,Trustworthy  ,1.08385549997911,4,images/A1f01.jpg,18
+492.135181800057,2.35047950001899,Decision,Trustworthy,2.35047950001899,4,images/A1f01.jpg,18
+494.498521000091,3.64952049998101,Response,Trustworthy,2.35047950001899,4,images/A1f01.jpg,18
+498.148137199986,2,Thinking,Trustworthy,2.35047950001899,4,images/A1f01.jpg,18
+500.15083900007,2,Feedback,Trustworthy,2.35047950001899,4,images/A1f01.jpg,18
+506.151683200095,1.08385549997911,Decision,Trustworthy,1.08385549997911,4,images/A1f01.jpg,18
+507.248904499985,4.91614450002089,Response,Trustworthy,1.08385549997911,4,images/A1f01.jpg,18
+512.165108899996,2,Thinking,Trustworthy,1.08385549997911,4,images/A1f01.jpg,18
+514.16828070005,2,Feedback,Trustworthy,1.08385549997911,4,images/A1f01.jpg,18
 520.168757600072,2.31720360007603,Decision,Untrustworthy,2.31720360007603,2,images/C1f01.jpg,6
 522.499375400078,3.68279639992397,Response,Untrustworthy,2.31720360007603,2,images/C1f01.jpg,6
 526.182201799997,2,Thinking,Untrustworthy,2.31720360007603,2,images/C1f01.jpg,6
@@ -139,43 +139,43 @@ onset,duration,event,trial_type,response_time,response_key,stim_file,trial_earni
 537.999475500025,4.19985669991001,Response,Untrustworthy,1.80014330008999,2,images/C1f01.jpg,6
 542.199280600008,2,Thinking,Untrustworthy,1.80014330008999,2,images/C1f01.jpg,6
 544.202252400052,2,Feedback,Untrustworthy,1.80014330008999,2,images/C1f01.jpg,6
-552.202917499994,0.917333199991845,Decision,Trustworthy  ,0.917333199991845,4,images/A1f01.jpg,18
-553.133536699987,5.08266680000816,Response,Trustworthy  ,0.917333199991845,4,images/A1f01.jpg,18
-558.216267800019,2,Thinking,Trustworthy  ,0.917333199991845,4,images/A1f01.jpg,18
-560.219262200003,2,Feedback,Trustworthy  ,0.917333199991845,4,images/A1f01.jpg,18
-572.220830600071,1.25014939997345,Decision,Trustworthy  ,1.25014939997345,4,images/A1f01.jpg,18
-573.483847900005,4.74985060002655,Response,Trustworthy  ,1.25014939997345,4,images/A1f01.jpg,18
-578.233528700019,2,Thinking,Trustworthy  ,1.25014939997345,4,images/A1f01.jpg,18
-580.236955400035,2,Feedback,Trustworthy  ,1.25014939997345,4,images/A1f01.jpg,18
-586.237336700028,2.03381639998406,Decision,Trustworthy  ,2.03381639998406,4,images/A1f01.jpg,18
-588.284409200019,3.96618360001594,Response,Trustworthy  ,2.03381639998406,4,images/A1f01.jpg,18
-592.250300600021,2,Thinking,Trustworthy  ,2.03381639998406,4,images/A1f01.jpg,18
-594.253745300058,2,Feedback,Trustworthy  ,2.03381639998406,4,images/A1f01.jpg,18
+552.202917499994,0.917333199991845,Decision,Trustworthy,0.917333199991845,4,images/A1f01.jpg,18
+553.133536699987,5.08266680000816,Response,Trustworthy,0.917333199991845,4,images/A1f01.jpg,18
+558.216267800019,2,Thinking,Trustworthy,0.917333199991845,4,images/A1f01.jpg,18
+560.219262200003,2,Feedback,Trustworthy,0.917333199991845,4,images/A1f01.jpg,18
+572.220830600071,1.25014939997345,Decision,Trustworthy,1.25014939997345,4,images/A1f01.jpg,18
+573.483847900005,4.74985060002655,Response,Trustworthy,1.25014939997345,4,images/A1f01.jpg,18
+578.233528700019,2,Thinking,Trustworthy,1.25014939997345,4,images/A1f01.jpg,18
+580.236955400035,2,Feedback,Trustworthy,1.25014939997345,4,images/A1f01.jpg,18
+586.237336700028,2.03381639998406,Decision,Trustworthy,2.03381639998406,4,images/A1f01.jpg,18
+588.284409200019,3.96618360001594,Response,Trustworthy,2.03381639998406,4,images/A1f01.jpg,18
+592.250300600021,2,Thinking,Trustworthy,2.03381639998406,4,images/A1f01.jpg,18
+594.253745300058,2,Feedback,Trustworthy,2.03381639998406,4,images/A1f01.jpg,18
 600.254535000017,0.917405399959534,Decision,Untrustworthy,0.917405399959534,3,images/C1f01.jpg,3
 601.18507290009,5.08259460004047,Response,Untrustworthy,0.917405399959534,3,images/C1f01.jpg,3
 606.26745960006,2,Thinking,Untrustworthy,0.917405399959534,3,images/C1f01.jpg,3
 608.270791400052,2,Feedback,Untrustworthy,0.917405399959534,3,images/C1f01.jpg,3
-614.271364899995,2.11736930010375,Decision,Neutral      ,2.11736930010375,2,images/B1f01.jpg,12
-616.402126500095,3.88263069989625,Response,Neutral      ,2.11736930010375,2,images/B1f01.jpg,12
-620.28508610005,2,Thinking,Neutral      ,2.11736930010375,2,images/B1f01.jpg,12
-622.288312100051,2,Feedback,Neutral      ,2.11736930010375,2,images/B1f01.jpg,12
+614.271364899995,2.11736930010375,Decision,Neutral,2.11736930010375,2,images/B1f01.jpg,12
+616.402126500095,3.88263069989625,Response,Neutral,2.11736930010375,2,images/B1f01.jpg,12
+620.28508610005,2,Thinking,Neutral,2.11736930010375,2,images/B1f01.jpg,12
+622.288312100051,2,Feedback,Neutral,2.11736930010375,2,images/B1f01.jpg,12
 628.28856050008,1.86712039995473,Decision,Untrustworthy,1.86712039995473,2,images/C1f01.jpg,12
 630.168927300084,4.13287960004527,Response,Untrustworthy,1.86712039995473,2,images/C1f01.jpg,12
 634.301958500003,2,Thinking,Untrustworthy,1.86712039995473,2,images/C1f01.jpg,12
 636.304931300055,2,Feedback,Untrustworthy,1.86712039995473,2,images/C1f01.jpg,12
-642.305572500048,1.16711869998835,Decision,Trustworthy  ,1.16711869998835,4,images/A1f01.jpg,18
-643.485976500032,4.83288130001165,Response,Trustworthy  ,1.16711869998835,4,images/A1f01.jpg,18
-648.318934400045,2,Thinking,Trustworthy  ,1.16711869998835,4,images/A1f01.jpg,18
-650.321813100078,2,Feedback,Trustworthy  ,1.16711869998835,4,images/A1f01.jpg,18
-660.322745700078,1.10045269993134,Decision,Neutral      ,1.10045269993134,4,images/B1f01.jpg,18
-661.436577400021,4.89954730006866,Response,Neutral      ,1.10045269993134,4,images/B1f01.jpg,18
-666.336093600085,2,Thinking,Neutral      ,1.10045269993134,4,images/B1f01.jpg,18
-668.339149100068,2,Feedback,Neutral      ,1.10045269993134,4,images/B1f01.jpg,18
+642.305572500048,1.16711869998835,Decision,Trustworthy,1.16711869998835,4,images/A1f01.jpg,18
+643.485976500032,4.83288130001165,Response,Trustworthy,1.16711869998835,4,images/A1f01.jpg,18
+648.318934400045,2,Thinking,Trustworthy,1.16711869998835,4,images/A1f01.jpg,18
+650.321813100078,2,Feedback,Trustworthy,1.16711869998835,4,images/A1f01.jpg,18
+660.322745700078,1.10045269993134,Decision,Neutral,1.10045269993134,4,images/B1f01.jpg,18
+661.436577400021,4.89954730006866,Response,Neutral,1.10045269993134,4,images/B1f01.jpg,18
+666.336093600085,2,Thinking,Neutral,1.10045269993134,4,images/B1f01.jpg,18
+668.339149100068,2,Feedback,Neutral,1.10045269993134,4,images/B1f01.jpg,18
 676.339772900045,3.06751779990736,Decision,Untrustworthy,3.06751779990736,3,images/C1f01.jpg,3
 679.420752800014,2.93248220009264,Response,Untrustworthy,3.06751779990736,3,images/C1f01.jpg,3
 682.352945299996,2,Thinking,Untrustworthy,3.06751779990736,3,images/C1f01.jpg,3
 684.356285700053,2,Feedback,Untrustworthy,3.06751779990736,3,images/C1f01.jpg,3
-692.356857899986,1.18378490000032,Decision,Neutral      ,1.18378490000032,4,images/B1f01.jpg,18
-693.554015100063,4.81621509999968,Response,Neutral      ,1.18378490000032,4,images/B1f01.jpg,18
-698.370372200096,2,Thinking,Neutral      ,1.18378490000032,4,images/B1f01.jpg,18
-700.373268600032,2,Feedback,Neutral      ,1.18378490000032,4,images/B1f01.jpg,18
+692.356857899986,1.18378490000032,Decision,Neutral,1.18378490000032,4,images/B1f01.jpg,18
+693.554015100063,4.81621509999968,Response,Neutral,1.18378490000032,4,images/B1f01.jpg,18
+698.370372200096,2,Thinking,Neutral,1.18378490000032,4,images/B1f01.jpg,18
+700.373268600032,2,Feedback,Neutral,1.18378490000032,4,images/B1f01.jpg,18

@@ -51,10 +51,4 @@ for i = 1:length(part)
      fname = join([socialAL, '/output/eventfiles/pmod/', part{i}, '/', part{i}, '_decision.mat']);
      save(fname, 'names', 'durations', 'onsets', 'pmod')
      clear fname names durations onsets
-     
-     % make decision start file with no responses
-     load(join(['output/eventfiles/glm/', part{i}, '/', part{i}, '_decision_start.mat']));     
-     fname = join([socialAL, '/output/eventfiles/pmod/', part{i}, '/', part{i}, '_decision_start.mat']);
-     save(fname, 'names', 'durations', 'onsets', 'pmod')
-     clear fname names durations onsets
 end
