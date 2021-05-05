@@ -15,6 +15,7 @@ part = cell(1,72);
 [part{:}] = files(1:72).name;
 clear files
 cd(socialAL)
+% remove participants cut for poor performance
 part(find(strcmp(part, 'sub-1027'))) = [];
 part(find(strcmp(part, 'sub-1031'))) = [];
 part(find(strcmp(part, 'sub-1040'))) = [];
@@ -63,7 +64,7 @@ for i = 1:length(part)
      % make feedback file with rpe
      load(join(['output/eventfiles/glm/', part{i}, '/', part{i}, '_feedback.mat']));
      for j = 1:3
-         pmod(j).param = cellfun(@transpose, probs(j), 'UniformOutput', false);
+         pmod(j).param = cellfun(@transpose, rpes(j), 'UniformOutput', false);
          pmod(j).poly = {[1]};
      end
      clear j
