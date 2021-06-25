@@ -1,4 +1,4 @@
-# Conert raw socialAL behavior into BIDS format
+# Convert raw socialAL behavior into BIDS format
 # 5.9.19 KLS
 
 # load required packages
