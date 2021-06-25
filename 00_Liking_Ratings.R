@@ -5,7 +5,7 @@
 library(here)
 library(tidyverse)
 library(ggplot2)
-#library(rstatix)
+library(rstatix)
 
 # load source functions
 source('~/Dropbox (Personal)/Functions/SummarySE.R')
@@ -46,13 +46,15 @@ for (x in 1:length(dt$Untrustworthy_IMG)) {
 
 # make long
 d3 <- gather(dt[c(1,3, 18:20)], Partner, Rating, trustworthy_like:untrustworthy_like, factor_key = TRUE)
+d3$AgeGroup <- as.factor(recode(as.character(d3$AgeGroup_YA1_OA2), '1' = 'Younger', '2' = 'Older'))
+d3$AgeGroup <- ordered(d3$AgeGroup, levels = c('Younger', 'Older'))
 
 # age group graph ####
 
 # summarize and futz with order of factors
-d4 <- summarySE(d3, 'Rating', c('AgeGroup_YA1_OA2', 'Partner'))
-d4$AgeGroup <- as.factor(recode(as.character(d4$AgeGroup_YA1_OA2), '1' = 'Younger', '2' = 'Older'))
-d4$AgeGroup <- ordered(d4$AgeGroup, levels = c('Younger', 'Older'))
+d4 <- summarySE(d3, 'Rating', c('AgeGroup', 'Partner'))
+#d4$AgeGroup <- as.factor(recode(as.character(d4$AgeGroup_YA1_OA2), '1' = 'Younger', '2' = 'Older'))
+#d4$AgeGroup <- ordered(d4$AgeGroup, levels = c('Younger', 'Older'))
 d4$Partner <- recode(d4$Partner, 'trustworthy_like' = 'Trustworthy', 'neutral_like' = 'Neutral', 'untrustworthy_like' = 'Untrustworthy')
 d4$Partner <- ordered(d4$Partner, levels = c('Untrustworthy', 'Neutral', 'Trustworthy'))
 
@@ -73,3 +75,12 @@ ggplot(d4, aes(Partner, Rating, fill = AgeGroup)) +
   scale_fill_brewer(palette="Set1", name="Age Group") + theme_minimal() + 
   scale_colour_brewer(palette="Set1", name="Age Group") + custom_plot
 
+# stats
+liking_aov = anova_test(data = d3, dv = Rating, wid = ID, between = AgeGroup, within = Partner)
+get_anova_table(liking_aov)
+
+# breakdown
+one.way <- d3 %>% group_by(AgeGroup) %>% anova_test(dv = Rating, wid = ID, within = Partner) %>% 
+  get_anova_table() %>% adjust_pvalue(method = 'bonferroni')
+
+pwc <- d3 %>% group_by(AgeGroup) %>% pairwise_t_test(Rating ~ Partner, p.adjust.method = 'bonferroni')
