@@ -33,49 +33,6 @@ d3 <- clean_single_alpha(d3)
 d4 <- clean_single_alpha(d4)
 d5 <- clean_single_alpha(d5)
 
-# 2 alpha model ####
-# uncommenting the lines below allows analysis of 
-# only participants best-fit by the double alpha model
-dt <- merge(dt, d6, by='id')
-dt <- dt[which(dt$win == 'double'),] 
-
-# compare parameters of 2 alpha model
-older <- dt[which(dt$agegrp=='Older'),]
-younger <- dt[which(dt$agegrp=='Younger'),]
-
-a2gain = t.test(older$alpha_gain, younger$alpha_gain)
-a2loss = t.test(older$alpha_loss, younger$alpha_loss)
-a2beta = t.test(older$beta, younger$beta)
-
-# compare alphas to each other
-a2alphas = t.test(dt$alpha_gain, dt$alpha_loss, paired = TRUE)
-a2alphasYA = t.test(younger$alpha_gain, younger$alpha_loss)
-a2alphasOA = t.test(older$alpha_gain, older$alpha_loss)
-
-# 1 alpha model ####
-# uncommenting the lines below allows analysis of 
-# only participants best-fit by the single alpha model
-d2 <- merge(d2, d6, by='id')
-d2 <- d2[which(d2$win == 'single'),] 
-
-# compare parameters of 1 alpha model
-older <- d2[which(d2$agegrp=='Older'),]
-younger <- d2[which(d2$agegrp=='Younger'),]
-a1alpha = t.test(older$alpha, younger$alpha)
-a1beta = t.test(older$beta, younger$beta)
-
-
-# baseline model ####
-# uncommenting the lines below allows analysis of 
-# only participants best-fit by the baseline model
-d3 <- merge(d3, d6, by='id')
-d3 <- d3[which(d3$win == 'baseline'),] 
-
-# compare parameters of baseline model ####
-older <- d3[which(d3$agegrp=='Older'),]
-younger <- d3[which(d3$agegrp=='Younger'),]
-basebeta = t.test(older$beta, younger$beta)
-
 # 2 alpha with decay model ####
 
 # uncommenting the lines below allows analysis of 
@@ -96,20 +53,63 @@ decaybeta = t.test(older$beta, younger$beta)
 decaydecay = t.test(older$decay, younger$decay)
 leveneTest(decay ~ agegrp, data = d4)
 
-# 2 alpha with priors model ####
-
-# uncommenting the lines below allows analysis of 
-# only participants best-fit by the double alpha model with priors
-#d5 <- merge(d5, d6, by='id')
-#d5 <- d4[which(d5$win == 'prior'),] 
-
-# compare parameters of 2 alpha model
-older <- d5[which(d5$agegrp=='Older'),]
-younger <- d5[which(d5$agegrp=='Younger'),]
-
-priorgain = t.test(older$alpha_gain, younger$alpha_gain)
-priorloss = t.test(older$alpha_loss, younger$alpha_loss)
-priorbeta = t.test(older$beta, younger$beta)
-priortrust = t.test(older$iProb_trust, younger$iProb_trust)
-priorneutral = t.test(older$iProb_neut, younger$iProb_neut)
-prioruntrust = t.test(older$iProb_untrust, younger$iProb_untrust)
+# # 2 alpha model ####
+# # uncommenting the lines below allows analysis of 
+# # only participants best-fit by the double alpha model
+# dt <- merge(dt, d6, by='id')
+# dt <- dt[which(dt$win == 'double'),] 
+# 
+# # compare parameters of 2 alpha model
+# older <- dt[which(dt$agegrp=='Older'),]
+# younger <- dt[which(dt$agegrp=='Younger'),]
+# 
+# a2gain = t.test(older$alpha_gain, younger$alpha_gain)
+# a2loss = t.test(older$alpha_loss, younger$alpha_loss)
+# a2beta = t.test(older$beta, younger$beta)
+# 
+# # compare alphas to each other
+# a2alphas = t.test(dt$alpha_gain, dt$alpha_loss, paired = TRUE)
+# a2alphasYA = t.test(younger$alpha_gain, younger$alpha_loss)
+# a2alphasOA = t.test(older$alpha_gain, older$alpha_loss)
+# 
+# # 1 alpha model ####
+# # uncommenting the lines below allows analysis of 
+# # only participants best-fit by the single alpha model
+# d2 <- merge(d2, d6, by='id')
+# d2 <- d2[which(d2$win == 'single'),] 
+# 
+# # compare parameters of 1 alpha model
+# older <- d2[which(d2$agegrp=='Older'),]
+# younger <- d2[which(d2$agegrp=='Younger'),]
+# a1alpha = t.test(older$alpha, younger$alpha)
+# a1beta = t.test(older$beta, younger$beta)
+# 
+# 
+# # baseline model ####
+# # uncommenting the lines below allows analysis of 
+# # only participants best-fit by the baseline model
+# d3 <- merge(d3, d6, by='id')
+# d3 <- d3[which(d3$win == 'baseline'),] 
+# 
+# # compare parameters of baseline model
+# older <- d3[which(d3$agegrp=='Older'),]
+# younger <- d3[which(d3$agegrp=='Younger'),]
+# basebeta = t.test(older$beta, younger$beta)
+# 
+# # 2 alpha with priors model ####
+# 
+# # uncommenting the lines below allows analysis of 
+# # only participants best-fit by the double alpha model with priors
+# #d5 <- merge(d5, d6, by='id')
+# #d5 <- d4[which(d5$win == 'prior'),] 
+# 
+# # compare parameters of 2 alpha model
+# older <- d5[which(d5$agegrp=='Older'),]
+# younger <- d5[which(d5$agegrp=='Younger'),]
+# 
+# priorgain = t.test(older$alpha_gain, younger$alpha_gain)
+# priorloss = t.test(older$alpha_loss, younger$alpha_loss)
+# priorbeta = t.test(older$beta, younger$beta)
+# priortrust = t.test(older$iProb_trust, younger$iProb_trust)
+# priorneutral = t.test(older$iProb_neut, younger$iProb_neut)
+# prioruntrust = t.test(older$iProb_untrust, younger$iProb_untrust)
