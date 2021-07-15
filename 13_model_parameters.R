@@ -5,6 +5,7 @@
 library(here)
 library(tidyverse)
 library(ggplot2)
+library(car)
 
 # load source functions
 source(here::here('scr', 'concat_clean.R'))
@@ -70,17 +71,15 @@ a1beta = t.test(older$beta, younger$beta)
 d3 <- merge(d3, d6, by='id')
 d3 <- d3[which(d3$win == 'baseline'),] 
 
-# compare parameters of baseline model
+# compare parameters of baseline model ####
 older <- d3[which(d3$agegrp=='Older'),]
 younger <- d3[which(d3$agegrp=='Younger'),]
 basebeta = t.test(older$beta, younger$beta)
 
-
-
 # 2 alpha with decay model ####
 
 # uncommenting the lines below allows analysis of 
-# only participants best-fit by the double alpha model
+# only participants best-fit by the double alpha decay model
 d4 <- merge(d4, d6, by='id')
 #d4 <- d4[which(d4$win == 'decay'),] 
 
@@ -95,6 +94,7 @@ decayalpha = aov(alpha ~ agegrp * condition, data = alphas)
 
 decaybeta = t.test(older$beta, younger$beta)
 decaydecay = t.test(older$decay, younger$decay)
+leveneTest(decay ~ agegrp, data = d4)
 
 # 2 alpha with priors model ####
 
