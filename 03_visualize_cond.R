@@ -63,7 +63,7 @@ age_grp_means <- ggplot(grpmeans, aes(trial_type, mean_amount, colour = agegrp, 
   #ggtitle('Baseline Model') + theme(plot.title = element_text(hjust = 0.5))
 age_grp_means
 #ggsave(here::here('figs', 'age_grp_means.png'))
-#ggsave(here::here('figs', 'baseline_beh_age_grp_means.png'))
+ggsave(here::here('figs', 'baseline_beh_age_grp_means.png'))
 
 # pretty graph
 beh <- ggplot() + 
@@ -114,7 +114,7 @@ behxtime <- ggplot(dt, aes(tt_number, amount_shared, colour = trial_type, fill =
   theme_minimal() + custom_plot + theme(strip.text.x = element_text(size=lg)) + 
   theme(legend.position = 'bottom')
 #ggsave(here::here('figs', 'all_data_over_time_no_legend.png'))
-#ggsave(here::here('figs', 'baseline_all_beh_over_time.png'))
+ggsave(here::here('figs', 'baseline_all_beh_over_time.png'))
 saveRDS(behxtime, here::here('figs', 'bot.RDS'))
 
 ## Graph 3 - Change over stage
