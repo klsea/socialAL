@@ -48,6 +48,8 @@ for (x in 1:length(dt$Untrustworthy_IMG)) {
 d3 <- gather(dt[c(1,3, 18:20)], Partner, Rating, trustworthy_like:untrustworthy_like, factor_key = TRUE)
 d3$AgeGroup <- as.factor(recode(as.character(d3$AgeGroup_YA1_OA2), '1' = 'Younger', '2' = 'Older'))
 d3$AgeGroup <- ordered(d3$AgeGroup, levels = c('Younger', 'Older'))
+d3$Partner <- recode(d3$Partner, 'trustworthy_like' = 'Trustworthy', 'neutral_like' = 'Neutral', 'untrustworthy_like' = 'Untrustworthy')
+d3$Partner <- ordered(d3$Partner, levels = c('Untrustworthy', 'Neutral', 'Trustworthy'))
 
 # age group graph ####
 
@@ -55,8 +57,6 @@ d3$AgeGroup <- ordered(d3$AgeGroup, levels = c('Younger', 'Older'))
 d4 <- summarySE(d3, 'Rating', c('AgeGroup', 'Partner'))
 #d4$AgeGroup <- as.factor(recode(as.character(d4$AgeGroup_YA1_OA2), '1' = 'Younger', '2' = 'Older'))
 #d4$AgeGroup <- ordered(d4$AgeGroup, levels = c('Younger', 'Older'))
-d4$Partner <- recode(d4$Partner, 'trustworthy_like' = 'Trustworthy', 'neutral_like' = 'Neutral', 'untrustworthy_like' = 'Untrustworthy')
-d4$Partner <- ordered(d4$Partner, levels = c('Untrustworthy', 'Neutral', 'Trustworthy'))
 
 # graph constants
 lg = 18 # text size
@@ -74,6 +74,20 @@ ggplot(d4, aes(Partner, Rating, fill = AgeGroup)) +
   coord_cartesian(ylim=c(1, 7)) + scale_y_continuous(breaks = c(1, 2, 3, 4, 5, 6, 7)) + 
   scale_fill_brewer(palette="Set1", name="Age Group") + theme_minimal() + 
   scale_colour_brewer(palette="Set1", name="Age Group") + custom_plot
+
+# pretty plot?
+ratings<- ggplot() + 
+  geom_point(data = d3, aes(x = Partner, y = Rating, colour = AgeGroup), 
+             position = position_jitterdodge(jitter.height = .25), alpha = .5) + 
+  geom_bar(data = d4, aes(x = Partner, y = Rating, colour = AgeGroup, fill = AgeGroup), 
+           position=position_dodge(), stat= 'identity', alpha = 0.3) + 
+  geom_errorbar(data = d4, aes(x = Partner, y = Rating, ymin = Rating-se, ymax = Rating + se, colour = AgeGroup), 
+                position = position_dodge(.9), width = .2) + 
+  coord_cartesian(ylim=c(1, 7)) + scale_y_continuous(breaks = c(1, 2, 3, 4, 5, 6, 7)) + 
+  scale_fill_brewer(palette="Set1", name="Age Group") + theme_minimal() + 
+  scale_colour_brewer(palette="Set1", name="Age Group") + custom_plot
+#ggsave(here::here('figs', 'post-experiment_ratings.png'))
+saveRDS(ratings, here::here('figs', 'per.RDS'))
 
 # stats
 liking_aov = anova_test(data = d3, dv = Rating, wid = ID, between = AgeGroup, within = Partner)

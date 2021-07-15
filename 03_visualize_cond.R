@@ -31,8 +31,8 @@ dt$agegrp <- factor(dt$agegrp, levels = c('Younger', 'Older'))
 ## ---------------------
 # calculate individual means 
 indiv_means <- dt %>% 
-  dplyr::group_by(id, agegrp, trial_type) %>%
-  summarize(avg_amount = mean(amount_shared, na.rm = TRUE))
+  group_by(id, agegrp, trial_type) %>%
+  summarise(avg_amount = mean(amount_shared, na.rm = TRUE))
 
 # calculate age group means 
 se <- function(sd,n) {sd/sqrt(n())}
@@ -65,6 +65,20 @@ age_grp_means
 #ggsave(here::here('figs', 'age_grp_means.png'))
 #ggsave(here::here('figs', 'baseline_beh_age_grp_means.png'))
 
+# pretty graph
+beh <- ggplot() + 
+  geom_point(data = indiv_means, aes(x = trial_type, y = avg_amount, colour = agegrp), 
+             position = position_jitterdodge(jitter.height = .25), alpha = .5) + 
+  geom_bar(data = grpmeans, aes(x = trial_type, y = mean_amount, colour = agegrp, fill = agegrp), 
+           position=position_dodge(), stat= 'identity', alpha = 0.3) + 
+  geom_errorbar(data = grpmeans, aes(x = trial_type, y = mean_amount, ymin = mean_amount-se_amount, ymax = mean_amount + se_amount, colour = agegrp), 
+                position = position_dodge(.9), width = .2) + 
+  xlab('Trial Type') + ylab('Average $ Shared') + coord_cartesian(ylim=c(0, 9)) + 
+  scale_y_continuous(breaks = c(0,3, 6, 9)) +
+  scale_fill_brewer(palette="Set1", name="Age Group") + theme_minimal() + 
+  scale_colour_brewer(palette="Set1", name="Age Group") + custom_plot
+saveRDS(beh, here::here('figs', 'bbg.RDS'))
+
 # make it a violin plot
 library(Hmisc)
 violin <- ggplot(indiv_means, aes(trial_type, avg_amount, color = agegrp)) + 
@@ -95,13 +109,13 @@ trial_type_by_time <- ggplot(d3, aes(tt_number, mean_amount, colour = trial_type
   scale_colour_brewer(palette="Dark2", name="Condition") +
   scale_x_continuous(breaks = c(3, 6, 9, 12, 15)) + 
   coord_cartesian(ylim=c(0, 9)) + scale_y_continuous(breaks = c(3, 6, 9)) + custom_plot + 
-  theme(strip.text.x = element_text(size=lg))
+  theme(strip.text.x = element_text(size=lg), legend.position="bottom") 
 trial_type_by_time
 #ggsave(here::here('figs', 'grp_means_over_time.png'))
 
 # graph raw data
 # need to add something for overplotting
-ggplot(dt, aes(tt_number, amount_shared, colour = trial_type, fill = trial_type)) + 
+behxtime <- ggplot(dt, aes(tt_number, amount_shared, colour = trial_type, fill = trial_type)) + 
   geom_smooth(method=lm) + facet_grid(. ~ agegrp) +
   xlab('Trial') + ylab('Amount $ Shared') + geom_jitter(size=1, alpha=0.2, width=0.3) + 
   scale_fill_brewer(palette="Dark2", name="Condition") +
@@ -109,9 +123,10 @@ ggplot(dt, aes(tt_number, amount_shared, colour = trial_type, fill = trial_type)
   scale_x_continuous(breaks = c(3, 6, 9, 12, 15)) + 
   coord_cartesian(ylim=c(-1, 10)) + scale_y_continuous(breaks = c(0,3, 6, 9)) + 
   theme_minimal() + custom_plot + theme(strip.text.x = element_text(size=lg)) + 
-  theme(legend.position = 'top')
+  theme(legend.position = 'bottom')
 #ggsave(here::here('figs', 'all_data_over_time_no_legend.png'))
-ggsave(here::here('figs', 'baseline_all_beh_over_time.png'))
+#ggsave(here::here('figs', 'baseline_all_beh_over_time.png'))
+saveRDS(behxtime, here::here('figs', 'bot.RDS'))
 
 ## Graph 3 - Change over stage
 dt <- add_stage(dt)

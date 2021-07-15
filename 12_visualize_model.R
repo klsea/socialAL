@@ -27,8 +27,8 @@ d6 <- read.csv(here::here('output', 'model_comparison.csv'))[c(1,18)]
 # clear model names
 
 # graph constants ####
-lg = 26 # text size
-md = 20
+lg = 18 # text size
+md = 16
 sm = 14
 custom_plot = list(theme(
   plot.title = element_text(size = lg, hjust = 0.5),
@@ -127,6 +127,7 @@ decaygrpmeans <- d7 %>%
             se= sd(estimate)/sqrt(n()))
 alphas <- decaygrpmeans[which(decaygrpmeans$parameter != 'beta'),]
 beta <- decaygrpmeans[which(decaygrpmeans$parameter == 'beta'),]
+decay <- decaygrpmeans[which(decaygrpmeans$parameter == 'decay'),]
 
 # Graph 1 - bar graph group means
 ggplot(decaygrpmeans, aes(parameter, mean, fill = agegrp)) + 
@@ -135,7 +136,6 @@ ggplot(decaygrpmeans, aes(parameter, mean, fill = agegrp)) +
                 width = .2, position=position_dodge(.9)) + 
   scale_fill_brewer(palette="Set1", name="Age Group") + 
   scale_colour_brewer(palette="Set1", name="Age Group") + theme_minimal() + custom_plot
-
 ggsave(here('figs', 'decay_age_grp_means.png'))
 
 ggplot(alphas, aes(parameter, mean, fill = agegrp)) + 
@@ -153,6 +153,19 @@ ggplot(beta, aes(parameter, mean, fill = agegrp)) +
   scale_fill_brewer(palette="Set1", name="Age Group") + 
   scale_colour_brewer(palette="Set1", name="Age Group") + theme_minimal() +custom_plot
 ggsave(here('figs', 'decay_beta_age_grp_means.png'), width = 5.5)
+
+#pretty plot
+decay <- ggplot() + 
+  geom_point(data = d7[which(d7$parameter == 'decay'),], aes(x = agegrp, y = estimate, colour = agegrp), 
+             position = position_jitterdodge(jitter.height = .25), alpha = .5) + 
+  geom_bar(data = decay, aes(x = agegrp, y = mean, fill= agegrp, colour = agegrp), 
+           stat='identity', alpha = 0.3, position=position_dodge()) + 
+  geom_errorbar(data = decay, aes(x = agegrp, y = mean, fill= agegrp, ymin=mean - se, ymax = mean + se, colour = agegrp), 
+                width = .2, position=position_dodge(.9)) + 
+  scale_fill_brewer(palette="Set1", name="Age Group") + 
+  scale_colour_brewer(palette="Set1", name="Age Group") + theme_minimal() + custom_plot + 
+  xlab('Age Group') + ylab('Decay estimate') + coord_cartesian(ylim=c(-0.2,1))
+saveRDS(decay, here::here('figs', 'decay.RDS'))
 
 # double alpha with prior model ####
 d8 <- clean_single_alpha(d5)
