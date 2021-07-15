@@ -37,7 +37,7 @@ indiv_means <- dt %>%
 # calculate age group means 
 se <- function(sd,n) {sd/sqrt(n())}
 grpmeans <- indiv_means %>% 
-  dplyr::group_by(agegrp, trial_type) %>%
+  group_by(agegrp, trial_type) %>%
   summarise(mean_amount = mean(avg_amount), sd_amount = sd(avg_amount), 
             se_amount = sd(avg_amount)/sqrt(n()))
 
@@ -78,17 +78,6 @@ beh <- ggplot() +
   scale_fill_brewer(palette="Set1", name="Age Group") + theme_minimal() + 
   scale_colour_brewer(palette="Set1", name="Age Group") + custom_plot
 saveRDS(beh, here::here('figs', 'bbg.RDS'))
-
-# make it a violin plot
-library(Hmisc)
-violin <- ggplot(indiv_means, aes(trial_type, avg_amount, color = agegrp)) + 
-  geom_violin(trim= FALSE) + geom_boxplot(width = 0.1, position = position_dodge(.9)) + 
-  scale_color_brewer(palette="Set1", name="Age Group") + 
-  scale_fill_brewer(palette="Set1", name="Age Groupn") + 
-  xlab('Trial Type') + ylab('Average $ Shared') + 
-  scale_y_continuous(breaks = c(0,3, 6, 9)) + theme_minimal() + custom_plot
-violin
-#ggsave(here::here('figs', 'age_grp_means_violin.png'))
 
 ## Graph 2 - Change over time
 ## --------------------------
@@ -163,7 +152,7 @@ ggplot(dw, aes(agegrp, tudiff, color = agegrp)) + geom_violin(trim= FALSE) + geo
   xlab('Age Group') + ylab('Difference in Trust \n(Trustworthy - Untrustworthy)') + 
   geom_hline(aes(yintercept = 0)) + theme(legend.position = 'none') + custom_plot 
 #ggsave(here::here('figs', 'grp_means_tu_diff_score.png'))
-ggsave(here::here('figs', 'baseline_grp_means_tu_diff_score.png'))
+#ggsave(here::here('figs', 'baseline_grp_means_tu_diff_score.png'))
 
 ggplot(dw, aes(agegrp, tndiff, color = agegrp)) + geom_violin(trim= FALSE) + geom_point(alpha = .5) + 
   scale_color_brewer(palette="Set1") + theme_minimal() + 
