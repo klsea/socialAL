@@ -27,7 +27,7 @@ dt$agegrp <- factor(dt$agegrp, levels = c('Younger', 'Older'))
 #dt <- dt[which(dt$win == 'baseline'),]
 #dt <- dt[which(dt$win != 'baseline'),]
 
-## Graph 1 - Group means
+## Graph 1 - Group means ####
 ## ---------------------
 # calculate individual means 
 indiv_means <- dt %>% 
@@ -79,7 +79,7 @@ beh <- ggplot() +
   scale_colour_brewer(palette="Set1", name="Age Group") + custom_plot
 saveRDS(beh, here::here('figs', 'bbg.RDS'))
 
-## Graph 2 - Change over time
+## Graph 2 - Change over time ####
 ## --------------------------
 dt <- add_tt_number(dt)
 
@@ -117,7 +117,7 @@ behxtime <- ggplot(dt, aes(tt_number, amount_shared, colour = trial_type, fill =
 ggsave(here::here('figs', 'baseline_all_beh_over_time.png'))
 saveRDS(behxtime, here::here('figs', 'bot.RDS'))
 
-## Graph 3 - Change over stage
+## Graph 3 - Change over stage ####
 dt <- add_stage(dt)
 
 # calculate individual mean summary table by stage
@@ -141,7 +141,7 @@ ggplot(grp_means_stage, aes(stage, avg_amount, colour = trial_type)) +
   coord_cartesian(ylim=c(0, 9)) + scale_y_continuous(breaks = c(0, 3, 6, 9)) + custom_plot
 #ggsave(here::here('figs', 'grp_means_over_stage.png'))
 
-# Graph 4 - Difference scores (by Age Group)
+# Graph 4 - Difference scores (by Age Group) ####
 library(tidyr)
 dw <- pivot_wider(indiv_means, id_cols = c(id, agegrp), names_from = trial_type, values_from = avg_amount)
 dw$tudiff <- dw$Trustworthy - dw$Untrustworthy

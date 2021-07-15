@@ -52,7 +52,7 @@ AIC(m1, m2, m3)
 anova(m1, m2, m3, test="Chisq")
 
 # save model 3
-saveRDS(m3, file = here::here('output', 'model3.rds'))
+#saveRDS(m3, file = here::here('output', 'model3.rds'))
 
 # summary model 3 ####
 summary(m3)
@@ -117,3 +117,4 @@ confint(em_agetypetime.c)
 
 #Characterize using emtrends to compare slopes
 emtrends(m3, pairwise ~ agegrp*trial_type, var = "z_partner_trial_number") 
+
