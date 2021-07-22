@@ -87,7 +87,7 @@ ratings<- ggplot() +
   scale_fill_brewer(palette="Set1", name="Age Group") + theme_minimal() + 
   scale_colour_brewer(palette="Set1", name="Age Group") + custom_plot
 #ggsave(here::here('figs', 'post-experiment_ratings.png'))
-saveRDS(ratings, here::here('figs', 'per.RDS'))
+#saveRDS(ratings, here::here('figs', 'per.RDS'))
 
 # stats
 liking_aov = anova_test(data = d3, dv = Rating, wid = ID, between = AgeGroup, within = Partner)
