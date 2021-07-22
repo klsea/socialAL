@@ -18,7 +18,7 @@ rm(o4, y4)
 # overall means
 means <- as.data.frame(t(colMeans(dt[2:6])))
 d1 <- merge(dt$id, means)
-
+colnames(d1)[1]<- 'id'
 
 # save
 write.csv(d1, here::here('output', 'model_parameter_means.csv'), row.names = FALSE)
