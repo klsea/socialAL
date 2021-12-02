@@ -27,17 +27,17 @@ dt$agegrp <- factor(dt$agegrp, levels = c('Younger', 'Older'))
 #dt <- dt[which(dt$win == 'baseline'),]
 #dt <- dt[which(dt$win != 'baseline'),]
 
-## Graph 1 - Group means
+## Graph 1 - Group means ####
 ## ---------------------
 # calculate individual means 
 indiv_means <- dt %>% 
-  dplyr::group_by(id, agegrp, trial_type) %>%
-  summarize(avg_amount = mean(amount_shared, na.rm = TRUE))
+  group_by(id, agegrp, trial_type) %>%
+  summarise(avg_amount = mean(amount_shared, na.rm = TRUE))
 
 # calculate age group means 
 se <- function(sd,n) {sd/sqrt(n())}
 grpmeans <- indiv_means %>% 
-  dplyr::group_by(agegrp, trial_type) %>%
+  group_by(agegrp, trial_type) %>%
   summarise(mean_amount = mean(avg_amount), sd_amount = sd(avg_amount), 
             se_amount = sd(avg_amount)/sqrt(n()))
 
@@ -63,20 +63,23 @@ age_grp_means <- ggplot(grpmeans, aes(trial_type, mean_amount, colour = agegrp, 
   #ggtitle('Baseline Model') + theme(plot.title = element_text(hjust = 0.5))
 age_grp_means
 #ggsave(here::here('figs', 'age_grp_means.png'))
-#ggsave(here::here('figs', 'baseline_beh_age_grp_means.png'))
+ggsave(here::here('figs', 'baseline_beh_age_grp_means.png'))
 
-# make it a violin plot
-library(Hmisc)
-violin <- ggplot(indiv_means, aes(trial_type, avg_amount, color = agegrp)) + 
-  geom_violin(trim= FALSE) + geom_boxplot(width = 0.1, position = position_dodge(.9)) + 
-  scale_color_brewer(palette="Set1", name="Age Group") + 
-  scale_fill_brewer(palette="Set1", name="Age Groupn") + 
-  xlab('Trial Type') + ylab('Average $ Shared') + 
-  scale_y_continuous(breaks = c(0,3, 6, 9)) + theme_minimal() + custom_plot
-violin
-#ggsave(here::here('figs', 'age_grp_means_violin.png'))
+# pretty graph
+beh <- ggplot() + 
+  geom_point(data = indiv_means, aes(x = trial_type, y = avg_amount, colour = agegrp), 
+             position = position_jitterdodge(jitter.height = .25), alpha = .5) + 
+  geom_bar(data = grpmeans, aes(x = trial_type, y = mean_amount, colour = agegrp, fill = agegrp), 
+           position=position_dodge(), stat= 'identity', alpha = 0.3) + 
+  geom_errorbar(data = grpmeans, aes(x = trial_type, y = mean_amount, ymin = mean_amount-se_amount, ymax = mean_amount + se_amount, colour = agegrp), 
+                position = position_dodge(.9), width = .2) + 
+  xlab('Trial Type') + ylab('Average $ Shared') + coord_cartesian(ylim=c(0, 9)) + 
+  scale_y_continuous(breaks = c(0,3, 6, 9)) +
+  scale_fill_brewer(palette="Set1", name="Age Group") + theme_minimal() + 
+  scale_colour_brewer(palette="Set1", name="Age Group") + custom_plot
+saveRDS(beh, here::here('figs', 'bbg.RDS'))
 
-## Graph 2 - Change over time
+## Graph 2 - Change over time ####
 ## --------------------------
 dt <- add_tt_number(dt)
 
@@ -95,13 +98,13 @@ trial_type_by_time <- ggplot(d3, aes(tt_number, mean_amount, colour = trial_type
   scale_colour_brewer(palette="Dark2", name="Condition") +
   scale_x_continuous(breaks = c(3, 6, 9, 12, 15)) + 
   coord_cartesian(ylim=c(0, 9)) + scale_y_continuous(breaks = c(3, 6, 9)) + custom_plot + 
-  theme(strip.text.x = element_text(size=lg))
+  theme(strip.text.x = element_text(size=lg), legend.position="bottom") 
 trial_type_by_time
 #ggsave(here::here('figs', 'grp_means_over_time.png'))
 
 # graph raw data
 # need to add something for overplotting
-ggplot(dt, aes(tt_number, amount_shared, colour = trial_type, fill = trial_type)) + 
+behxtime <- ggplot(dt, aes(tt_number, amount_shared, colour = trial_type, fill = trial_type)) + 
   geom_smooth(method=lm) + facet_grid(. ~ agegrp) +
   xlab('Trial') + ylab('Amount $ Shared') + geom_jitter(size=1, alpha=0.2, width=0.3) + 
   scale_fill_brewer(palette="Dark2", name="Condition") +
@@ -109,11 +112,12 @@ ggplot(dt, aes(tt_number, amount_shared, colour = trial_type, fill = trial_type)
   scale_x_continuous(breaks = c(3, 6, 9, 12, 15)) + 
   coord_cartesian(ylim=c(-1, 10)) + scale_y_continuous(breaks = c(0,3, 6, 9)) + 
   theme_minimal() + custom_plot + theme(strip.text.x = element_text(size=lg)) + 
-  theme(legend.position = 'top')
+  theme(legend.position = 'bottom')
 #ggsave(here::here('figs', 'all_data_over_time_no_legend.png'))
 ggsave(here::here('figs', 'baseline_all_beh_over_time.png'))
+saveRDS(behxtime, here::here('figs', 'bot.RDS'))
 
-## Graph 3 - Change over stage
+## Graph 3 - Change over stage ####
 dt <- add_stage(dt)
 
 # calculate individual mean summary table by stage
@@ -137,7 +141,7 @@ ggplot(grp_means_stage, aes(stage, avg_amount, colour = trial_type)) +
   coord_cartesian(ylim=c(0, 9)) + scale_y_continuous(breaks = c(0, 3, 6, 9)) + custom_plot
 #ggsave(here::here('figs', 'grp_means_over_stage.png'))
 
-# Graph 4 - Difference scores (by Age Group)
+# Graph 4 - Difference scores (by Age Group) ####
 library(tidyr)
 dw <- pivot_wider(indiv_means, id_cols = c(id, agegrp), names_from = trial_type, values_from = avg_amount)
 dw$tudiff <- dw$Trustworthy - dw$Untrustworthy
@@ -148,7 +152,7 @@ ggplot(dw, aes(agegrp, tudiff, color = agegrp)) + geom_violin(trim= FALSE) + geo
   xlab('Age Group') + ylab('Difference in Trust \n(Trustworthy - Untrustworthy)') + 
   geom_hline(aes(yintercept = 0)) + theme(legend.position = 'none') + custom_plot 
 #ggsave(here::here('figs', 'grp_means_tu_diff_score.png'))
-ggsave(here::here('figs', 'baseline_grp_means_tu_diff_score.png'))
+#ggsave(here::here('figs', 'baseline_grp_means_tu_diff_score.png'))
 
 ggplot(dw, aes(agegrp, tndiff, color = agegrp)) + geom_violin(trim= FALSE) + geom_point(alpha = .5) + 
   scale_color_brewer(palette="Set1") + theme_minimal() + 

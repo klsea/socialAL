@@ -33,7 +33,7 @@ dt$amount_shared <- as.numeric(dt$amount_shared)
 dt$partner_trial_number <- as.numeric(dt$partner_trial_number)
 
 #effects coding (reduces multicollinearity in the model)
-contrasts(dt$agegrp)<-c(1,-1)
+contrasts(dt$agegrp)<-c(1,-1) #Younger = 1, Older = -1
 contrasts(dt$trial_type)[,1]<-c(-1/3,2/3,-1/3)
 contrasts(dt$trial_type)[,2]<-c(-1/3,-1/3,2/3)
 
@@ -48,14 +48,18 @@ m3 = lmer(amount_shared ~ agegrp * trial_type * z_partner_trial_number + (1 + tr
           data=dt, REML = TRUE, control=lmerControl(optimizer="bobyqa"))
 
 # model comparison ####
-AIC(m1, m2, m3)
-anova(m1, m2, m3, test="Chisq")
+AIC(m1, m3)
+anova(m1, m3, test="Chisq")
+
+AIC(m2, m3)
+anova(m2, m3, test="Chisq")
 
 # save model 3
-saveRDS(m3, file = here::here('output', 'model3.rds'))
+#saveRDS(m3, file = here::here('output', 'model3.rds'))
 
 # summary model 3 ####
 summary(m3)
+confint(m3, oldNames=FALSE)
 r.squaredGLMM(m3)
 
 #the first value, R2m, is the 'marginal' R2 value, i.e. the amount of variance explained by the fixed effects alone
@@ -77,7 +81,7 @@ sjPlot::tab_model(m3)
 mylist <- list(z_partner_trial_number = seq(-1.5,1.5,by = 3), agegrp=c("Younger","Older"), 
                trial_type=c("Untrustworthy","Neutral", "Trustworthy"))
 
-# characterize age effec
+# characterize age effect
 em_agegrp <- emmeans (m3, ~agegrp, at = mylist)
 em_agegrp
 em_agegrp.c <- contrast(em_agegrp, "pairwise")
@@ -107,6 +111,7 @@ confint(em_typetime.c)
 
 # alternative breakdown comparing time slopes by trial_type
 emtrends(m3, pairwise ~trial_type, var = "z_partner_trial_number")
+test(emtrends(m3, pairwise ~ trial_type, var = "z_partner_trial_number"))
 
 # characterize three way interaction
 em_agetypetime <- emmeans(m3, ~agegrp*trial_type*z_partner_trial_number, at = mylist)
@@ -116,4 +121,6 @@ em_agetypetime.c
 confint(em_agetypetime.c)
 
 #Characterize using emtrends to compare slopes
-emtrends(m3, pairwise ~ agegrp*trial_type, var = "z_partner_trial_number") 
+emtrends(m3, pairwise ~ agegrp*trial_type, var = "z_partner_trial_number")
+test(emtrends(m3, pairwise ~ agegrp*trial_type, var = "z_partner_trial_number"))
+

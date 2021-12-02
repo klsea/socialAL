@@ -1,4 +1,4 @@
-# Group-level analyese
+# Group-level analysis
 # 9.16.19 KLS
 
 # load required packages
