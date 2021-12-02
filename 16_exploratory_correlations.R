@@ -79,6 +79,5 @@ d2 %>% group_by(agegrp) %>% summarize(
   pvalue <- cor.test(avg_amt_rating_diff, decay)$p.value
 )
 
-
   
             
