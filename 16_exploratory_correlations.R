@@ -51,6 +51,7 @@ modeling$id <- NULL
 dt <- merge(behavior_indiv_means, liking, by = c('ID', 'trial_type'))
 
 dt %>% group_by(agegrp) %>% summarize(
+    df <- cor.test(avg_amount, rating)$parameter, 
     correlation <- cor.test(avg_amount, rating)$estimate,
     pvalue <- cor.test(avg_amount, rating)$p.value
 )
@@ -59,6 +60,7 @@ dt %>% group_by(agegrp) %>% summarize(
 d1 <- merge(demo, modeling, by = 'ID')
 
 d1 %>% group_by(AgeGroup_YA1OA2) %>% summarize(
+  df <- cor.test(Digit.Span.Backward, decay)$parameter,
   correlation <- cor.test(Digit.Span.Backward, decay)$estimate,
   pvalue <- cor.test(Digit.Span.Backward, decay)$p.value
 )   
@@ -75,6 +77,7 @@ d2 <- d2 %>% group_by(ID, agegrp, decay) %>% summarize(
 d2$avg_amt_rating_diff <- d2$`mean(amt_rating_diff)`
 
 d2 %>% group_by(agegrp) %>% summarize(
+  df <- cor.test(avg_amt_rating_diff, decay)$parameter,
   correlation <- cor.test(avg_amt_rating_diff, decay)$estimate,
   pvalue <- cor.test(avg_amt_rating_diff, decay)$p.value
 )
