@@ -85,9 +85,9 @@ ratings<- ggplot() +
                 position = position_dodge(.9), width = .2) + 
   coord_cartesian(ylim=c(1, 7)) + scale_y_continuous(breaks = c(1, 2, 3, 4, 5, 6, 7)) + 
   scale_fill_brewer(palette="Set1", name="Age Group") + theme_minimal() + 
-  scale_colour_brewer(palette="Set1", name="Age Group") + custom_plot
+  scale_colour_brewer(palette="Set1", name="Age Group") + xlab('Partner Type') + custom_plot
 #ggsave(here::here('figs', 'post-experiment_ratings.png'))
-#saveRDS(ratings, here::here('figs', 'per.RDS'))
+saveRDS(ratings, here::here('figs', 'per.RDS'))
 
 # stats
 liking_aov = anova_test(data = d3, dv = Rating, wid = ID, between = AgeGroup, within = Partner)

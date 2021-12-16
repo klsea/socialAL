@@ -50,7 +50,7 @@ d7$parameter <- factor(d7$parameter)
 
 decaygrpmeans <- d7 %>% 
   group_by(agegrp, parameter) %>%
-  summarise(mean = mean(estimate), sd = sd(estimate), 
+  dplyr::summarise(mean = mean(estimate), sd = sd(estimate), 
             se= sd(estimate)/sqrt(n()))
 alphas <- decaygrpmeans[which(decaygrpmeans$parameter != 'beta'),]
 beta <- decaygrpmeans[which(decaygrpmeans$parameter == 'beta'),]
@@ -82,7 +82,7 @@ dplot <- ggplot() +
                 width = .2, position=position_dodge(.9)) + 
   scale_fill_brewer(palette="Set1", name="Age Group") + 
   scale_colour_brewer(palette="Set1", name="Age Group") + theme_minimal() + custom_plot + 
-  xlab('Age Group') + ylab('Decay estimate') + coord_cartesian(ylim=c(-0.2,1))
+  xlab('Age Group') + ylab('Forgetting estimate') + coord_cartesian(ylim=c(-0.2,1))
 saveRDS(dplot, here::here('figs', 'decay.RDS'))
 
 # # double alpha model ####
