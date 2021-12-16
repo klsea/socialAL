@@ -1,5 +1,5 @@
 # Eploratory correlations
-# 11.30.21
+# 11.30.21 updated 12.16.21
 
 # load required packages ####
 library(here)
@@ -14,6 +14,7 @@ source(here::here('scr', 'decode_img.R'))
 demo <- read.csv(here::here('data', 'SocialAL_demo_question_data.csv'))
 #liking <- read.csv(here::here('data', 'SocialAL_Liking_Ratings.csv'))
 behavior <- read.csv(here::here('data', 'socialAL_clean_data.csv'))
+brain <- read.csv(here::here('data', 'SocialAL_cluster_activity.csv'))
 oa <- read.csv(here::here('output', 'two_alpha_with_decay_model_params_older.csv'))
 ya <- read.csv(here::here('output', 'two_alpha_with_decay_model_params_younger.csv'))
 modeling <- rbind(oa, ya)
@@ -82,5 +83,12 @@ d2 %>% group_by(agegrp) %>% summarize(
   pvalue <- cor.test(avg_amt_rating_diff, decay)$p.value
 )
 
+# IFG and digit span
+brain$ID <- paste0('sub-', brain$ID)
+d3 <- merge(demo, brain, by = 'ID')
   
-            
+d3 %>% group_by(AgeGroup) %>% summarize(
+  df <- cor.test(Digit.Span.Backward, decision_ifg)$parameter,
+  correlation <- cor.test(Digit.Span.Backward, decision_ifg)$estimate,
+  pvalue <- cor.test(Digit.Span.Backward, decision_ifg)$p.value
+)            
