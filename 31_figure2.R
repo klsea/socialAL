@@ -39,9 +39,9 @@ custom_plot = list(theme(
   legend.position = 'none'))
 
 # create plot
-fig2 <- plot_grid(p2, p1 + custom_plot + scale_x_discrete(labels =addline_format(c('Younger Adults', 'Older Adults'))),
-                  p4,  p3 + custom_plot + scale_x_discrete(labels =addline_format(c('Younger Adults', 'Older Adults'))), 
-                  p6, p5 + custom_plot + scale_x_discrete(labels =addline_format(c('Younger Adults', 'Older Adults'))), 
+fig2 <- plot_grid(p2, p1 + custom_plot + scale_x_discrete(labels =addline_format(c('Older Adults', 'Younger Adults'))),
+                  p4,  p3 + custom_plot + scale_x_discrete(labels =addline_format(c('Older Adults', 'Younger Adults'))), 
+                  p6, p5 + custom_plot + scale_x_discrete(labels =addline_format(c('Older Adults', 'Younger Adults'))), 
                   ncol = 2, labels = c('a', '', 'b','', 'c', ''), scale = .9, rel_widths = c(2, 1, 1, 2, 2, 1))
 fig2
 # save
