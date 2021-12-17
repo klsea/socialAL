@@ -12,6 +12,10 @@ library(tidyverse)
 # load data
 brain <- read.csv(here::here('data', 'SocialAL_cluster_activity.csv'))
 
+# rename age groups
+brain$AgeGroup[which(brain$AgeGroup == 'YA')] <- 'Younger Adults'
+brain$AgeGroup[which(brain$AgeGroup == 'OA')] <- 'Older Adults'
+
 # graph constants ####
 lg = 18 # text size
 sm = 14
@@ -39,7 +43,7 @@ ifg <- ggplot() +
            stat='identity', alpha = 0.3, position=position_dodge()) +
   geom_errorbar(data = ifgmeans, aes(x = AgeGroup, y = mean, ymin=mean - se, ymax = mean + se, colour = AgeGroup), 
                 width = .2, position=position_dodge(.9)) + 
-  xlab('Age Group') + ylab('Reputation Signal in IFG') +
+  xlab('Age Group') + ylab('Reputation Signal') +
   scale_fill_brewer(palette="Set1", name="Age Group") + theme_minimal() + 
   scale_colour_brewer(palette="Set1", name="Age Group") + custom_plot
 saveRDS(ifg, here::here('figs', 'ifg.RDS'))
@@ -53,7 +57,7 @@ tpj <- ggplot() +
            stat='identity', alpha = 0.3, position=position_dodge()) +
   geom_errorbar(data = tpjmeans, aes(x = AgeGroup, y = mean, ymin=mean - se, ymax = mean + se, colour = AgeGroup), 
                 width = .2, position=position_dodge(.9)) + 
-  xlab('Age Group') + ylab('RPE Signal in Angular Gyrus') +
+  xlab('Age Group') + ylab('RPE Signal') +
   scale_fill_brewer(palette="Set1", name="Age Group") + theme_minimal() + 
   scale_colour_brewer(palette="Set1", name="Age Group") + custom_plot
 saveRDS(tpj, here::here('figs', 'tpj.RDS'))
@@ -67,7 +71,7 @@ vis <- ggplot() +
            stat='identity', alpha = 0.3, position=position_dodge()) +
   geom_errorbar(data = vismeans, aes(x = AgeGroup, y = mean, ymin=mean - se, ymax = mean + se, colour = AgeGroup), 
                 width = .2, position=position_dodge(.9)) + 
-  xlab('Age Group') + ylab('RPE Signal in Visual Cortex') +
+  xlab('Age Group') + ylab('RPE Signal') +
   scale_fill_brewer(palette="Set1", name="Age Group") + theme_minimal() + 
   scale_colour_brewer(palette="Set1", name="Age Group") + custom_plot
 saveRDS(vis, here::here('figs', 'vis.RDS'))
