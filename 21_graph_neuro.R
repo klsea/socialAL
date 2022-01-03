@@ -23,7 +23,7 @@ custom_plot = list(theme(
   plot.title = element_text(size = 24),
   axis.title.x = element_text(size = lg), axis.text.x = element_text(size = sm),
   axis.title.y = element_text(size = lg), axis.text.y = element_text(size = sm), 
-  legend.title = element_text(size = lg), legend.text = element_text(size = sm)
+  legend.title = element_text(size = lg), legend.text = element_text(size = sm))
 )
 
 # create summary tables by age group ####
@@ -75,3 +75,4 @@ vis <- ggplot() +
   scale_fill_brewer(palette="Set1", name="Age Group") + theme_minimal() + 
   scale_colour_brewer(palette="Set1", name="Age Group") + custom_plot
 saveRDS(vis, here::here('figs', 'vis.RDS'))
+
