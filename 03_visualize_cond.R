@@ -21,12 +21,6 @@ rm(d1)
 dt$trial_type <- factor(dt$trial_type, levels = c('Untrustworthy', 'Neutral', 'Trustworthy'))
 dt$agegrp <- factor(dt$agegrp, levels = c('Younger', 'Older'))
 
-# use the following to isolate subsets of data
-#dt <- dt[which(dt$win == 'double'),]
-#dt <- dt[which(dt$win == 'single'),]
-#dt <- dt[which(dt$win == 'baseline'),]
-#dt <- dt[which(dt$win != 'baseline'),]
-
 ## Graph 1 - Group means ####
 ## ---------------------
 # calculate individual means 
@@ -100,7 +94,7 @@ trial_type_by_time <- ggplot(d3, aes(tt_number, mean_amount, colour = trial_type
   coord_cartesian(ylim=c(0, 9)) + scale_y_continuous(breaks = c(3, 6, 9)) + custom_plot + 
   theme(strip.text.x = element_text(size=lg), legend.position="bottom") 
 trial_type_by_time
-#ggsave(here::here('figs', 'grp_means_over_time.png'))
+ggsave(here::here('figs', 'grp_means_over_time.png'))
 
 # graph raw data
 # need to add something for overplotting

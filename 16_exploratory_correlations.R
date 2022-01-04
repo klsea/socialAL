@@ -4,6 +4,7 @@
 # load required packages ####
 library(here)
 library(tidyverse)
+library(cocor)
 
 # load source functions
 source(here::here('scr', 'decode_img.R'))
@@ -51,11 +52,22 @@ modeling$id <- NULL
 # Behavior and Liking Ratings
 dt <- merge(behavior_indiv_means, liking, by = c('ID', 'trial_type'))
 
-dt %>% group_by(agegrp) %>% summarize(
-    df <- cor.test(avg_amount, rating)$parameter, 
-    correlation <- cor.test(avg_amount, rating)$estimate,
-    pvalue <- cor.test(avg_amount, rating)$p.value
+c1 <- dt %>% group_by(agegrp) %>% summarize(
+    df = cor.test(avg_amount, rating)$parameter, 
+    correlation = cor.test(avg_amount, rating)$estimate,
+    pvalue = cor.test(avg_amount, rating)$p.value
 )
+c1
+
+# Fishers r to z
+younger <- dt %>% filter(agegrp == 'Younger')
+older <- dt %>% filter(agegrp == 'Older')
+bl_dat <- list(younger = as.data.frame(younger), older = as.data.frame(older))
+cocor(~avg_amount + rating | avg_amount + rating, data = bl_dat)
+
+# graph
+ggplot(dt, aes(avg_amount, rating, colour = agegrp)) + 
+  geom_jitter() + geom_smooth(method='lm') + theme_minimal() + scale_colour_viridis_d(option = "E")
 
 #Digit Span and Decay Parameter
 d1 <- merge(demo, modeling, by = 'ID')

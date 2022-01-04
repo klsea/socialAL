@@ -30,20 +30,20 @@ custom_plot = list(theme(
 
 # cowplot v3
 legend <- get_legend(p1 + theme(legend.position = 'top') + custom_plot)
+legend2 <- get_legend(p3 + theme(legend.position = 'bottom') + custom_plot)
 prow1 <- ggdraw() + 
-  draw_plot(p1 + theme(legend.position = 'none')+ custom_plot, x = 0, y = 0, width = .37, height = 1) + 
-  draw_plot(p4 + theme(legend.position = 'none')+ custom_plot, x = 0.375, y = 0, width = .25, height = 1) +
-  draw_plot(p2 + theme(legend.position = 'none')+ custom_plot, x = 0.625, y = 0, width = .37, height = 1) +
+  draw_plot(p1 + theme(legend.position = 'none') + custom_plot, x = 0, y = 0, width = .37, height = 1) + 
+  draw_plot(p4 + theme(legend.position = 'none') + custom_plot, x = 0.375, y = 0, width = .25, height = 1) +
+  draw_plot(p2 + theme(legend.position = 'none') + custom_plot, x = 0.625, y = 0, width = .37, height = 1) +
   draw_plot_label(label = c("A", "C", "D"), size = 15, x = c(0, 0.375, 0.625), y = c(1, 1, 1))
 prow1
 prow2 <- ggdraw() + 
-  draw_plot(p3 + custom_plot + theme(legend.position = 'top', strip.text.x = element_text(size=lg)), x = 0.05, y = 0, width = .9, height = 1) + 
+  draw_plot(p3 + custom_plot + theme(legend.position = 'bottom', strip.text.x = element_text(size=lg)), x = 0.05, y = 0, width = .9, height = 1) + 
   draw_plot_label(label = c("B"), size = 15, x = 0, y = 1)
 prow2
 
 #fig1 <- plot_grid(legend, prow1, p3 + theme(legend.position = 'top') + custom_plot, ncol = 1, rel_heights = c(.2, 1, 1.5), labels = c('', '', 'D'))
-fig1 <- plot_grid(legend, prow1, prow2 , ncol = 1, rel_heights = c(.2, 1, 1.5))
-
+fig1 <- plot_grid(prow1, legend, prow2, ncol = 1, rel_heights = c(1, .2, 1.5))
 fig1
 
 # save
