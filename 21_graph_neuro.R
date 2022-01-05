@@ -57,7 +57,7 @@ tpj <- ggplot() +
            stat='identity', alpha = 0.3, position=position_dodge()) +
   geom_errorbar(data = tpjmeans, aes(x = AgeGroup, y = mean, ymin=mean - se, ymax = mean + se, colour = AgeGroup), 
                 width = .2, position=position_dodge(.9)) + 
-  xlab('Age Group') + ylab('RPE Signal') +
+  xlab('Age Group') + ylab('PE Signal') +
   scale_fill_brewer(palette="Set1", name="Age Group") + theme_minimal() + 
   scale_colour_brewer(palette="Set1", name="Age Group") + custom_plot
 saveRDS(tpj, here::here('figs', 'tpj.RDS'))
@@ -71,7 +71,7 @@ vis <- ggplot() +
            stat='identity', alpha = 0.3, position=position_dodge()) +
   geom_errorbar(data = vismeans, aes(x = AgeGroup, y = mean, ymin=mean - se, ymax = mean + se, colour = AgeGroup), 
                 width = .2, position=position_dodge(.9)) + 
-  xlab('Age Group') + ylab('RPE Signal') +
+  xlab('Age Group') + ylab('PE Signal') +
   scale_fill_brewer(palette="Set1", name="Age Group") + theme_minimal() + 
   scale_colour_brewer(palette="Set1", name="Age Group") + custom_plot
 saveRDS(vis, here::here('figs', 'vis.RDS'))
