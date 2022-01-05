@@ -13,6 +13,7 @@ path_to_data <- "~/Box/SocialAL/task/data/"
 
 # read data in
 files <- list.files(path_to_data, pattern = ".csv")
+files <- files[-1]
 #files <- files[- (grep("button", files))]
 
 for (f in files) {

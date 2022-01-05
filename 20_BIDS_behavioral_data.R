@@ -11,10 +11,12 @@ source("./scr/isolate_run.R")
 source("./scr/convert_to_bids.R")
 
 # set hard-coded variables
-path_to_data <- "./task/data/"
+#path_to_data <- "./task/data/"
+path_to_data <- "~/Box/SocialAL/task/data/"
 
 # read data in
 files <- list.files(path_to_data, pattern = ".csv")
+files <- files[-1]
 #files <- files[- (grep("button", files))]
 
 for (f in files[1:2]) {
