@@ -56,8 +56,8 @@ dd$Description[which(dd$`Variable Name` == 'trial_earnings')] <- "Amount of mone
 dd$Description[which(dd$`Variable Name` == 'id')] <- 'Participant code; beings with sub-1000 and assigned sequentially'
 dd$Description[which(dd$`Variable Name` == 'grp')] <- 'Age group of participant in numbers'
 dd$Description[which(dd$`Variable Name` == 'amount_shared')] <- 'Amount of money shared by the participant (out of $9)'
-dd$Description[which(dd$`Variable Name` == 'agegrp')] <- 'Age group of participant in numbers'
+dd$Description[which(dd$`Variable Name` == 'agegrp')] <- 'Age group of participant in words'
 dd$Description[which(dd$`Variable Name` == 'respond')] <- 'If the participant responded or not'
 
 # save 
-write.csv(dd, here::here('data', 'socialAL_clean_data_dictionary.csv'))
+#write.csv(dd, here::here('data', 'socialAL_clean_data_dictionary.csv'))
