@@ -36,7 +36,7 @@ custom_plot = list(theme(
   axis.title.x = element_text(size = lg), axis.text.x = element_text(size = sm),
   axis.title.y = element_text(size = lg), axis.text.y = element_text(size = sm), 
   #legend.title = element_text(size = lg), legend.text = element_text(size = sm))
-  legend.position = 'none'))
+  ))
 
 # create plot
 fig2 <- plot_grid(p2, p1 + custom_plot + scale_x_discrete(labels =addline_format(c('Older Adults', 'Younger Adults'))),
