@@ -1,4 +1,4 @@
-# Eploratory correlations
+# Exploratory correlations
 # 11.30.21 updated 12.16.21
 
 # load required packages ####
