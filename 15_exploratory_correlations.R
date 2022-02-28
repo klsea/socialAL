@@ -104,3 +104,45 @@ d3 %>% group_by(AgeGroup) %>% summarize(
   correlation <- cor.test(Digit.Span.Backward, decision_ifg)$estimate,
   pvalue <- cor.test(Digit.Span.Backward, decision_ifg)$p.value
 )            
+
+# learning and forgetting parameters
+modeling %>% summarize(
+  df <- cor.test(alpha_gain, decay)$parameter, 
+  correlation <- cor.test(alpha_gain, decay)$estimate, 
+  pvalue <- cor.test(alpha_gain, decay)$p.value
+)
+
+modeling %>% summarize(
+  df <- cor.test(alpha_loss, decay)$parameter, 
+  correlation <- cor.test(alpha_loss, decay)$estimate, 
+  pvalue <- cor.test(alpha_loss, decay)$p.value
+)
+
+d1 %>% group_by(AgeGroup_YA1OA2) %>% summarize(
+  df <- cor.test(alpha_gain, decay)$parameter,
+  correlation <- cor.test(alpha_gain, decay)$estimate,
+  pvalue <- cor.test(alpha_gain, decay)$p.value
+)   
+
+d1 %>% group_by(AgeGroup_YA1OA2) %>% summarize(
+  df <- cor.test(alpha_loss, decay)$parameter,
+  correlation <- cor.test(alpha_loss, decay)$estimate,
+  pvalue <- cor.test(alpha_loss, decay)$p.value
+)  
+
+# graph
+ggplot(d1, aes(alpha_gain, decay, colour = AgeGroup_YA1OA2, fill = AgeGroup_YA1OA2)) + 
+  geom_jitter() + geom_smooth(method='lm') + theme_minimal() + 
+  scale_colour_viridis_d(option = "E") + scale_fill_viridis_d(option = "E")
+
+ggplot(d1, aes(alpha_loss, decay, colour = AgeGroup_YA1OA2, fill = AgeGroup_YA1OA2)) + 
+  geom_jitter() + geom_smooth(method='lm') + theme_minimal() + 
+  scale_colour_viridis_d(option = "E") + scale_fill_viridis_d(option = "E")
+
+# Fishers r to z
+younger <- d1 %>% filter(AgeGroup_YA1OA2 == 1)
+older <- d1 %>% filter(AgeGroup_YA1OA2 == 2)
+mo_dat <- list(younger = as.data.frame(younger), older = as.data.frame(older))
+cocor(~alpha_gain + decay | alpha_gain + decay, data = mo_dat)
+cocor(~alpha_loss + decay | alpha_loss + decay, data = mo_dat)
+

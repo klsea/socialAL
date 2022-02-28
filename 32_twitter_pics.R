@@ -35,15 +35,14 @@ custom_plot = list(theme(
 
 # twitter fig 2 ####
 p1
-
 # save
-ggsave(here::here('figs', 'twitterfig1.pdf'), p1, width = 7, height = 4)
+ggsave(here::here('figs', 'twitterfig1.png'), p1, width = 7, height = 4, bg = 'white')
 
 # twitter fig 2 ####
 p2
 
 # save
-ggsave(here::here('figs', 'twitterfig2.pdf'), p2, width = 7, height = 7)
+ggsave(here::here('figs', 'twitterfig2.png'), p2, width = 7, height = 7, bg = 'white')
 
 # twitter fig 2 ####
 
@@ -52,4 +51,4 @@ fig <- plot_grid(p4,  p3 + custom_plot + scale_x_discrete(labels =addline_format
 fig
 
 # save
-ggsave(here::here('figs', 'twitterfig3.pdf'), fig, width = 7, height = 4)
+ggsave(here::here('figs', 'twitterfig3.png'), fig, width = 7, height = 4, bg = 'white')
