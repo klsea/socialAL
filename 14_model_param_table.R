@@ -1,5 +1,5 @@
 # table of model parameters
-# 3.29.21 KLS
+# 3.29.21 KLS updated 3.4.22
 
 # init ####
 # load required packages
@@ -22,6 +22,7 @@ o4 <- read.csv(here::here('output', 'two_alpha_with_decay_model_params_older.csv
 y4 <- read.csv(here::here('output', 'two_alpha_with_decay_model_params_younger.csv'))
 o5 <- read.csv(here::here('output', 'prior_model_params_older.csv'))
 y5 <- read.csv(here::here('output', 'prior_model_params_younger.csv'))
+d6 <- read.csv(here::here('output', 'single_alpha_with_decay_model_params.csv'))
 
 d4 <- rbind(o4, y4); rm(o4, y4)
 d5 <- rbind(o5, y5); rm(o5, y5)
@@ -49,8 +50,8 @@ t1 <- d1 %>% group_by(agegrp) %>%
 
 # general learning model ####
 d2 <- merge(d2, resp_summary, by = 'id')
-d2$AIC <- calc_AIC(d2$n_resp, 3, d2$X.LLH)
-d2$BIC <- calc_BIC(d2$n_resp, 3, d2$X.LLH)
+d2$AIC <- calc_AIC(d2$n_resp, 2, d2$X.LLH)
+d2$BIC <- calc_BIC(d2$n_resp, 2, d2$X.LLH)
 
 t2 <- d2 %>% group_by(agegrp) %>%
   summarise(alpha_mean = mean(alpha), 
@@ -65,8 +66,8 @@ t2 <- d2 %>% group_by(agegrp) %>%
 
 # baseline model ####
 d3 <- merge(d3, resp_summary, by = 'id')
-d3$AIC <- calc_AIC(d3$n_resp,3,d3$X.LLH) # calc AIC
-d3$BIC <- calc_BIC(d3$n_resp,3,d3$X.LLH) # calc BIC
+d3$AIC <- calc_AIC(d3$n_resp,1,d3$X.LLH) # calc AIC
+d3$BIC <- calc_BIC(d3$n_resp,1,d3$X.LLH) # calc BIC
 
 t3 <- d3 %>% group_by(agegrp) %>%
   summarise(beta_mean = mean(beta), 
@@ -79,8 +80,8 @@ t3 <- d3 %>% group_by(agegrp) %>%
 
 # decay model ####
 d4 <- merge(d4, resp_summary, by = 'id')
-d4$AIC <- calc_AIC(d4$n_resp,3,d4$X.LLH) # calc AIC
-d4$BIC <- calc_BIC(d4$n_resp,3,d4$X.LLH) # calc BIC
+d4$AIC <- calc_AIC(d4$n_resp,4,d4$X.LLH) # calc AIC
+d4$BIC <- calc_BIC(d4$n_resp,4,d4$X.LLH) # calc BIC
 
 t4 <- d4 %>% group_by(agegrp) %>%
   summarise(a_gain_mean = mean(alpha_gain), 
@@ -99,8 +100,8 @@ t4 <- d4 %>% group_by(agegrp) %>%
 
 # prior model ####
 d5 <- merge(d5, resp_summary, by = 'id')
-d5$AIC <- calc_AIC(d5$n_resp,3,d5$X.LLH) # calc AIC
-d5$BIC <- calc_BIC(d5$n_resp,3,d5$X.LLH) # calc BIC
+d5$AIC <- calc_AIC(d5$n_resp,6,d5$X.LLH) # calc AIC
+d5$BIC <- calc_BIC(d5$n_resp,6,d5$X.LLH) # calc BIC
 
 t5 <- d5 %>% group_by(agegrp) %>%
   summarise(a_gain_mean = mean(alpha_gain), 
@@ -115,6 +116,23 @@ t5 <- d5 %>% group_by(agegrp) %>%
             ineut_sd = sd(iProb_neut), 
             iuntrust_mean = mean(iProb_untrust),
             iuntrust_sd = sd(iProb_untrust),
+            AIC_mean = mean(AIC), 
+            AIC_sd = sd(AIC), 
+            BIC_mean = mean(BIC), 
+            BIC_sd = sd(BIC))
+
+# general learning with decay####
+d6 <- merge(d6, resp_summary, by = 'id') #adds response summary and gets rid of cut participants
+d6$AIC <- calc_AIC(d6$n_resp,3,d6$X.LLH) # calc AIC
+d6$BIC <- calc_BIC(d6$n_resp,3,d6$X.LLH) # calc BIC
+
+t6 <- d6 %>% group_by(agegrp) %>%
+  summarise(alpha_mean = mean(alpha), 
+            alpha_sd = sd(alpha), 
+            beta_mean = mean(beta), 
+            beta_sd = sd(beta), 
+            decay_mean = mean(decay), 
+            decay_sd = sd(decay),
             AIC_mean = mean(AIC), 
             AIC_sd = sd(AIC), 
             BIC_mean = mean(BIC), 
@@ -209,6 +227,7 @@ y0[5,4] <- paste0(round(t5$iuntrust_mean[1],2), ' (', round(t5$iuntrust_sd[1],2)
 y0[5,7] <- paste0(round(t5$a_gain_mean[1],2), ' (', round(t5$a_gain_sd[1],2), ')')
 y0[5,8] <- paste0(round(t5$a_loss_mean[1],2), ' (', round(t5$a_loss_sd[1],2), ')')
 y0[5,9] <- paste0(round(t5$beta_mean[1],2), ' (', round(t5$beta_sd[1],2), ')')
+y0[5,10] <- paste0(round(t5$AIC_mean[1],2), ' (', round(t5$AIC_sd[1],2), ')')
 y0[5,11] <- paste0(round(t5$BIC_mean[1],2), ' (', round(t5$BIC_sd[1],2), ')')
 
 o0[5,1] <- 'initial beliefs gain-loss'
@@ -220,6 +239,22 @@ o0[5,8] <- paste0(round(t5$a_loss_mean[2],2), ' (', round(t5$a_loss_sd[2],2), ')
 o0[5,9] <- paste0(round(t5$beta_mean[2],2), ' (', round(t5$beta_sd[2],2), ')')
 o0[5,10] <- paste0(round(t5$AIC_mean[2],2), ' (', round(t5$AIC_sd[2],2), ')')
 o0[5,11] <- paste0(round(t5$BIC_mean[2],2), ' (', round(t5$BIC_sd[2],2), ')')
+
+# add decay general learning ####
+y0[6,1] <- 'decay general'
+y0[6,5] <- paste0(round(t6$decay_mean[1],2), ' (', round(t6$decay_sd[1],2), ')')
+y0[6,6] <- paste0(round(t6$alpha_mean[1],2), ' (', round(t6$alpha_sd[1],2), ')')
+y0[6,9] <- paste0(round(t6$beta_mean[1],2), ' (', round(t6$beta_sd[1],2), ')')
+y0[6,10] <- paste0(round(t6$AIC_mean[1],2), ' (', round(t6$AIC_sd[1],2), ')')
+y0[6,11] <- paste0(round(t6$BIC_mean[1],2), ' (', round(t6$BIC_sd[1],2), ')')
+
+o0[6,1] <- 'decay general'
+o0[6,5] <- paste0(round(t6$decay_mean[2],2), ' (', round(t6$decay_sd[2],2), ')')
+o0[6,6] <- paste0(round(t6$alpha_mean[2],2), ' (', round(t6$alpha_sd[2],2), ')')
+o0[6,9] <- paste0(round(t6$beta_mean[2],2), ' (', round(t6$beta_sd[2],2), ')')
+o0[6,10] <- paste0(round(t6$AIC_mean[2],2), ' (', round(t6$AIC_sd[2],2), ')')
+o0[6,11] <- paste0(round(t6$BIC_mean[2],2), ' (', round(t6$BIC_sd[2],2), ')')
+
 
 # full table ####
 table <- cbind(y0,o0[2:11])

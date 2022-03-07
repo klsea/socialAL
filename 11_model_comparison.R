@@ -28,7 +28,7 @@ d5 <- rbind(o5, y5); rm(o5, y5)
 d1 <- clean_param(d1)
 
 #merge data frames with each other - update once all subjects run with initial model
-d6 <- merge(d1[c(1:2,5)], d2[c(1,4)], by = 'id')
+d6 <- merge(d1[c(1:2,6)], d2[c(1,4)], by = 'id')
 colnames(d6) <- c('id', 'agegrp', 'llh_double', 'llh_single')
 
 d7 <- merge(d6, d3[c(1,3)], by = 'id')
@@ -44,19 +44,19 @@ rm(d1,d2,d3,d4,d5,d6,d7,d8)
 
 # remove excluded participants
 cut <- read.csv(here::here('output', 'socialAL_cut.csv'), header = F)$V1
-cut <- c(as.character(cut), 'sub-2040') #sub-2040 does not exist, sub-2039 was accidently copied 2x
+cut <- c(as.character(cut), 'sub-2040') #sub-2040 does not exist, sub-2039 was accidentally copied 2x
 for (c in cut) {
   dt <- dt[which(dt$id != c), ]
 }
 
-# caluclate AIC for each model
+# calculate AIC for each model
 dt$AIC_double <- calc_AIC(45, 3, dt$llh_double)
 dt$AIC_single <- calc_AIC(45, 2, dt$llh_single)
 dt$AIC_baseline <- calc_AIC(45, 1, dt$llh_baseline)
 dt$AIC_decay <- calc_AIC(45, 4, dt$llh_decay)
 dt$AIC_prior <- calc_AIC(45, 6, dt$llh_prior)
 
-# caluclate BIC for each model
+# calculate BIC for each model
 dt$BIC_double <- calc_BIC(45, 3, dt$llh_double)
 dt$BIC_single <- calc_BIC(45, 2, dt$llh_single)
 dt$BIC_baseline <- calc_BIC(45, 1, dt$llh_baseline)
