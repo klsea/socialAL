@@ -11,7 +11,7 @@ library(ggpubr)
 
 # set hard-coded variables
 
-# baseline model ####
+# baseline model - done ####
 # read data in
 bld <- read.csv(here::here('output', 'simulation', 'sim_baseline_model_data.csv'))
 blf <- read.csv(here::here('output', 'simulation', 'sim_baseline_model_fits.csv'))
@@ -28,7 +28,7 @@ ggscatter(bl, x = 'trueBeta', y = 'estBeta', shape = 1, color = 'red3',
           xlab = 'True Beta value', ylab = 'Extimated Beta value')
 
 
-# 1a model ####
+# 1a model - done ####
 # read data in
 ad <- read.csv(here::here('output', 'simulation', 'sim_1alpha_model_data.csv'))
 af <- read.csv(here::here('output', 'simulation', 'sim_1alpha_model_fits.csv'))
@@ -72,19 +72,24 @@ ggscatter(a1d, x = 'trueDecay', y = 'estDecay', shape = 1, color = 'darkgreen',
           cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(1, 3), cor.coef.size = 5,
           xlab = 'True Decay value', ylab = 'Extimated Decay value')
 
-# 2a model - gain loss ####
+# 2a model - gain loss - done####
 # read in data
 gld <- read.csv(here::here('output', 'simulation', 'sim_2alpha_model_data.csv'))
 gld <- gld[which(gld$Trial == 1), ] # 2a model
-
+glf <- read.csv(here::here('output', 'simulation', 'sim_2alpha_model_fit.csv'))
 # clean up and merge
+gld <- rename(gld, trueBeta = Beta, trueAlphaGain = Alpha_gain, trueAlphaLoss = Alpha_loss)
+glf <- rename(glf, estBeta = beta, estAlphaGain = a_gain, estAlphaLoss = a_loss)
+gll <- merge(gld[c(6, 1:3)], glf, by = 'Subject')
+rm(gld, glf)
+
 # graph
-ggscatter(gll, x = 'trueAgain', y = 'estAgain', shape = 1, color = 'blue', 
+ggscatter(gll, x = 'trueAlphaGain', y = 'estAlphaGain', shape = 1, color = 'blue', 
           add = 'reg.line', conf.int = TRUE, 
           cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(.5, .25), cor.coef.size = 5,
           xlab = 'True Alpha Gain value', ylab = 'Extimated Alpha Gain value')
 
-ggscatter(gll, x = 'trueAloss', y = 'estAloss', shape = 1, color = 'blue', 
+ggscatter(gll, x = 'trueAlphaLoss', y = 'estAlphaLoss', shape = 1, color = 'blue4', 
           add = 'reg.line', conf.int = TRUE, 
           cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(.5, .25), cor.coef.size = 5,
           xlab = 'True Alpha Loss value', ylab = 'Extimated Alpha Loss value')
