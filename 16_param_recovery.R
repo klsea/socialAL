@@ -50,12 +50,16 @@ ggscatter(a1, x = 'trueBeta', y = 'estBeta', shape = 1, color = 'red3',
           xlab = 'True Beta value', ylab = 'Extimated Beta value')
 
 
-# 1a decay model ####
+# 1a decay model - done ####
 # read in data
 add <- read.csv(here::here('output', 'simulation', 'sim_1alpha_decay_model_data.csv'))
 add <- add[which(add$Trial == 1), ] # 1a decay model
-
-# clean up and merge
+adf <- read.csv(here::here('output', 'simulation', 'sim_1alpha_decay_model_fits.csv'))
+# clean up and merge 
+add <- rename(add, trueBeta = Beta, trueAlpha = Alpha, trueDecay = Decay)
+adf <- rename(adf, estBeta = beta, estAlpha = alpha, estDecay = decay)
+a1d <- merge(add[5:8], adf, by = 'Subject')
+rm(add, adf)
 # graph
 ggscatter(a1d, x = 'trueAlpha', y = 'estAlpha', shape = 1, color = 'blue', 
           add = 'reg.line', conf.int = TRUE, 
@@ -69,7 +73,7 @@ ggscatter(a1d, x = 'trueBeta', y = 'estBeta', shape = 1, color = 'red',
 
 ggscatter(a1d, x = 'trueDecay', y = 'estDecay', shape = 1, color = 'darkgreen', 
           add = 'reg.line', conf.int = TRUE, 
-          cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(1, 3), cor.coef.size = 5,
+          cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(0, .5), cor.coef.size = 5,
           xlab = 'True Decay value', ylab = 'Extimated Decay value')
 
 # 2a model - gain loss - done####
