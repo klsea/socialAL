@@ -1,0 +1,51 @@
+---
+title: "parameter recovery"
+author: "Kendra Seaman"
+date: "3/14/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+#knitr::opts_chunk$set(fig.width=5, fig.height=3.5) 
+library(here)
+source(here::here('16_param_recovery.R'))
+```
+
+### baseline model
+
+```{r baseline, echo = FALSE, message=FALSE, fig.show="hold", out.width="50%"}
+bl_beta
+```
+
+### general learning model 
+
+```{r general, echo=FALSE, message=FALSE, fig.show="hold", out.width="50%"}
+a1_alpha
+a1_beta
+```
+
+### general learning with decay  model 
+
+```{r general decay, echo=FALSE, message=FALSE, fig.show="hold", out.width="50%"}
+a1d_alpha
+a1d_beta
+a1d_decay
+```
+
+### gain-loss learning model
+
+```{r gain-loss, echo=FALSE, message=FALSE, fig.show="hold", out.width="50%"}
+a2_alpha_gain
+a2_alpha_loss
+a2_beta
+```
+
+### gain-loss learning with decay  model
+
+```{r gain-loss decay, echo=FALSE, message=FALSE, fig.show="hold", out.width="50%"}
+a2d_alpha_gain
+a2d_alpha_loss
+a2d_beta
+a2d_decay
+```

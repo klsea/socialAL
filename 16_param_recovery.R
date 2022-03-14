@@ -22,11 +22,11 @@ blf <- rename(blf, estBeta = beta)
 bl <- merge(bld[5:6], blf, by = 'Subject')
 rm(bld, blf)
 # graph
-ggscatter(bl, x = 'trueBeta', y = 'estBeta', shape = 1, color = 'red3', 
+bl_beta <- ggscatter(bl, x = 'trueBeta', y = 'estBeta', shape = 1, color = 'red3', 
           add = 'reg.line', conf.int = TRUE, 
           cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(1, 3), cor.coef.size = 5,
           xlab = 'True Beta value', ylab = 'Extimated Beta value')
-
+rm(bl)
 
 # 1a model - done ####
 # read data in
@@ -39,16 +39,16 @@ af <- rename(af, estBeta = beta, estAlpha = alpha)
 a1 <- merge(ad[5:7], af, by = 'Subject')
 rm(ad, af)
 #graph
-ggscatter(a1, x = 'trueAlpha', y = 'estAlpha', shape = 1, color = 'blue', 
+a1_alpha <- ggscatter(a1, x = 'trueAlpha', y = 'estAlpha', shape = 1, color = 'blue', 
           add = 'reg.line', conf.int = TRUE, 
           cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(.5, .25), cor.coef.size = 5,
           xlab = 'True Alpha value', ylab = 'Extimated Alpha value')
 
-ggscatter(a1, x = 'trueBeta', y = 'estBeta', shape = 1, color = 'red3', 
+a1_beta <- ggscatter(a1, x = 'trueBeta', y = 'estBeta', shape = 1, color = 'red3', 
           add = 'reg.line', conf.int = TRUE, 
           cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(1, 3), cor.coef.size = 5,
           xlab = 'True Beta value', ylab = 'Extimated Beta value')
-
+rm(a1)
 
 # 1a decay model - done ####
 # read in data
@@ -61,20 +61,21 @@ adf <- rename(adf, estBeta = beta, estAlpha = alpha, estDecay = decay)
 a1d <- merge(add[5:8], adf, by = 'Subject')
 rm(add, adf)
 # graph
-ggscatter(a1d, x = 'trueAlpha', y = 'estAlpha', shape = 1, color = 'blue', 
+a1d_alpha <- ggscatter(a1d, x = 'trueAlpha', y = 'estAlpha', shape = 1, color = 'blue', 
           add = 'reg.line', conf.int = TRUE, 
           cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(.5, .25), cor.coef.size = 5,
           xlab = 'True Alpha value', ylab = 'Extimated Alpha value')
 
-ggscatter(a1d, x = 'trueBeta', y = 'estBeta', shape = 1, color = 'red', 
+a1d_beta <- ggscatter(a1d, x = 'trueBeta', y = 'estBeta', shape = 1, color = 'red3', 
           add = 'reg.line', conf.int = TRUE, 
           cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(1, 3), cor.coef.size = 5,
           xlab = 'True Beta value', ylab = 'Extimated Beta value')
 
-ggscatter(a1d, x = 'trueDecay', y = 'estDecay', shape = 1, color = 'darkgreen', 
+a1d_decay <- ggscatter(a1d, x = 'trueDecay', y = 'estDecay', shape = 1, color = 'darkgreen', 
           add = 'reg.line', conf.int = TRUE, 
           cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(0, .5), cor.coef.size = 5,
           xlab = 'True Decay value', ylab = 'Extimated Decay value')
+rm(a1d)
 
 # 2a model - gain loss - done####
 # read in data
@@ -88,20 +89,21 @@ gll <- merge(gld[c(6, 1:3)], glf, by = 'Subject')
 rm(gld, glf)
 
 # graph
-ggscatter(gll, x = 'trueAlphaGain', y = 'estAlphaGain', shape = 1, color = 'blue', 
+a2_alpha_gain <- ggscatter(gll, x = 'trueAlphaGain', y = 'estAlphaGain', shape = 1, color = 'blue', 
           add = 'reg.line', conf.int = TRUE, 
           cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(.5, .25), cor.coef.size = 5,
           xlab = 'True Alpha Gain value', ylab = 'Extimated Alpha Gain value')
 
-ggscatter(gll, x = 'trueAlphaLoss', y = 'estAlphaLoss', shape = 1, color = 'blue4', 
+a2_alpha_loss <- ggscatter(gll, x = 'trueAlphaLoss', y = 'estAlphaLoss', shape = 1, color = 'blue4', 
           add = 'reg.line', conf.int = TRUE, 
           cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(.5, .25), cor.coef.size = 5,
           xlab = 'True Alpha Loss value', ylab = 'Extimated Alpha Loss value')
 
-ggscatter(gll, x = 'trueBeta', y = 'estBeta', shape = 1, color = 'red', 
+a2_beta <- ggscatter(gll, x = 'trueBeta', y = 'estBeta', shape = 1, color = 'red3', 
           add = 'reg.line', conf.int = TRUE, 
           cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(1, 3), cor.coef.size = 5,
           xlab = 'True Beta value', ylab = 'Extimated Beta value')
+rm(gll)
 
 # 2a decay model ####
 # read in data
@@ -114,28 +116,38 @@ gldf <- rename(gldf, estBeta = beta, estAlphaGain = a_gain, estAlphaLoss = a_los
 gldl <- merge(gldd[c(7, 1:3, 5)], gldf, by = 'Subject')
 rm(gldd, gldf)
 # graph
-ggscatter(gldl, x = 'trueAlphaGain', y = 'estAlphaGain', shape = 1, color = 'blue', 
+a2d_alpha_gain <- ggscatter(gldl, x = 'trueAlphaGain', y = 'estAlphaGain', shape = 1, color = 'blue', 
           add = 'reg.line', conf.int = TRUE, 
           cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(.5, .25), cor.coef.size = 5,
           xlab = 'True Alpha Gain value', ylab = 'Extimated Alpha Gain value')
 
-ggscatter(gldl, x = 'trueAlphaLoss', y = 'estAlphaLoss', shape = 1, color = 'blue4', 
+a2d_alpha_loss <- ggscatter(gldl, x = 'trueAlphaLoss', y = 'estAlphaLoss', shape = 1, color = 'blue4', 
           add = 'reg.line', conf.int = TRUE, 
           cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(.5, .25), cor.coef.size = 5,
           xlab = 'True Alpha Loss value', ylab = 'Extimated Alpha Loss value')
 
-ggscatter(gldl, x = 'trueBeta', y = 'estBeta', shape = 1, color = 'red', 
+a2d_beta <- ggscatter(gldl, x = 'trueBeta', y = 'estBeta', shape = 1, color = 'red3', 
           add = 'reg.line', conf.int = TRUE, 
           cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(1, 3), cor.coef.size = 5,
           xlab = 'True Beta value', ylab = 'Extimated Beta value')
 
-ggscatter(gldl, x = 'trueDecay', y = 'estDecay', shape = 1, color = 'darkgreen', 
+a2d_decay <- ggscatter(gldl, x = 'trueDecay', y = 'estDecay', shape = 1, color = 'darkgreen', 
           add = 'reg.line', conf.int = TRUE, 
           cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(0, .5), cor.coef.size = 5,
           xlab = 'True Decay value', ylab = 'Extimated Decay value')
+rm(gldl)
+
 # 2a prior model ####
 # read in data
 glpd <- read.csv(here::here('output', 'simulation', 'sim_2alpha_with_priors_model_data.csv'))
+glpd <- glpd[which(glpd$Trial == 1),] # 2a with priors
+glpf <- read.csv(here::here('output', 'simulation', 'sim_2alpha_with_priors_model_fit.csv'))
 # clean up and merge
 # graph
+#a2p_alpha_gain
+#a2p_alpha_loss
+#a2p_beta
+#a2p_iprobA
+#a2p_iprobB
+#a2p_iprobC
 
