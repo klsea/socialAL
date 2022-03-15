@@ -1,7 +1,7 @@
 ---
 title: "parameter recovery"
 author: "Kendra Seaman"
-date: "3/14/2022"
+date: "3/15/2022"
 output: html_document
 ---
 
@@ -48,4 +48,15 @@ a2d_alpha_gain
 a2d_alpha_loss
 a2d_beta
 a2d_decay
+```
+
+### gain-loss learning with priors model
+
+```{r gain-loss prior, echo=FALSE, message=FALSE, fig.show="hold", out.width="50%"}
+a2p_alpha_gain
+a2p_alpha_loss
+a2p_beta
+a2p_iprobA
+a2p_iprobB
+a2p_iprobC
 ```

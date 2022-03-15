@@ -143,11 +143,43 @@ glpd <- read.csv(here::here('output', 'simulation', 'sim_2alpha_with_priors_mode
 glpd <- glpd[which(glpd$Trial == 1),] # 2a with priors
 glpf <- read.csv(here::here('output', 'simulation', 'sim_2alpha_with_priors_model_fit.csv'))
 # clean up and merge
+glpd <- rename(glpd, trueBeta = Beta, trueAlphaGain = Alpha_gain, trueAlphaLoss = Alpha_loss, trueIProbA = iProbA, 
+               trueIProbB = iProbB, trueIProbC = iProbC)
+glpf <- rename(glpf, estBeta = beta, estAlphaGain = a_gain, estAlphaLoss = a_loss, estIProbA = iProbA, estIProbB = iProbB, 
+               estIProbC = iProbC)
+glpl <- merge(glpd[c(6, 1:3, 9:11)], glpf, by = 'Subject')
+rm(glpd, glpf)
 # graph
-#a2p_alpha_gain
-#a2p_alpha_loss
-#a2p_beta
-#a2p_iprobA
-#a2p_iprobB
-#a2p_iprobC
+a2p_alpha_gain <- ggscatter(glpl, x = 'trueAlphaGain', y = 'estAlphaGain', shape = 1, color = 'blue', 
+                           add = 'reg.line', conf.int = TRUE, 
+                           cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(.5, .25), cor.coef.size = 5,
+                           xlab = 'True Alpha Gain value', ylab = 'Extimated Alpha Gain value')
+
+a2p_alpha_loss <- ggscatter(glpl, x = 'trueAlphaLoss', y = 'estAlphaLoss', shape = 1, color = 'blue4', 
+                           add = 'reg.line', conf.int = TRUE, 
+                           cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(.5, .25), cor.coef.size = 5,
+                           xlab = 'True Alpha Loss value', ylab = 'Extimated Alpha Loss value')
+
+a2p_beta <- ggscatter(glpl, x = 'trueBeta', y = 'estBeta', shape = 1, color = 'red3', 
+                     add = 'reg.line', conf.int = TRUE, 
+                     cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(1, 3), cor.coef.size = 5,
+                     xlab = 'True Beta value', ylab = 'Extimated Beta value')
+
+a2p_iprobA <- ggscatter(glpl, x = 'trueIProbA', y = 'estIProbA', shape = 1, color = 'orange', 
+                        add = 'reg.line', conf.int = TRUE, 
+                        cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(.5, .25), cor.coef.size = 5,
+                        xlab = 'True initial Prob A value', ylab = 'Extimated initial Prob A value')
+
+a2p_iprobB <- ggscatter(glpl, x = 'trueIProbB', y = 'estIProbB', shape = 1, color = 'orange', 
+                        add = 'reg.line', conf.int = TRUE, 
+                        cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(.5, .25), cor.coef.size = 5,
+                        xlab = 'True initial Prob B value', ylab = 'Extimated initial Prob B value')
+a2p_iprobC <- ggscatter(glpl, x = 'trueIProbC', y = 'estIProbC', shape = 1, color = 'orange', 
+                        add = 'reg.line', conf.int = TRUE, 
+                        cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(.5, .25), cor.coef.size = 5,
+                        xlab = 'True initial Prob C value', ylab = 'Extimated initial Prob C value')
+rm(glpl)
+
+
+
 
