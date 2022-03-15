@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 #knitr::opts_chunk$set(fig.width=5, fig.height=3.5) 
 library(here)
-source(here::here('16_param_recovery.R'))
+source(here::here('17_model_param_recovery.R'))
 ```
 
 ### baseline model

@@ -1,0 +1,49 @@
+---
+title: "simulated_data"
+author: "Kendra Seaman"
+date: "3/15/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.width=5, fig.height=3.5) 
+library(here)
+source(here::here('16_model_vis_sim_data.R'))
+```
+
+### baseline model
+
+```{r baseline, echo = FALSE, message=FALSE}
+bldplot
+```
+
+### general learning model 
+
+```{r general, echo=FALSE, message=FALSE}
+adplot
+```
+
+### general learning with decay  model 
+
+```{r general decay, echo=FALSE, message=FALSE}
+addplot
+```
+
+### gain-loss learning model
+
+```{r gain-loss, echo=FALSE, message=FALSE}
+gldplot
+```
+
+### gain-loss learning with decay  model
+
+```{r gain-loss decay, echo=FALSE, message=FALSE, fig.show="hold", out.width="50%"}
+glddplot
+```
+
+### gain-loss learning with priors model
+
+```{r gain-loss prior, echo=FALSE, message=FALSE, fig.show="hold", out.width="50%"}
+glpdplot
+```
