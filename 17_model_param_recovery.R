@@ -14,7 +14,7 @@ library(ggpubr)
 # baseline model - done ####
 # read data in
 bld <- read.csv(here::here('output', 'simulation', 'sim_baseline_model_data.csv'))
-blf <- read.csv(here::here('output', 'simulation', 'sim_baseline_model_fits.csv'))
+blf <- read.csv(here::here('output', 'simulation', 'b_fit2_b.csv'))
 bld <- bld[which(bld$Trial == 1),] 
 # clean up and merge 
 bld <- rename(bld, trueBeta = Beta)
@@ -31,7 +31,7 @@ rm(bl)
 # 1a model - done ####
 # read data in
 ad <- read.csv(here::here('output', 'simulation', 'sim_1alpha_model_data.csv'))
-af <- read.csv(here::here('output', 'simulation', 'sim_1alpha_model_fits.csv'))
+af <- read.csv(here::here('output', 'simulation', 'a1_fit2_a1.csv'))
 ad <- ad[which(ad$Trial == 1), ] # 1a model
 # clean up and merge 
 ad <- rename(ad, trueBeta = Beta, trueAlpha = Alpha)
@@ -54,7 +54,7 @@ rm(a1)
 # read in data
 add <- read.csv(here::here('output', 'simulation', 'sim_1alpha_decay_model_data.csv'))
 add <- add[which(add$Trial == 1), ] # 1a decay model
-adf <- read.csv(here::here('output', 'simulation', 'sim_1alpha_decay_model_fits.csv'))
+adf <- read.csv(here::here('output', 'simulation', 'a1d_fit2_a1d.csv'))
 # clean up and merge 
 add <- rename(add, trueBeta = Beta, trueAlpha = Alpha, trueDecay = Decay)
 adf <- rename(adf, estBeta = beta, estAlpha = alpha, estDecay = decay)
@@ -81,7 +81,7 @@ rm(a1d)
 # read in data
 gld <- read.csv(here::here('output', 'simulation', 'sim_2alpha_model_data.csv'))
 gld <- gld[which(gld$Trial == 1), ] # 2a model
-glf <- read.csv(here::here('output', 'simulation', 'sim_2alpha_model_fit.csv'))
+glf <- read.csv(here::here('output', 'simulation', 'a2_fit2_a2.csv'))
 # clean up and merge
 gld <- rename(gld, trueBeta = Beta, trueAlphaGain = Alpha_gain, trueAlphaLoss = Alpha_loss)
 glf <- rename(glf, estBeta = beta, estAlphaGain = a_gain, estAlphaLoss = a_loss)
@@ -109,7 +109,7 @@ rm(gll)
 # read in data
 gldd <- read.csv(here::here('output', 'simulation', 'sim_2alpha_decay_model_data.csv'))
 gldd <- gldd[which(gldd$Trial == 1),] # 2a with decay
-gldf <- read.csv(here::here('output', 'simulation', 'sim_2alpha_decay_model_fit.csv'))
+gldf <- read.csv(here::here('output', 'simulation', 'a2d_fit2_a2d.csv'))
 # clean up and merge
 gldd <- rename(gldd, trueBeta = Beta, trueAlphaGain = Alpha_gain, trueAlphaLoss = Alpha_loss, trueDecay = Decay)
 gldf <- rename(gldf, estBeta = beta, estAlphaGain = a_gain, estAlphaLoss = a_loss, estDecay = decay)
@@ -141,7 +141,7 @@ rm(gldl)
 # read in data
 glpd <- read.csv(here::here('output', 'simulation', 'sim_2alpha_with_priors_model_data.csv'))
 glpd <- glpd[which(glpd$Trial == 1),] # 2a with priors
-glpf <- read.csv(here::here('output', 'simulation', 'sim_2alpha_with_priors_model_fit.csv'))
+glpf <- read.csv(here::here('output', 'simulation', 'a2p_fit2_a2p.csv'))
 # clean up and merge
 glpd <- rename(glpd, trueBeta = Beta, trueAlphaGain = Alpha_gain, trueAlphaLoss = Alpha_loss, trueIProbA = iProbA, 
                trueIProbB = iProbB, trueIProbC = iProbC)
