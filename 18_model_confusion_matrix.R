@@ -17,17 +17,11 @@ source(here::here('scr', 'BIC_functions.R'))
 
 # read in fits to baseline sim data ####
 b <- read.csv(here::here('output', 'simulation', 'b_fit2_b.csv'))
-#b <- rename(b, 'b_llh' = 'llh')
 a1 <- read.csv(here::here('output', 'simulation', 'a1_fit2_b.csv'))
-#a1 <- rename(a1, 'a1_llh' = 'llh')
 a1d <- read.csv(here::here('output', 'simulation', 'a1d_fit2_b.csv'))
-#a1d <- rename(a1d, 'a1d_llh' = 'llh')
 a2 <- read.csv(here::here('output', 'simulation', 'a2_fit2_b.csv'))
-#a2 <- rename(a2, 'a2_llh' = 'llh')
 a2d <- read.csv(here::here('output', 'simulation', 'a2d_fit2_b.csv'))
-#a2d <- rename(a2d, 'a2d_llh' = 'llh')
 a2p <- read.csv(here::here('output', 'simulation', 'a2p_fit2_b.csv'))
-#a2p <- rename(a2p, 'a2p_llh' = 'llh')
 
 # calculate AIC and BIC
 b$AIC <- calc_AIC(45,1,b$llh); b$BIC <- calc_BIC(45,1,b$llh)
@@ -46,7 +40,10 @@ d3 <- merge(d,d1)
 d4 <- merge(d3,d2)
 rm(b,a1,a1d,a2,a2d,a2p,d,d1,d2,d3)
 
-# calculate weights
+# find minBIC
+d5 <- d4[c(1, grep('BIC', colnames(d4)))]
+d6 <- winningBIC(d5)
+d6 %>% count(winModel) %>% mutate(freq = n/sum(n))
 
 # read in fits to single alpha sim data ####
 b <- read.csv(here::here('output', 'simulation', 'b_fit2_a1.csv'))
