@@ -15,3 +15,24 @@ compare_BIC <- function(BIC1, BIC2){
   bij=exp(BIC1-BIC2)
   return(bij)
 }
+
+winningBIC <- function(x) {
+  # This function takes a table where the first column is ID names and 
+  # the remaining colunns are  BIC values for different models
+  # and returns a data table with 
+  # (1) the id and (2) the name of the winning model (based on the column names)
+  min.col <- function(m, ...) max.col(-m, ...)
+  names <- colnames(x)[2:ncol(x)]
+  id <- x[1]
+  bics <- x[2:ncol(x)]
+  minBIC <- apply(bics, 1, min)
+  winModel <- names[min.col(bics)]
+  winModel <- sub('BIC_', '', winModel)
+  data <- data.frame(id, bics, winModel)
+  return(data)
+}
+
+
+
+
+  
