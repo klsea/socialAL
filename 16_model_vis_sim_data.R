@@ -35,7 +35,8 @@ bld$Choice <- (bld$Choice - 1) * 3
 
 #graph
 bldplot <- ggplot(bld, aes(tt_number, Choice, colour = Partner, fill = Partner)) + theme_bw() +  xlab('Trial') + 
-  geom_smooth(method = lm) + scale_x_continuous(breaks = c(5,10,15)) + ylim(0,9) #+ scale_y_continuous(breaks = seq(0,9,3))
+  geom_smooth(method = lm) + scale_x_continuous(breaks = c(5,10,15)) + ylim(0,9) +
+  facet_wrap(~Beta, ncol = 4) + theme(legend.position = 'top')  + ggtitle('by Beta level')
 
 # plot 1 alpha model sim ####
 ad <- read.csv(here::here('output', 'simulation', 'sim_1alpha_model_data.csv'))
@@ -44,8 +45,13 @@ ad <- add_tt_number(ad)
 levels(ad$Partner) <- c('Trustworthy', 'Neutral', 'Untrustworthy')
 ad$Choice <- (ad$Choice - 1) * 3
 
-adplot <- ggplot(ad, aes(tt_number, Choice, colour = Partner, fill = Partner)) + theme_bw() + xlab('Trial') + 
-  geom_smooth(method = lm) + scale_x_continuous(breaks = c(5,10,15)) + scale_y_continuous(breaks = seq(0,9,3)) + ylim(0,9) #
+adplota <- ggplot(ad, aes(tt_number, Choice, colour = Partner, fill = Partner)) + theme_bw() + xlab('Trial') + 
+  geom_smooth(method = lm) + scale_x_continuous(breaks = c(5,10,15)) + scale_y_continuous(breaks = seq(0,9,3)) + 
+  ylim(0,9) + facet_wrap(~Alpha, ncol = 4) + theme(legend.position = 'top') + ggtitle('by Alpha level')
+
+adplotb <- ggplot(ad, aes(tt_number, Choice, colour = Partner, fill = Partner)) + theme_bw() + xlab('Trial') + 
+  geom_smooth(method = lm) + scale_x_continuous(breaks = c(5,10,15)) + scale_y_continuous(breaks = seq(0,9,3)) + 
+  ylim(0,9) + facet_wrap(~Beta, ncol = 4) + theme(legend.position = 'top') + ggtitle('by Beta level')
 
 # plot 1 alpha with decay model sim ####
 add <- read.csv(here::here('output', 'simulation', 'sim_1alpha_decay_model_data.csv'))
@@ -54,18 +60,36 @@ add <- add_tt_number(add)
 levels(add$Partner) <- c('Trustworthy', 'Neutral', 'Untrustworthy')
 add$Choice <- (add$Choice - 1) * 3
 
-addplot <- ggplot(add, aes(tt_number, Choice, colour = Partner, fill = Partner)) + theme_bw() +  xlab('Trial') + 
-  geom_smooth(method = lm) + scale_x_continuous(breaks = c(5,10,15)) + scale_y_continuous(breaks = seq(0,9,3)) + ylim(0,9) #
+addplota <- ggplot(add, aes(tt_number, Choice, colour = Partner, fill = Partner)) + theme_bw() +  xlab('Trial') + 
+  geom_smooth(method = lm) + scale_x_continuous(breaks = c(5,10,15)) + scale_y_continuous(breaks = seq(0,9,3)) + 
+  facet_wrap(~Alpha, ncol = 4) + theme(legend.position = 'top') + ggtitle('by Alpha level')
 
-# plot 2 alpha model sim ###
+addplotb <- ggplot(add, aes(tt_number, Choice, colour = Partner, fill = Partner)) + theme_bw() +  xlab('Trial') + 
+  geom_smooth(method = lm) + scale_x_continuous(breaks = c(5,10,15)) + scale_y_continuous(breaks = seq(0,9,3)) + 
+  facet_wrap(~Beta, ncol = 4) + theme(legend.position = 'top') + ggtitle('by Beta level')
+
+addplotd <- ggplot(add, aes(tt_number, Choice, colour = Partner, fill = Partner)) + theme_bw() +  xlab('Trial') + 
+  geom_smooth(method = lm) + scale_x_continuous(breaks = c(5,10,15)) + scale_y_continuous(breaks = seq(0,9,3)) + 
+  facet_wrap(~Decay, ncol = 4) + theme(legend.position = 'top') + ggtitle('by Decay level')
+
+# plot 2 alpha model sim ####
 gld <- read.csv(here::here('output', 'simulation', 'sim_2alpha_model_data.csv'))
 gld$Partner <- factor(gld$Stim_Sequence)
 gld <- add_tt_number(gld)
 levels(gld$Partner) <- c('Trustworthy', 'Neutral', 'Untrustworthy')
 gld$Choice <- (gld$Choice - 1) * 3
 
-gldplot <- ggplot(gld, aes(tt_number, Choice, colour = Partner, fill = Partner)) + theme_bw() +  xlab('Trial') + 
-  geom_smooth(method = lm) + scale_x_continuous(breaks = c(5,10,15)) + scale_y_continuous(breaks = seq(0,9,3)) + ylim(0,9) #
+gldplotg <- ggplot(gld, aes(tt_number, Choice, colour = Partner, fill = Partner)) + theme_bw() +  xlab('Trial') + 
+  geom_smooth(method = lm) + scale_x_continuous(breaks = c(5,10,15)) + scale_y_continuous(breaks = seq(0,9,3)) + #ylim(0,9) #
+  facet_wrap(~Alpha_gain, ncol = 4) + theme(legend.position = 'top') + ggtitle('by Alpha Gain level')
+
+gldplotl <- ggplot(gld, aes(tt_number, Choice, colour = Partner, fill = Partner)) + theme_bw() +  xlab('Trial') + 
+  geom_smooth(method = lm) + scale_x_continuous(breaks = c(5,10,15)) + scale_y_continuous(breaks = seq(0,9,3)) + #ylim(0,9) #
+  facet_wrap(~Alpha_loss, ncol = 4) + theme(legend.position = 'top') + ggtitle('by Alpha Loss level')
+
+gldplotb <- ggplot(gld, aes(tt_number, Choice, colour = Partner, fill = Partner)) + theme_bw() +  xlab('Trial') + 
+  geom_smooth(method = lm) + scale_x_continuous(breaks = c(5,10,15)) + scale_y_continuous(breaks = seq(0,9,3)) + #ylim(0,9) #
+  facet_wrap(~Beta, ncol = 4) + theme(legend.position = 'top') + ggtitle('by Beta level')
 
 # plot 2 alpha with decay model sim ###
 gldd <- read.csv(here::here('output', 'simulation', 'sim_2alpha_decay_model_data.csv'))
@@ -86,3 +110,59 @@ glpd$Choice <- (glpd$Choice - 1) * 3
 
 glpdplot <- ggplot(glpd, aes(tt_number, Choice, colour = Partner, fill = Partner)) + theme_bw() +  xlab('Trial') + 
   geom_smooth(method = lm) + scale_x_continuous(breaks = c(5,10,15)) + scale_y_continuous(breaks = seq(0,9,3)) + ylim(0,9) #
+
+
+
+# plot 2 alpha with decay model sim ###
+gldd <- read.csv(here::here('output', 'simulation', 'sim_2alpha_decay_model_data.csv'))
+gldd$Partner <- factor(gldd$Stim_Sequence)
+gldd <- add_tt_number(gldd)
+levels(gldd$Partner) <- c('Trustworthy', 'Neutral', 'Untrustworthy')
+gldd$Choice <- (gldd$Choice - 1) * 3
+
+glddplotg <- ggplot(gldd, aes(tt_number, Choice, colour = Partner, fill = Partner)) + theme_bw() +  xlab('Trial') + 
+  geom_smooth(method = lm) + scale_x_continuous(breaks = c(5,10,15)) + scale_y_continuous(breaks = seq(0,9,3)) + #ylim(0,9) #
+  facet_wrap(~Alpha_gain, ncol = 3) + theme(legend.position = 'top') + ggtitle('by Alpha Gain level')
+
+glddplotl <- ggplot(gldd, aes(tt_number, Choice, colour = Partner, fill = Partner)) + theme_bw() +  xlab('Trial') + 
+  geom_smooth(method = lm) + scale_x_continuous(breaks = c(5,10,15)) + scale_y_continuous(breaks = seq(0,9,3)) + #ylim(0,9) #
+  facet_wrap(~Alpha_loss, ncol = 3) + theme(legend.position = 'top') + ggtitle('by Alpha Loss level')
+
+glddplotb <- ggplot(gldd, aes(tt_number, Choice, colour = Partner, fill = Partner)) + theme_bw() +  xlab('Trial') + 
+  geom_smooth(method = lm) + scale_x_continuous(breaks = c(5,10,15)) + scale_y_continuous(breaks = seq(0,9,3)) + #ylim(0,9) #
+  facet_wrap(~Beta, ncol = 3) + theme(legend.position = 'top') + ggtitle('by Beta level')
+
+glddplotd <- ggplot(gldd, aes(tt_number, Choice, colour = Partner, fill = Partner)) + theme_bw() +  xlab('Trial') + 
+  geom_smooth(method = lm) + scale_x_continuous(breaks = c(5,10,15)) + scale_y_continuous(breaks = seq(0,9,3)) + #ylim(0,9) #
+  facet_wrap(~Decay, ncol = 3) + theme(legend.position = 'top') + ggtitle('by Decay level')
+
+# plot 2 alpha with prior model sim ####
+glpd <- read.csv(here::here('output', 'simulation', 'sim_2alpha_with_priors_model_data.csv'))
+glpd$Partner <- factor(glpd$Stim_Sequence)
+glpd <- add_tt_number(glpd)
+levels(glpd$Partner) <- c('Trustworthy', 'Neutral', 'Untrustworthy')
+glpd$Choice <- (glpd$Choice - 1) * 3
+
+glpdplotg <- ggplot(glpd, aes(tt_number, Choice, colour = Partner, fill = Partner)) + theme_bw() +  xlab('Trial') + 
+  geom_smooth(method = lm) + scale_x_continuous(breaks = c(5,10,15)) + scale_y_continuous(breaks = seq(0,9,3)) + #ylim(0,9) #
+  facet_wrap(~Alpha_gain, ncol = 4) + theme(legend.position = 'top') + ggtitle('by Alpha Gain level')
+
+glpdplotl <- ggplot(glpd, aes(tt_number, Choice, colour = Partner, fill = Partner)) + theme_bw() +  xlab('Trial') + 
+  geom_smooth(method = lm) + scale_x_continuous(breaks = c(5,10,15)) + scale_y_continuous(breaks = seq(0,9,3)) + #ylim(0,9) #
+  facet_wrap(~Alpha_loss, ncol = 4) + theme(legend.position = 'top') + ggtitle('by Alpha Loss level')
+
+glpdplotb <- ggplot(glpd, aes(tt_number, Choice, colour = Partner, fill = Partner)) + theme_bw() +  xlab('Trial') + 
+  geom_smooth(method = lm) + scale_x_continuous(breaks = c(5,10,15)) + scale_y_continuous(breaks = seq(0,9,3)) + #ylim(0,9) #
+  facet_wrap(~Beta, ncol = 4) + theme(legend.position = 'top') + ggtitle('by Beta level')
+
+glpdplotpA <- ggplot(glpd, aes(tt_number, Choice, colour = Partner, fill = Partner)) + theme_bw() +  xlab('Trial') + 
+  geom_smooth(method = lm) + scale_x_continuous(breaks = c(5,10,15)) + scale_y_continuous(breaks = seq(0,9,3)) + #ylim(0,9) #
+  facet_wrap(~iProbA, ncol = 3) + theme(legend.position = 'top') + ggtitle('by Intial Prior Partner A level')
+
+glpdplotpB <- ggplot(glpd, aes(tt_number, Choice, colour = Partner, fill = Partner)) + theme_bw() +  xlab('Trial') + 
+  geom_smooth(method = lm) + scale_x_continuous(breaks = c(5,10,15)) + scale_y_continuous(breaks = seq(0,9,3)) + #ylim(0,9) #
+  facet_wrap(~iProbA, ncol = 3) + theme(legend.position = 'top') + ggtitle('by Intial Prior Partner B level')
+
+glpdplotpC <- ggplot(glpd, aes(tt_number, Choice, colour = Partner, fill = Partner)) + theme_bw() +  xlab('Trial') + 
+  geom_smooth(method = lm) + scale_x_continuous(breaks = c(5,10,15)) + scale_y_continuous(breaks = seq(0,9,3)) + #ylim(0,9) #
+  facet_wrap(~iProbA, ncol = 3) + theme(legend.position = 'top') + ggtitle('by Intial Prior Partner C level')
