@@ -26,6 +26,11 @@ bl_beta <- ggscatter(bl, x = 'trueBeta', y = 'estBeta', shape = 1, color = 'red3
           add = 'reg.line', conf.int = TRUE, 
           cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(1, 3), cor.coef.size = 5,
           xlab = 'True Beta value', ylab = 'Extimated Beta value')
+
+#param diff
+bl$diffBeta = bl$trueBeta - bl$estBeta
+bl_betadiff <- ggscatter(bl, x = 'diffBeta', y = 'Subject', shape = 1, color = 'red3', facet.by = 'trueBeta') 
+
 rm(bl)
 
 # 1a model - done ####
@@ -48,6 +53,14 @@ a1_beta <- ggscatter(a1, x = 'trueBeta', y = 'estBeta', shape = 1, color = 'red3
           add = 'reg.line', conf.int = TRUE, 
           cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(1, 3), cor.coef.size = 5,
           xlab = 'True Beta value', ylab = 'Extimated Beta value')
+
+#param diff
+a1$diffAlpha = a1$trueAlpha - a1$estAlpha
+a1_alphadiff <- ggscatter(a1, x = 'diffAlpha', y = 'Subject', shape = 1, color = 'blue', facet.by = 'trueAlpha') 
+
+a1$diffBeta = a1$trueBeta - a1$estBeta
+a1_betadiff <- ggscatter(a1, x = 'diffBeta', y = 'Subject', shape = 1, color = 'red3', facet.by = 'trueBeta') 
+
 rm(a1)
 
 # 1a decay model - done ####
@@ -75,6 +88,17 @@ a1d_decay <- ggscatter(a1d, x = 'trueDecay', y = 'estDecay', shape = 1, color = 
           add = 'reg.line', conf.int = TRUE, 
           cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(0, .5), cor.coef.size = 5,
           xlab = 'True Decay value', ylab = 'Extimated Decay value')
+
+#param diff
+a1d$diffAlpha = a1d$trueAlpha - a1d$estAlpha
+a1d_alphadiff <- ggscatter(a1d, x = 'diffAlpha', y = 'Subject', shape = 1, color = 'blue', facet.by = 'trueAlpha') 
+
+a1d$diffBeta = a1d$trueBeta - a1d$estBeta
+a1d_betadiff <- ggscatter(a1d, x = 'diffBeta', y = 'Subject', shape = 1, color = 'red3', facet.by = 'trueBeta') 
+
+a1d$diffDecay = a1d$trueDecay - a1d$estDecay
+a1d_decaydiff <- ggscatter(a1d, x = 'diffDecay', y = 'Subject', shape = 1, color = 'red3', facet.by = 'trueDecay') 
+
 rm(a1d)
 
 # 2a model - gain loss - done####
@@ -85,25 +109,36 @@ glf <- read.csv(here::here('output', 'simulation', 'a2_fit2_a2.csv'))
 # clean up and merge
 gld <- rename(gld, trueBeta = Beta, trueAlphaGain = Alpha_gain, trueAlphaLoss = Alpha_loss)
 glf <- rename(glf, estBeta = beta, estAlphaGain = a_gain, estAlphaLoss = a_loss)
-gll <- merge(gld[c(6, 1:3)], glf, by = 'Subject')
+gldl <- merge(gld[c(6, 1:3)], glf, by = 'Subject')
 rm(gld, glf)
 
 # graph
-a2_alpha_gain <- ggscatter(gll, x = 'trueAlphaGain', y = 'estAlphaGain', shape = 1, color = 'blue', 
+a2_alpha_gain <- ggscatter(gldl, x = 'trueAlphaGain', y = 'estAlphaGain', shape = 1, color = 'blue', 
           add = 'reg.line', conf.int = TRUE, 
           cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(.5, .25), cor.coef.size = 5,
           xlab = 'True Alpha Gain value', ylab = 'Extimated Alpha Gain value')
 
-a2_alpha_loss <- ggscatter(gll, x = 'trueAlphaLoss', y = 'estAlphaLoss', shape = 1, color = 'blue4', 
+a2_alpha_loss <- ggscatter(gldl, x = 'trueAlphaLoss', y = 'estAlphaLoss', shape = 1, color = 'blue4', 
           add = 'reg.line', conf.int = TRUE, 
           cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(.5, .25), cor.coef.size = 5,
           xlab = 'True Alpha Loss value', ylab = 'Extimated Alpha Loss value')
 
-a2_beta <- ggscatter(gll, x = 'trueBeta', y = 'estBeta', shape = 1, color = 'red3', 
+a2_beta <- ggscatter(gldl, x = 'trueBeta', y = 'estBeta', shape = 1, color = 'red3', 
           add = 'reg.line', conf.int = TRUE, 
           cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(1, 3), cor.coef.size = 5,
           xlab = 'True Beta value', ylab = 'Extimated Beta value')
-rm(gll)
+
+#param diff
+gldl$diffAlphaGain = gldl$trueAlphaGain - gldl$estAlphaGain
+gldl_alphagaindiff <- ggscatter(gldl, x = 'diffAlphaGain', y = 'Subject', shape = 1, color = 'blue', facet.by = 'trueAlphaGain') 
+
+gldl$diffAlphaLoss = gldl$trueAlphaLoss - gldl$estAlphaLoss
+gldl_alphaLossdiff <- ggscatter(gldl, x = 'diffAlphaLoss', y = 'Subject', shape = 1, color = 'blue', facet.by = 'trueAlphaLoss') 
+
+gldl$diffBeta = gldl$trueBeta - gldl$estBeta
+gldl_betadiff <- ggscatter(gldl, x = 'diffBeta', y = 'Subject', shape = 1, color = 'red3', facet.by = 'trueBeta') 
+
+rm(gldl)
 
 # 2a decay model ####
 # read in data
@@ -135,6 +170,20 @@ a2d_decay <- ggscatter(gldl, x = 'trueDecay', y = 'estDecay', shape = 1, color =
           add = 'reg.line', conf.int = TRUE, 
           cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(0, .5), cor.coef.size = 5,
           xlab = 'True Decay value', ylab = 'Extimated Decay value')
+
+#param diff
+gldl$diffAlphaGain = gldl$trueAlphaGain - gldl$estAlphaGain
+gldl_alphagaindiff <- ggscatter(gldl, x = 'diffAlphaGain', y = 'Subject', shape = 1, color = 'blue', facet.by = 'trueAlphaGain') 
+
+gldl$diffAlphaLoss = gldl$trueAlphaLoss - gldl$estAlphaLoss
+gldl_alphalossdiff <- ggscatter(gldl, x = 'diffAlphaLoss', y = 'Subject', shape = 1, color = 'blue', facet.by = 'trueAlphaLoss') 
+
+gldl$diffBeta = gldl$trueBeta - gldl$estBeta
+gldl_betadiff <- ggscatter(gldl, x = 'diffBeta', y = 'Subject', shape = 1, color = 'red3', facet.by = 'trueBeta') 
+
+gldl$diffDecay = gldl$trueDecay - gldl$estDecay
+gldl_decaydiff <- ggscatter(gldl, x = 'diffDecay', y = 'Subject', shape = 1, color = 'red3', facet.by = 'trueDecay') 
+
 rm(gldl)
 
 # 2a prior model ####
@@ -178,6 +227,28 @@ a2p_iprobC <- ggscatter(glpl, x = 'trueIProbC', y = 'estIProbC', shape = 1, colo
                         add = 'reg.line', conf.int = TRUE, 
                         cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(.5, .25), cor.coef.size = 5,
                         xlab = 'True initial Prob C value', ylab = 'Extimated initial Prob C value')
+
+#param diff
+glpl$diffAlphaGain = glpl$trueAlphaGain - glpl$estAlphaGain
+glpl_alphagaindiff <- ggscatter(glpl, x = 'diffAlphaGain', y = 'Subject', shape = 1, color = 'blue', facet.by = 'trueAlphaGain') 
+
+glpl$diffAlphaLoss = glpl$trueAlphaLoss - glpl$estAlphaLoss
+glpl_alphalossdiff <- ggscatter(glpl, x = 'diffAlphaLoss', y = 'Subject', shape = 1, color = 'blue', facet.by = 'trueAlphaLoss') 
+
+glpl$diffBeta = glpl$trueBeta - glpl$estBeta
+glpl_betadiff <- ggscatter(glpl, x = 'diffBeta', y = 'Subject', shape = 1, color = 'red3', facet.by = 'trueBeta') 
+
+glpl$diffIProbA = glpl$trueIProbA - glpl$iprobA
+glpl_iProbAdiff <- ggscatter(glpl, x = 'diffIProbA', y = 'Subject', shape = 1, color = 'red3', facet.by = 'trueIProbA') 
+
+glpl$diffIProbB = glpl$trueIProbB - glpl$iprobB
+glpl_iProbBdiff <- ggscatter(glpl, x = 'diffIProbB', y = 'Subject', shape = 1, color = 'red3', facet.by = 'trueIProbB') 
+
+glpl$diffIProbC = glpl$trueIProbC - glpl$iprobC
+glpl_iProbCdiff <- ggscatter(glpl, x = 'diffIProbC', y = 'Subject', shape = 1, color = 'red3', facet.by = 'trueIProbC') 
+
+
+
 rm(glpl)
 
 
