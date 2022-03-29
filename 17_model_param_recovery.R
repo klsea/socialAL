@@ -97,7 +97,7 @@ a1d$diffBeta = a1d$trueBeta - a1d$estBeta
 a1d_betadiff <- ggscatter(a1d, x = 'diffBeta', y = 'Subject', shape = 1, color = 'red3', facet.by = 'trueBeta') 
 
 a1d$diffDecay = a1d$trueDecay - a1d$estDecay
-a1d_decaydiff <- ggscatter(a1d, x = 'diffDecay', y = 'Subject', shape = 1, color = 'red3', facet.by = 'trueDecay') 
+a1d_decaydiff <- ggscatter(a1d, x = 'diffDecay', y = 'Subject', shape = 1, color = 'darkgreen', facet.by = 'trueDecay') 
 
 rm(a1d)
 
@@ -130,13 +130,16 @@ a2_beta <- ggscatter(gldl, x = 'trueBeta', y = 'estBeta', shape = 1, color = 're
 
 #param diff
 gldl$diffAlphaGain = gldl$trueAlphaGain - gldl$estAlphaGain
-gldl_alphagaindiff <- ggscatter(gldl, x = 'diffAlphaGain', y = 'Subject', shape = 1, color = 'blue', facet.by = 'trueAlphaGain') 
+a2_diffAlphaGain <- gldl_alphagaindiff <- ggscatter(gldl, x = 'diffAlphaGain', y = 'Subject', 
+                                                    shape = 1, color = 'blue', facet.by = 'trueAlphaGain') 
 
 gldl$diffAlphaLoss = gldl$trueAlphaLoss - gldl$estAlphaLoss
-gldl_alphaLossdiff <- ggscatter(gldl, x = 'diffAlphaLoss', y = 'Subject', shape = 1, color = 'blue', facet.by = 'trueAlphaLoss') 
+a2_diffAlphaLoss <- gldl_alphaLossdiff <- ggscatter(gldl, x = 'diffAlphaLoss', y = 'Subject', 
+                                                    shape = 1, color = 'blue4', facet.by = 'trueAlphaLoss') 
 
 gldl$diffBeta = gldl$trueBeta - gldl$estBeta
-gldl_betadiff <- ggscatter(gldl, x = 'diffBeta', y = 'Subject', shape = 1, color = 'red3', facet.by = 'trueBeta') 
+a2_diffBeta <- gldl_betadiff <- ggscatter(gldl, x = 'diffBeta', y = 'Subject', 
+                                          shape = 1, color = 'red3', facet.by = 'trueBeta') 
 
 rm(gldl)
 
@@ -173,16 +176,20 @@ a2d_decay <- ggscatter(gldl, x = 'trueDecay', y = 'estDecay', shape = 1, color =
 
 #param diff
 gldl$diffAlphaGain = gldl$trueAlphaGain - gldl$estAlphaGain
-gldl_alphagaindiff <- ggscatter(gldl, x = 'diffAlphaGain', y = 'Subject', shape = 1, color = 'blue', facet.by = 'trueAlphaGain') 
+a2d_diffAlphaGain <- gldl_alphagaindiff <- ggscatter(gldl, x = 'diffAlphaGain', y = 'Subject', 
+                                                     shape = 1, color = 'blue', facet.by = 'trueAlphaGain') 
 
 gldl$diffAlphaLoss = gldl$trueAlphaLoss - gldl$estAlphaLoss
-gldl_alphalossdiff <- ggscatter(gldl, x = 'diffAlphaLoss', y = 'Subject', shape = 1, color = 'blue', facet.by = 'trueAlphaLoss') 
+a2d_diffAlphaLoss <- gldl_alphalossdiff <- ggscatter(gldl, x = 'diffAlphaLoss', y = 'Subject', 
+                                                     shape = 1, color = 'blue4', facet.by = 'trueAlphaLoss') 
 
 gldl$diffBeta = gldl$trueBeta - gldl$estBeta
-gldl_betadiff <- ggscatter(gldl, x = 'diffBeta', y = 'Subject', shape = 1, color = 'red3', facet.by = 'trueBeta') 
+a2d_diffBeta <- gldl_betadiff <- ggscatter(gldl, x = 'diffBeta', y = 'Subject', 
+                                           shape = 1, color = 'red3', facet.by = 'trueBeta') 
 
 gldl$diffDecay = gldl$trueDecay - gldl$estDecay
-gldl_decaydiff <- ggscatter(gldl, x = 'diffDecay', y = 'Subject', shape = 1, color = 'red3', facet.by = 'trueDecay') 
+a2d_diffDecay <- ggscatter(gldl, x = 'diffDecay', y = 'Subject', 
+                           shape = 1, color = 'darkgreen', facet.by = 'trueDecay') 
 
 rm(gldl)
 
@@ -230,24 +237,28 @@ a2p_iprobC <- ggscatter(glpl, x = 'trueIProbC', y = 'estIProbC', shape = 1, colo
 
 #param diff
 glpl$diffAlphaGain = glpl$trueAlphaGain - glpl$estAlphaGain
-glpl_alphagaindiff <- ggscatter(glpl, x = 'diffAlphaGain', y = 'Subject', shape = 1, color = 'blue', facet.by = 'trueAlphaGain') 
+a2p_diffAlphaGain <- glpl_alphagaindiff <- ggscatter(glpl, x = 'diffAlphaGain', y = 'Subject', 
+                                                     shape = 1, color = 'blue', facet.by = 'trueAlphaGain') 
 
 glpl$diffAlphaLoss = glpl$trueAlphaLoss - glpl$estAlphaLoss
-glpl_alphalossdiff <- ggscatter(glpl, x = 'diffAlphaLoss', y = 'Subject', shape = 1, color = 'blue', facet.by = 'trueAlphaLoss') 
+a2p_diffAlphaLoss <- glpl_alphalossdiff <- ggscatter(glpl, x = 'diffAlphaLoss', y = 'Subject', 
+                                                     shape = 1, color = 'blue4', facet.by = 'trueAlphaLoss') 
 
 glpl$diffBeta = glpl$trueBeta - glpl$estBeta
-glpl_betadiff <- ggscatter(glpl, x = 'diffBeta', y = 'Subject', shape = 1, color = 'red3', facet.by = 'trueBeta') 
+a2p_diffBeta <- glpl_betadiff <- ggscatter(glpl, x = 'diffBeta', y = 'Subject', 
+                                           shape = 1, color = 'red3', facet.by = 'trueBeta') 
 
 glpl$diffIProbA = glpl$trueIProbA - glpl$iprobA
-glpl_iProbAdiff <- ggscatter(glpl, x = 'diffIProbA', y = 'Subject', shape = 1, color = 'red3', facet.by = 'trueIProbA') 
+a2p_diffIProbA <- ggscatter(glpl, x = 'diffIProbA', y = 'Subject', shape = 1, 
+                            color = 'orange', facet.by = 'trueIProbA') 
 
 glpl$diffIProbB = glpl$trueIProbB - glpl$iprobB
-glpl_iProbBdiff <- ggscatter(glpl, x = 'diffIProbB', y = 'Subject', shape = 1, color = 'red3', facet.by = 'trueIProbB') 
+a2p_diffIProbB <- ggscatter(glpl, x = 'diffIProbB', y = 'Subject', shape = 1, 
+                            color = 'orange', facet.by = 'trueIProbB') 
 
 glpl$diffIProbC = glpl$trueIProbC - glpl$iprobC
-glpl_iProbCdiff <- ggscatter(glpl, x = 'diffIProbC', y = 'Subject', shape = 1, color = 'red3', facet.by = 'trueIProbC') 
-
-
+a2p_diffIProbC <- ggscatter(glpl, x = 'diffIProbC', y = 'Subject', shape = 1, 
+                            color = 'orange', facet.by = 'trueIProbC') 
 
 rm(glpl)
 
