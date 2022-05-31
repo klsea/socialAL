@@ -5,7 +5,8 @@
 library(here)
 library(tidyverse)
 library(ggplot2)
-library(car)
+#library(car)
+library(rstatix)
 
 # load source functions
 source(here::here('scr', 'concat_clean.R'))
@@ -33,39 +34,43 @@ d3 <- clean_single_alpha(d3)
 d4 <- clean_single_alpha(d4)
 d5 <- clean_single_alpha(d5)
 
-# 2 alpha with decay model ####
+# # 2 alpha with decay model ####
+#
+# # uncommenting the lines below allows analysis of
+# # only participants best-fit by the double alpha decay model
+# d4 <- merge(d4, d6, by='id')
+# #d4 <- d4[which(d4$win == 'decay'),]
+#
+# # compare parameters of 2 alpha model
+# older <- d4[which(d4$agegrp=='Older'),]
+# younger <- d4[which(d4$agegrp=='Younger'),]
+#
+# alphas <- gather(d4[c(1:3,7)], condition, alpha, alpha_gain:alpha_loss, factor_key = TRUE)
+# alphas$condition <- substr(as.character(alphas$condition), 7, 10)
+# alphas$condition <- as.factor(alphas$condition)
+# decayalpha = aov(alpha ~ agegrp * condition, data = alphas)
+#
+# decaybeta = t.test(older$beta, younger$beta)
+# decaydecay = t.test(older$decay, younger$decay)
+# leveneTest(decay ~ agegrp, data = d4)
 
-# uncommenting the lines below allows analysis of 
-# only participants best-fit by the double alpha decay model
-d4 <- merge(d4, d6, by='id')
-#d4 <- d4[which(d4$win == 'decay'),] 
+# 2 alpha model ####
+# uncommenting the lines below allows analysis of
+# only participants best-fit by the double alpha model
+# dt <- merge(dt, d6, by='id')
+# dt <- dt[which(dt$win == 'double'),]
 
 # compare parameters of 2 alpha model
-older <- d4[which(d4$agegrp=='Older'),]
-younger <- d4[which(d4$agegrp=='Younger'),]
+older <- dt[which(dt$agegrp=='Older'),]
+younger <- dt[which(dt$agegrp=='Younger'),]
 
-alphas <- gather(d4[c(1:3,7)], condition, alpha, alpha_gain:alpha_loss, factor_key = TRUE)
-alphas$condition <- substr(as.character(alphas$condition), 7, 10)
-alphas$condition <- as.factor(alphas$condition)
-decayalpha = aov(alpha ~ agegrp * condition, data = alphas)
+# anova
+d1 <- pivot_longer(dt, alpha_gain:beta, names_to = 'parameter', values_to = 'estimate')
+anova_test(d1[which(d1$parameter != 'beta'),], dv = estimate, wid = id, between = agegrp, within = parameter)
 
-decaybeta = t.test(older$beta, younger$beta)
-decaydecay = t.test(older$decay, younger$decay)
-leveneTest(decay ~ agegrp, data = d4)
-
-# # 2 alpha model ####
-# # uncommenting the lines below allows analysis of 
-# # only participants best-fit by the double alpha model
-# dt <- merge(dt, d6, by='id')
-# dt <- dt[which(dt$win == 'double'),] 
-# 
-# # compare parameters of 2 alpha model
-# older <- dt[which(dt$agegrp=='Older'),]
-# younger <- dt[which(dt$agegrp=='Younger'),]
-# 
-# a2gain = t.test(older$alpha_gain, younger$alpha_gain)
-# a2loss = t.test(older$alpha_loss, younger$alpha_loss)
-# a2beta = t.test(older$beta, younger$beta)
+a2gain = t.test(older$alpha_gain, younger$alpha_gain)
+a2loss = t.test(older$alpha_loss, younger$alpha_loss)
+a2beta = t.test(older$beta, younger$beta)
 # 
 # # compare alphas to each other
 # a2alphas = t.test(dt$alpha_gain, dt$alpha_loss, paired = TRUE)
@@ -75,27 +80,27 @@ leveneTest(decay ~ agegrp, data = d4)
 # # 1 alpha model ####
 # # uncommenting the lines below allows analysis of 
 # # only participants best-fit by the single alpha model
-# d2 <- merge(d2, d6, by='id')
-# d2 <- d2[which(d2$win == 'single'),] 
-# 
+# # d2 <- merge(d2, d6, by='id')
+# # d2 <- d2[which(d2$win == 'single'),] 
+# # 
 # # compare parameters of 1 alpha model
 # older <- d2[which(d2$agegrp=='Older'),]
 # younger <- d2[which(d2$agegrp=='Younger'),]
 # a1alpha = t.test(older$alpha, younger$alpha)
 # a1beta = t.test(older$beta, younger$beta)
-# 
-# 
+
+
 # # baseline model ####
-# # uncommenting the lines below allows analysis of 
+# # uncommenting the lines below allows analysis of
 # # only participants best-fit by the baseline model
 # d3 <- merge(d3, d6, by='id')
-# d3 <- d3[which(d3$win == 'baseline'),] 
+# d3 <- d3[which(d3$win == 'baseline'),]
 # 
 # # compare parameters of baseline model
 # older <- d3[which(d3$agegrp=='Older'),]
 # younger <- d3[which(d3$agegrp=='Younger'),]
 # basebeta = t.test(older$beta, younger$beta)
-# 
+# # 
 # # 2 alpha with priors model ####
 # 
 # # uncommenting the lines below allows analysis of 
