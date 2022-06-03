@@ -41,7 +41,7 @@ for i = 1:length(part)
      cd(socialAL)
      
      % read in rl model estimates
-     fname = join([socialAL, '/output/trial_estimates_gl/', part{i}, '.csv']);
+     fname = join([socialAL, '/output/gain_loss_trial_estimates/', part{i}, '.csv']);
      rl = readtable(fname);
      
      % read in data
