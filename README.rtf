@@ -34,12 +34,15 @@
 # Neuroimaging data analysis\
 20_BIDS_behavioral_data.R - Create BIDS-formatted files for behavioral data.\
 21_graph_neuro.R - visualize group differences in cluster activation.\
-a_create_glm_eventfiles.m - \
-b_create_time_eventfiles.m - \
-c_create_rl_eventfiles.m - \
-d_all_in_one_rl_eventfiles.m - \
-e_create_rl_common_param_eventfiles.m - \
-f_all_in_one_rl_with_control_eventfiles.m - \
+a_create_glm_eventfiles.m - Creates glm.mat file with event onsets for decision and feedback phases.\
+b_create_time_eventfiles.m - Creates glm.mat file with pmod timing.\
+c_create_rl_eventfiles.m - Creates .mat file with onsets using trial-wise estimates of PE and reputation from best fitting individual parameters from decay model, separated by trial type.\
+d_all_in_one_rl_eventfiles.m - Creates .mat files like script c, but does not separate by trial type.\
+e_create_rl_common_param_eventfiles.m - Creates .mat file with onsets using trial-wise estimates of PE and reputation from best fitting group-level parameters from decay model, separated by trial type.\
+f_all_in_one_rl_with_control_eventfiles.m - Creates .mat files like script e, but does not separate by trial type.\
+g_create_svcho_eventfiles.m - Creates a .mat file with subjective value of the chosen action using decay model estimates.\
+h_create_gl_model_eventfiles.m - Creates .mat file with onsets using trial-wise estimates of PE and reputation from best fitting individual parameters from gain-loss model, separated by trial type. \
+i_all_in_one_gl_model_eventfiles.m - Creates .mat files like script h, but does not separate by trial type.\
 \
 # Figures\
 30_figure1.R - Create figure 1 for manuscript\
