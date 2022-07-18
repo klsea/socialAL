@@ -71,11 +71,12 @@ anova_test(d1[which(d1$parameter != 'beta'),], dv = estimate, wid = id, between 
 a2gain = t.test(older$alpha_gain, younger$alpha_gain)
 a2loss = t.test(older$alpha_loss, younger$alpha_loss)
 a2beta = t.test(older$beta, younger$beta)
-# 
-# # compare alphas to each other
-# a2alphas = t.test(dt$alpha_gain, dt$alpha_loss, paired = TRUE)
-# a2alphasYA = t.test(younger$alpha_gain, younger$alpha_loss)
-# a2alphasOA = t.test(older$alpha_gain, older$alpha_loss)
+
+
+# compare alphas to each other
+a2alphas = t.test(dt$alpha_gain, dt$alpha_loss, paired = TRUE)
+a2alphasYA = t.test(younger$alpha_gain, younger$alpha_loss)
+a2alphasOA = t.test(older$alpha_gain, older$alpha_loss)
 # 
 # # 1 alpha model ####
 # # uncommenting the lines below allows analysis of 
