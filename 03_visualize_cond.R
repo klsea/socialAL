@@ -42,7 +42,8 @@ custom_plot = list(theme(
   plot.title = element_text(size = 24),
   axis.title.x = element_text(size = lg), axis.text.x = element_text(size = sm),
   axis.title.y = element_text(size = lg), axis.text.y = element_text(size = sm), 
-  legend.title = element_text(size = lg), legend.text = element_text(size = sm))
+  legend.title = element_text(size = lg), legend.text = element_text(size = sm),
+  strip.text.x = element_text(size = lg))
 )
 
 # graph group means
@@ -124,16 +125,32 @@ grp_means_stage <- indiv_means_stage %>%
   summarize(sd_amount = sd(avg_amount), se_amount = sd(avg_amount)/sqrt(n()), 
             avg_amount = mean(avg_amount))
 
-# graph trial_type over stage
+# graph trial_type over stage ####
 ggplot(grp_means_stage, aes(stage, avg_amount, colour = trial_type)) + 
          geom_point() + geom_line() + 
   geom_errorbar(aes(ymin = avg_amount - se_amount, ymax =avg_amount + se_amount, width=.1)) + 
-  facet_grid(.~agegrp) +   xlab('Trial') + ylab('Average $ Shared') + theme_minimal() + 
+  facet_grid(.~agegrp) +   xlab('Trial Bin') + ylab('Average $ Shared') + theme_minimal() + 
   scale_fill_brewer(palette="Dark2", name="Condition") +
   scale_colour_brewer(palette="Dark2", name="Condition") +
   scale_x_continuous(breaks = c(1,2,3)) + 
   coord_cartesian(ylim=c(0, 9)) + scale_y_continuous(breaks = c(0, 3, 6, 9)) + custom_plot
 #ggsave(here::here('figs', 'grp_means_over_stage.png'))
+
+# pretty graph ####
+behxstage <- ggplot() + 
+  geom_point(data = indiv_means_stage, aes(x = stage, y = avg_amount, color = trial_type), 
+             position = position_jitterdodge(jitter.height = .25), alpha = .5) + 
+  geom_bar(data = grp_means_stage, aes(x = stage, y = avg_amount, color = trial_type, fill = trial_type), 
+           position=position_dodge(), stat= 'identity', alpha = 0.3) +
+  geom_errorbar(data = grp_means_stage, aes(x = stage, y = avg_amount, ymin = avg_amount - se_amount, ymax = avg_amount + se_amount, color = trial_type), 
+                position = position_dodge(.9), width = .2) + 
+  facet_grid(.~agegrp) +   xlab('Trial Bin') + ylab('Average $ Shared') + theme_minimal() + 
+  scale_fill_brewer(palette="Dark2", name="Partner Type") +
+  scale_colour_brewer(palette="Dark2", name="Partner Type") + scale_x_continuous(breaks = c(1,2,3)) + 
+  coord_cartesian(ylim=c(0, 9)) + scale_y_continuous(breaks = c(0, 3, 6, 9)) + 
+  theme(legend.position="bottom") + custom_plot
+saveRDS(behxstage, here::here('figs', 'bbs.RDS'))
+
 
 # Graph 4 - Difference scores (by Age Group) ####
 library(tidyr)
