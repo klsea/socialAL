@@ -1,5 +1,5 @@
 # Figure 2
-# 12.16.21 KLS
+# 12.16.21 KLS updated 7.27.22
 
 # load required packages ####
 library(here)
@@ -16,17 +16,14 @@ addline_format <- function(x,...){
 # set hard-coded variables
 
 # load data
-p1 <- readRDS(here::here('figs', 'ifg.RDS'))
-p3 <- readRDS(here::here('figs', 'tpj.RDS'))
-p5 <- readRDS(here::here('figs', 'vis.RDS'))
+p1 <- readRDS(here::here('figs', 'rAG.RDS'))
+p3 <- readRDS(here::here('figs', 'rPHC.RDS'))
 
 # load images
 ifg <- image_read(here::here('figs', 'OA_vs_YA_decision_MNI152_2mm copy.png'))
 p2 <- ggdraw() + draw_image(ifg, scale = 1.1) 
 tpj <- image_read(here::here('figs', 'feedback_rpe_YAvOA_p005k50 copy.png'))
 p4 <- ggdraw() + draw_image(tpj, scale = 1.1) 
-vis <- image_read(here::here('figs', 'feedback_rpe_OAvYA_p005k50_MNI152_2mm copy.png'))
-p6 <- ggdraw() + draw_image(vis, scale = 1.1) 
 
 # graph constants
 lg = 12 # text size
