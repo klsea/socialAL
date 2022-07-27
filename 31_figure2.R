@@ -20,10 +20,10 @@ p1 <- readRDS(here::here('figs', 'rAG.RDS'))
 p3 <- readRDS(here::here('figs', 'rPHC.RDS'))
 
 # load images
-ifg <- image_read(here::here('figs', 'OA_vs_YA_decision_MNI152_2mm copy.png'))
-p2 <- ggdraw() + draw_image(ifg, scale = 1.1) 
-tpj <- image_read(here::here('figs', 'feedback_rpe_YAvOA_p005k50 copy.png'))
-p4 <- ggdraw() + draw_image(tpj, scale = 1.1) 
+rAG <- image_read(here::here('figs', 'OA_learn_v_non_40-5028_zoom.png'))
+p2 <- ggdraw() + draw_image(rAG, scale = 1.1) 
+rPHC <- image_read(here::here('figs', 'OA_learn_v_non_24-20-18_zoom.png'))
+p4 <- ggdraw() + draw_image(rPHC, scale = 1.1) 
 
 # graph constants
 lg = 12 # text size
@@ -31,15 +31,15 @@ sm = 10
 custom_plot = list(theme(
   plot.title = element_text(size = 24),
   axis.title.x = element_text(size = lg), axis.text.x = element_text(size = sm),
-  axis.title.y = element_text(size = lg), axis.text.y = element_text(size = sm), 
+  axis.title.y = element_text(size = lg), axis.text.y = element_text(size = sm),
+  legend.position = 'None'
   #legend.title = element_text(size = lg), legend.text = element_text(size = sm))
   ))
 
 # create plot
-fig2 <- plot_grid(p2, p1 + custom_plot + scale_x_discrete(labels =addline_format(c('Older Adults', 'Younger Adults'))),
-                  p4,  p3 + custom_plot + scale_x_discrete(labels =addline_format(c('Older Adults', 'Younger Adults'))), 
-                  p6, p5 + custom_plot + scale_x_discrete(labels =addline_format(c('Older Adults', 'Younger Adults'))), 
-                  ncol = 2, labels = c('a', '', 'b','', 'c', ''), scale = .9, rel_widths = c(2, 1, 1, 2, 2, 1))
+fig2 <- plot_grid(p2, p1 + custom_plot + scale_x_discrete(labels =addline_format(c('OA Learners', 'OA Non-learners'))),
+                  p4,  p3 + custom_plot + scale_x_discrete(labels =addline_format(c('OA Learners', 'OA Non-learners'))), 
+                  ncol = 2, labels = c('a', '', 'b',''), scale = 1)
 fig2
 # save
 save_plot(here::here('figs', 'fig2.pdf'), fig2, base_height = 7, base_width = 7)

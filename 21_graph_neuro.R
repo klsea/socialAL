@@ -45,9 +45,9 @@ rAG <- ggplot() +
   geom_errorbar(data = rAGmeans, aes(x = Group, y = mean, ymin=mean - se, 
                                      ymax = mean + se, colour = Group), 
                 width = .2, position=position_dodge(.9)) + 
-  xlab('Learner Group') + ylab('Reputation Signal') +
-  scale_fill_brewer(palette="Set2", name=" Learner Group") + theme_minimal() + 
-  scale_colour_brewer(palette="Set2", name="Learner Group") + custom_plot
+  xlab('Group') + ylab('Reputation Signal') +
+  scale_fill_brewer(palette="Set2", name="Group") + theme_minimal() + 
+  scale_colour_brewer(palette="Set2", name="Group") + custom_plot
 saveRDS(rAG, here::here('figs', 'rAG.RDS'))
 
 # decision - rphipp ####
