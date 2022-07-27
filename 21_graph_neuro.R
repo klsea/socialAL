@@ -1,5 +1,5 @@
 # Graphs of neuroimaging cluster means
-# 12.16.21
+# 12.16.21 updated 7.27.22
 
 # load required packages ####
 library(here)
@@ -10,11 +10,12 @@ library(tidyverse)
 # set hard-coded variables
 
 # load data
-brain <- read.csv(here::here('data', 'SocialAL_cluster_activity.csv'))
+#brain <- read.csv(here::here('data', 'SocialAL_cluster_activity.csv'))
+brain <- read.csv(here::here('data', 'socialAL_OA_learner-nonlearner_ROIs.csv'))
 
 # rename age groups
-brain$AgeGroup[which(brain$AgeGroup == 'YA')] <- 'Younger Adults'
-brain$AgeGroup[which(brain$AgeGroup == 'OA')] <- 'Older Adults'
+brain$Group[which(brain$Group == 'learn')] <- 'OA Learner'
+brain$Group[which(brain$Group == 'nonlearn')] <- 'OA Non-learner'
 
 # graph constants ####
 lg = 18 # text size
@@ -27,52 +28,42 @@ custom_plot = list(theme(
 )
 
 # create summary tables by age group ####
-d1 <- brain %>% pivot_longer(cols = feedback_rTPJ:decision_ifg, names_to = 'region', values_to = 'activation')
+d1 <- brain %>% pivot_longer(cols = R_Angular_Gyrus:R_para_hipp, names_to = 'region', values_to = 'activation')
 
 d2 <- d1 %>% 
-  group_by(AgeGroup, region) %>%
+  group_by(Group, region) %>%
   dplyr::summarise(mean = mean(activation), sd = sd(activation), 
                    se= sd(activation)/sqrt(n()))
 
-# decision - IFG ####
-ifgmeans <- d2[which(d2$region == 'decision_ifg'),]
-ifg <- ggplot() +
-  geom_point(data = brain, aes(x = AgeGroup, y = decision_ifg, colour = AgeGroup), 
+# decision - rAG ####
+rAGmeans <- d2[which(d2$region == 'R_Angular_Gyrus'),]
+rAG <- ggplot() +
+  geom_point(data = brain, aes(x = Group, y = R_Angular_Gyrus, colour = Group), 
              position = position_jitterdodge(jitter.height = .25), alpha = .5) +
-  geom_bar(data = ifgmeans, aes(x = AgeGroup, y = mean, colour = AgeGroup, fill = AgeGroup), 
+  geom_bar(data = rAGmeans, aes(x = Group, y = mean, colour = Group, fill = Group), 
            stat='identity', alpha = 0.3, position=position_dodge()) +
-  geom_errorbar(data = ifgmeans, aes(x = AgeGroup, y = mean, ymin=mean - se, ymax = mean + se, colour = AgeGroup), 
+  geom_errorbar(data = rAGmeans, aes(x = Group, y = mean, ymin=mean - se, 
+                                     ymax = mean + se, colour = Group), 
                 width = .2, position=position_dodge(.9)) + 
-  xlab('Age Group') + ylab('Reputation Signal') +
-  scale_fill_brewer(palette="Set1", name="Age Group") + theme_minimal() + 
-  scale_colour_brewer(palette="Set1", name="Age Group") + custom_plot
-saveRDS(ifg, here::here('figs', 'ifg.RDS'))
+  xlab('Learner Group') + ylab('Reputation Signal') +
+  scale_fill_brewer(palette="Set2", name=" Learner Group") + theme_minimal() + 
+  scale_colour_brewer(palette="Set2", name="Learner Group") + custom_plot
+saveRDS(rAG, here::here('figs', 'rAG.RDS'))
 
-# feedback - TPJ ####
-tpjmeans <- d2[which(d2$region == 'feedback_rTPJ'),]
-tpj <- ggplot() +
-  geom_point(data = brain, aes(x = AgeGroup, y = feedback_rTPJ, colour = AgeGroup), 
+# decision - rphipp ####
+rPHCmeans <- d2[which(d2$region == 'R_para_hipp'),]
+rPHC <- ggplot() +
+  geom_point(data = brain, aes(x = Group, y = R_para_hipp, colour = Group), 
              position = position_jitterdodge(jitter.height = .25), alpha = .5) +
-  geom_bar(data = tpjmeans, aes(x = AgeGroup, y = mean, colour = AgeGroup, fill = AgeGroup), 
+  geom_bar(data = rPHCmeans, aes(x = Group, y = mean, colour = Group, fill = Group), 
            stat='identity', alpha = 0.3, position=position_dodge()) +
-  geom_errorbar(data = tpjmeans, aes(x = AgeGroup, y = mean, ymin=mean - se, ymax = mean + se, colour = AgeGroup), 
+  geom_errorbar(data = rPHCmeans, aes(x = Group, y = mean, ymin=mean - se, 
+                                        ymax = mean + se, colour = Group), 
                 width = .2, position=position_dodge(.9)) + 
-  xlab('Age Group') + ylab('PE Signal') +
-  scale_fill_brewer(palette="Set1", name="Age Group") + theme_minimal() + 
-  scale_colour_brewer(palette="Set1", name="Age Group") + custom_plot
-saveRDS(tpj, here::here('figs', 'tpj.RDS'))
+  xlab('Group') + ylab('Reputation Signal') +
+  scale_fill_brewer(palette="Set2", name="Group") + theme_minimal() + 
+  scale_colour_brewer(palette="Set2", name="Group") + custom_plot
+saveRDS(rPHC, here::here('figs', 'rPHC.RDS'))
 
-# feedback - Visual ####
-vismeans <- d2[which(d2$region == 'feedback_visual'),]
-vis <- ggplot() +
-  geom_point(data = brain, aes(x = AgeGroup, y = feedback_visual, colour = AgeGroup), 
-             position = position_jitterdodge(jitter.height = .25), alpha = .5) +
-  geom_bar(data = vismeans, aes(x = AgeGroup, y = mean, colour = AgeGroup, fill = AgeGroup), 
-           stat='identity', alpha = 0.3, position=position_dodge()) +
-  geom_errorbar(data = vismeans, aes(x = AgeGroup, y = mean, ymin=mean - se, ymax = mean + se, colour = AgeGroup), 
-                width = .2, position=position_dodge(.9)) + 
-  xlab('Age Group') + ylab('PE Signal') +
-  scale_fill_brewer(palette="Set1", name="Age Group") + theme_minimal() + 
-  scale_colour_brewer(palette="Set1", name="Age Group") + custom_plot
-saveRDS(vis, here::here('figs', 'vis.RDS'))
+
 
