@@ -75,6 +75,19 @@ d10 <- as.data.frame(table(d9$agegrp, d9$win))
 colnames(d10) <- c("Age", "Model", "Frequency")
 d10$Model <- factor(d10$Model, levels = c('baseline', 'single', 'double', 'decay', 'prior'))
 
+# calculate Weight BIC for each model and choose the winning weight
+z <- winningBIC(dt[c(1, grep('BIC_double', colnames(dt)):grep('BIC_prior', colnames(dt)))])
+d11 <- merge(dt, z, by = 'id')
+d11$win <- gsub('BIC_', '', d11$win)
+write.csv(d9, here::here('output', 'model_comparison.csv'), row.names = FALSE)
+
+# proportions
+table(d11$agegrp, d11$win)
+d12 <- as.data.frame(table(d11$agegrp, d11$win))
+colnames(d12) <- c("Age", "Model", "Frequency")
+d12$Model <- factor(d12$Model, levels = c('baseline', 'single', 'double', 'decay', 'prior'))
+
+
 # graph
 # graph constants
 lg = 26 # text size
