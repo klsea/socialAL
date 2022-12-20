@@ -13,13 +13,17 @@ source(here::here('scr', 'add_tt_number.R'))
 
 # read in and concatenate data for group visualization
 dt <- read.csv(here::here('data', 'socialAL_clean_data.csv'))
-d1 <- read.csv(here::here('output', 'model_comparison.csv'))[c(1,12)]
+d1 <- read.csv(here::here('output', 'model_comparison.csv'))[c(1,23)]
 dt <- merge(dt, d1, by = 'id')
 rm(d1)
 
 # reorder trial_type and age group factors
 dt$trial_type <- factor(dt$trial_type, levels = c('Untrustworthy', 'Neutral', 'Trustworthy'))
 dt$agegrp <- factor(dt$agegrp, levels = c('Younger', 'Older'))
+
+#learners
+dt$learn <- ifelse(dt$win == 'baseline', 0, 1)
+dt$learn <- factor(dt$learn)
 
 ## Graph 1 - Group means ####
 ## ---------------------
@@ -169,4 +173,40 @@ ggplot(dw, aes(agegrp, tndiff, color = agegrp)) + geom_violin(trim= FALSE) + geo
   scale_color_brewer(palette="Set1") + theme_minimal() + 
   xlab('Age Group') + ylab('Difference in Trust \n(Trustworthy - Neutral)') + 
   geom_hline(aes(yintercept = 0)) + theme(legend.position = 'none') + custom_plot
+
+
+# calculate learner group means ####
+
+# calculate individual means 
+indiv_means <- dt %>% 
+  group_by(id, learn, trial_type) %>%
+  summarise(avg_amount = mean(amount_shared, na.rm = TRUE))
+
+se <- function(sd,n) {sd/sqrt(n())}
+lgrpmeans <- indiv_means %>% 
+  group_by(learn, trial_type) %>%
+  summarise(mean_amount = mean(avg_amount), sd_amount = sd(avg_amount), 
+            se_amount = sd(avg_amount)/sqrt(n()))
+
+# graph constants
+lg = 18 # text size
+sm = 14
+custom_plot = list(theme(
+  plot.title = element_text(size = 24),
+  axis.title.x = element_text(size = lg), axis.text.x = element_text(size = sm),
+  axis.title.y = element_text(size = lg), axis.text.y = element_text(size = sm), 
+  legend.title = element_text(size = lg), legend.text = element_text(size = sm),
+  strip.text.x = element_text(size = lg))
+)
+
+# graph learner group means
+learn_grp_means <- ggplot(lgrpmeans, aes(trial_type, mean_amount, colour = learn, fill= learn)) + 
+  geom_bar(position=position_dodge(), stat='identity') + 
+  geom_errorbar(aes(ymin=mean_amount - se_amount, ymax = mean_amount + se_amount), 
+                width = .2, position=position_dodge(.9)) + theme_minimal() + 
+  scale_fill_brewer(palette="Set1", name="Learner Group") + 
+  scale_colour_brewer(palette="Set1", name="Learner Group") +
+  xlab('Trial Type') + ylab('Average $ Shared') + coord_cartesian(ylim=c(0, 9)) + 
+  scale_y_continuous(breaks = c(0,3, 6, 9)) + custom_plot #+ 
+learn_grp_means
        

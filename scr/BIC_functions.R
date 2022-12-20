@@ -18,7 +18,7 @@ compare_BIC <- function(BIC1, BIC2){
 
 winningBIC <- function(x) {
   # This function takes a table where the first column is ID names and 
-  # the remaining colunns are  BIC values for different models
+  # the remaining columns are  BIC values for different models
   # and returns a data table with 
   # (1) the id and (2) the name of the winning model (based on the column names)
   min.col <- function(m, ...) max.col(-m, ...)
@@ -32,7 +32,31 @@ winningBIC <- function(x) {
   return(data)
 }
 
+winningLLH <- function(x) {
+  # This function takes a table where the first column is ID names and 
+  # the remaining columns are LLH values for different models
+  # and returns a data table with 
+  # (1) the id and (2) the name of the winning model (based on the column names)
+  min.col <- function(m, ...) max.col(-m, ...)
+  names <- colnames(x)[2:ncol(x)]
+  id <- x[1]
+  llhs <- x[2:ncol(x)]
+  minBIC <- apply(llhs, 1, min)
+  winModel <- names[min.col(llhs)]
+  winModel <- sub('LLH_', '', winModel)
+  data <- data.frame(id, llhs, winModel)
+  return(data)
+}
 
+count_trials <- function(data) {
+  dt <- data %>% filter(Choice != 'None') %>%
+    group_by(Subject) %>% summarize(n = n())
+  return(dt)
+}
 
-
+count_trials2 <- function(data) {
+  dt <- data %>% filter(amount_shared != 'None') %>%
+    group_by(id) %>% summarize(n = n())
+  return(dt)
+}
   

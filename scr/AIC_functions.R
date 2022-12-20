@@ -8,6 +8,22 @@ calc_AIC <- function(n, k, llh) {
   return(aic)
 }
 
+winningAIC <- function(x) {
+  # This function takes a table where the first column is ID names and 
+  # the remaining columns are  AIC values for different models
+  # and returns a data table with 
+  # (1) the id and (2) the name of the winning model (based on the column names)
+  min.col <- function(m, ...) max.col(-m, ...)
+  names <- colnames(x)[2:ncol(x)]
+  id <- x[1]
+  aics <- x[2:ncol(x)]
+  minAIC <- apply(aics, 1, min)
+  winModel <- names[min.col(aics)]
+  winModel <- sub('BIC_', '', winModel)
+  data <- data.frame(id, aics, winModel)
+  return(data)
+}
+
 weightAIC <- function(x) {
   # This function calculates the Akaike weight given 
   # a set of AIC values for a participant (x)

@@ -1,0 +1,130 @@
+---
+title: "parameter recovery - data simulated with participant best-fits"
+author: "Kendra Seaman"
+date: "11/3/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+#knitr::opts_chunk$set(fig.width=5, fig.height=3.5) 
+library(here)
+source(here::here('16_model_param_recovery.R'))
+```
+
+For each set of graphs:
+graph 1 - true value (sim) compared to estimated value (fit)
+graph 2 - difference between true value (sim) and estimated value (fit) faceted by true value
+
+
+### baseline model
+#### beta
+```{r baseline, echo = FALSE, message=FALSE, fig.show="hold", out.width="50%"}
+bl_beta
+bl_betadiff
+```
+
+### general learning model 
+#### alpha
+```{r general alpha, echo=FALSE, message=FALSE, fig.show="hold", out.width="50%"}
+a1_alpha
+a1_alphadiff
+```
+
+#### beta
+```{r general beta, echo=FALSE, message=FALSE, fig.show="hold", out.width="50%"}
+a1_beta
+a1_betadiff
+```
+
+### general learning with decay  model 
+#### alpha
+```{r general decay alpha, echo=FALSE, message=FALSE, fig.show="hold", out.width="50%"}
+a1d_alpha
+a1d_alphadiff
+```
+
+#### beta
+```{r general decay beta, echo=FALSE, message=FALSE, fig.show="hold", out.width="50%"}
+a1d_beta
+a1d_betadiff
+```
+
+#### decay
+```{r general decay decay, echo=FALSE, message=FALSE, fig.show="hold", out.width="50%"}
+a1d_decay
+a1d_decaydiff
+```
+
+### gain-loss learning model
+#### alpha gain
+```{r gain-loss alpha g, echo=FALSE, message=FALSE, fig.show="hold", out.width="50%"}
+a2_alpha_gain
+a2_diffAlphaGain
+```
+
+#### alpha loss
+```{r gain-loss alpha l, echo=FALSE, message=FALSE, fig.show="hold", out.width="50%"}
+a2_alpha_loss
+a2_diffAlphaLoss
+```
+
+#### beta
+```{r gain-loss beta, echo=FALSE, message=FALSE, fig.show="hold", out.width="50%"}
+a2_beta
+a2_diffBeta
+```
+
+### gain-loss learning with decay  model
+#### alpha gain
+```{r gain-loss decay ag, echo=FALSE, message=FALSE, fig.show="hold", out.width="50%"}
+a2d_alpha_gain
+a2d_diffAlphaGain
+```
+
+#### alpha loss
+```{r gain-loss decay al, echo=FALSE, message=FALSE, fig.show="hold", out.width="50%"}
+a2d_alpha_loss
+a2d_diffAlphaLoss
+```
+
+#### beta 
+```{r gain-loss decay beta, echo=FALSE, message=FALSE, fig.show="hold", out.width="50%"}
+a2d_beta
+a2d_diffBeta
+```
+
+#### decay
+```{r gain-loss decay decay, echo=FALSE, message=FALSE, fig.show="hold", out.width="50%"}
+a2d_decay
+a2d_diffDecay
+```
+
+### gain-loss learning with priors model
+#### alpha gain
+```{r gain-loss prior ag, echo=FALSE, message=FALSE, fig.show="hold", out.width="50%"}
+a2p_alpha_gain
+a2p_diffAlphaGain
+```
+
+#### alpha loss
+```{r gain-loss prior al, echo=FALSE, message=FALSE, fig.show="hold", out.width="50%"}
+a2p_alpha_loss
+a2p_diffAlphaLoss
+```
+
+#### beta
+```{r gain-loss prior beta, echo=FALSE, message=FALSE, fig.show="hold", out.width="50%"}
+a2p_beta
+a2p_diffBeta
+```
+
+#### initial probs
+```{r gain-loss prior iprobs, echo=FALSE, message=FALSE, fig.show="hold", out.width="50%"}
+a2p_iprobA
+a2p_diffIProbA
+a2p_iprobB
+a2p_diffIProbB
+a2p_iprobC
+a2p_diffIProbC
+```

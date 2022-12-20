@@ -1,5 +1,5 @@
 # model comparison
-# 2.24.20 updated 3.15.21 KLS
+# 2.24.20 updated 3.15.21 KLS updated 12.17.22
 
 # load required packages
 library(here)
@@ -14,7 +14,10 @@ source(here::here('scr', 'BIC_functions.R'))
 # set hard-coded variables
 
 # read data in 
-d1 <- read.csv(here::here('output', 'two_alpha_model_params.csv' ))
+odt <- read.csv(here('data', 'socialAL_clean_data.csv')) %>% drop_na() # original data
+
+# read in model fits
+d1 <- read.csv(here::here('output', 'two_alpha_model_params.csv' )) 
 d2 <- read.csv(here::here('output', 'single_alpha_model_params.csv' ))
 d3 <- read.csv(here::here('output', 'baseline_model_params.csv'))
 o4 <- read.csv(here::here('output', 'two_alpha_with_decay_model_params_older.csv'))
@@ -49,6 +52,10 @@ for (c in cut) {
   dt <- dt[which(dt$id != c), ]
 }
 
+# add number of trials into data frame
+dt <- merge(dt, count_trials2(odt), by = 'id')
+rm(odt)
+
 # calculate AIC for each model
 dt$AIC_double <- calc_AIC(45, 3, dt$llh_double)
 dt$AIC_single <- calc_AIC(45, 2, dt$llh_single)
@@ -57,33 +64,36 @@ dt$AIC_decay <- calc_AIC(45, 4, dt$llh_decay)
 dt$AIC_prior <- calc_AIC(45, 6, dt$llh_prior)
 
 # calculate BIC for each model
-dt$BIC_double <- calc_BIC(45, 3, dt$llh_double)
-dt$BIC_single <- calc_BIC(45, 2, dt$llh_single)
-dt$BIC_baseline <- calc_BIC(45, 1, dt$llh_baseline)
-dt$BIC_decay <- calc_BIC(45, 4, dt$llh_decay)
-dt$BIC_prior <- calc_BIC(45, 6, dt$llh_prior)
+dt$BIC_double <- calc_BIC(dt$n, 3, dt$llh_double)
+dt$BIC_single <- calc_BIC(dt$n, 2, dt$llh_single)
+dt$BIC_baseline <- calc_BIC(dt$n, 1, dt$llh_baseline)
+dt$BIC_decay <- calc_BIC(dt$n, 4, dt$llh_decay)
+dt$BIC_prior <- calc_BIC(dt$n, 6, dt$llh_prior)
 
-# calculate Weight AIC for each model and choose the winning weight
-y <- winningWeight(dt$id, dt[grep('AIC_double', colnames(dt)):grep('AIC_prior', colnames(dt))])
-d9 <- merge(dt, y, by = 'id')
-d9$win <- gsub('AIC_', '', d9$win)
-write.csv(d9, here::here('output', 'model_comparison.csv'), row.names = FALSE)
+# calculate choose the winning model using AIC
+y <- winningAIC(dt[c(1, grep('AIC_double', colnames(dt)):grep('AIC_prior', colnames(dt)))])
+d9 <- merge(dt, y[c(1,ncol(y))], by = 'id')
+d9$winModel <- gsub('AIC_', '', d9$winModel)
+d9 <- d9 %>% rename(AIC_win = winModel)
+
+# calculate choose the winning model using BIC
+z <- winningBIC(dt[c(1, grep('BIC_double', colnames(dt)):grep('BIC_prior', colnames(dt)))])
+d11 <- merge(d9, z[c(1,ncol(z))], by = 'id')
+d11$winModel <- gsub('BIC_', '', d11$winModel)
+d11 <- d11 %>% rename(BIC_win = winModel)
+d11$conflict <- ifelse(d11$AIC_win == d11$BIC_win, 0, 1)
+write.csv(d11, here::here('output', 'model_comparisons.csv'), row.names = FALSE)
 
 # proportions
-table(d9$agegrp, d9$win)
-d10 <- as.data.frame(table(d9$agegrp, d9$win))
+table(d9$agegrp, d9$AIC_win)
+d10 <- as.data.frame(table(d9$agegrp, d9$AIC_win))
 colnames(d10) <- c("Age", "Model", "Frequency")
 d10$Model <- factor(d10$Model, levels = c('baseline', 'single', 'double', 'decay', 'prior'))
 
-# calculate Weight BIC for each model and choose the winning weight
-z <- winningBIC(dt[c(1, grep('BIC_double', colnames(dt)):grep('BIC_prior', colnames(dt)))])
-d11 <- merge(dt, z, by = 'id')
-d11$win <- gsub('BIC_', '', d11$win)
-write.csv(d9, here::here('output', 'model_comparison.csv'), row.names = FALSE)
 
 # proportions
-table(d11$agegrp, d11$win)
-d12 <- as.data.frame(table(d11$agegrp, d11$win))
+table(d11$agegrp, d11$BIC_win)
+d12 <- as.data.frame(table(d11$agegrp, d11$BIC_win))
 colnames(d12) <- c("Age", "Model", "Frequency")
 d12$Model <- factor(d12$Model, levels = c('baseline', 'single', 'double', 'decay', 'prior'))
 
@@ -103,7 +113,21 @@ custom_plot = list(theme(
 
 ggplot(d10, aes(Model, Frequency, fill = Age)) + 
   geom_bar(stat="identity", position=position_dodge()) + 
-  scale_fill_brewer(palette="Set1") + theme_minimal() + ggtitle('Best-Fitting Model') +
+  scale_fill_brewer(palette="Set1") + theme_minimal() + ggtitle('Best-Fitting Model using AIC') +
   custom_plot
 
-ggsave(here('figs', 'best-fit_model.png'))
+ggsave(here('figs', 'best-fit_model_AIC.png'))
+
+ggplot(d12, aes(Model, Frequency, fill = Age)) + 
+  geom_bar(stat="identity", position=position_dodge()) + 
+  scale_fill_brewer(palette="Set1") + theme_minimal() + ggtitle('Best-Fitting Model using BIC') +
+  custom_plot
+
+ggsave(here('figs', 'best-fit_model_BIC.png'))
+
+# # calculate Weight AIC for each model and choose the winning weight
+# y <- winningWeight(dt$id, dt[grep('AIC_double', colnames(dt)):grep('AIC_prior', colnames(dt))])
+# d9 <- merge(dt, y, by = 'id')
+# d9$win <- gsub('AIC_', '', d9$win)
+# d9 <- d9 %>% rename(AIC_win = win)
+# #write.csv(d9, here::here('output', 'model_comparison_AIC.csv'), row.names = FALSE)

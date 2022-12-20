@@ -1,0 +1,26 @@
+---
+title: "confusion_matrix"
+author: "Kendra Seaman"
+date: "7/8/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+#knitr::opts_chunk$set(fig.width=5, fig.height=3.5) 
+library(here)
+source(here::here('18_model_confusion_matrix.R'))
+```
+
+```{r baseline, echo = FALSE, message=FALSE}
+prettycm
+```
+
+*** 
+
+1. baseline model   
+2. general learning model   
+3. general learning with decay model
+4. gain-loss learning model
+5. gain-loss learning with decay model
+6. gain-loss learning with priors model

@@ -1,0 +1,6 @@
+"","Variable Name","Variable","Measurement Units","Allowed Values","Description"
+"1","feedback_rTPJ","Average activity in rTPJ cluster during feedback","arbitrary units","decimals","Average activity correlated with prediction error in the right angular gyrus (BA 39"
+"2","feedback_visual","Average activity in visual cluster during feedback","arbitrary units","decimals","Average activity correlated with prediction error in the bilateral visual cortex (BA 19/18"
+"3","decision_ifg","Average activity in ifg during decision","arbitrary units","decimals","Average activity correlated with reputation signal in the right inferior frontal gyrus (BA 45/46"
+"4","ID","Participant ID Number","integer","Integers over 1000","Participant code; beings with 1000 and assigned sequentially"
+"5","AgeGroup","Age group of participant (number)","character","Age Group; YA = Younger, OA = Older","Age group of participant"
