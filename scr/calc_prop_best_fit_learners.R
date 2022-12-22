@@ -1,4 +1,4 @@
-calc_prop_best_fit_learners <- function(sim_type, sim_model, penalty) {
+calc_prop_best_fit_gllearners <- function(sim_type, sim_model, penalty) {
   # this funciton calculates the proportion of time each model was the best-fitting model 
   # for confusion matrix
   # sim_type is string denoting how parameters were chosen for simulation
@@ -13,20 +13,20 @@ calc_prop_best_fit_learners <- function(sim_type, sim_model, penalty) {
   # limit to learners-only #### 
   # comment out if unwanted
   d1 <- read.csv(here('output', 'model_comparisons.csv'))
-  non_learners <- d1 %>% filter(BIC_win == 'baseline')
-  non_learners <- non_learners$id
+  gainloss <- d1 %>% filter(BIC_win == 'double')
+  gainloss <- gainloss$id
   rm(d1)
   
   # read files
   b <- read.csv(here('output', 'simulation', sim_type, paste0('b_fit2_', sim_model, '.csv')))
   b$subParent <- str_sub(b$Subject, start = 1, end = 8) 
-  b <- b %>% filter(!subParent %in% non_learners)
+  b <- b %>% filter(subParent %in% gainloss)
   a1 <- read.csv(here('output', 'simulation', sim_type, paste0('a1_fit2_', sim_model, '.csv')))
   a1$subParent <- str_sub(a1$Subject, start = 1, end = 8)
-  a1 <- a1 %>% filter(!subParent %in% non_learners)
+  a1 <- a1 %>% filter(subParent %in% gainloss)
   a2 <- read.csv(here('output', 'simulation', sim_type, paste0('a2_fit2_', sim_model, '.csv')))
   a2$subParent <- str_sub(a2$Subject, start = 1, end = 8)
-  a2 <- a2 %>% filter(!subParent %in% non_learners)
+  a2 <- a2 %>% filter(subParent %in% gainloss)
  
   sim_model2 <- ifelse(sim_model == 'b', 'baseline', ifelse(sim_model == 'a1', '1alpha', '2alpha'))
   dt <- read.csv(here('output', 'simulation', sim_type, paste0('sim_', sim_model2, '_model_data.csv')))

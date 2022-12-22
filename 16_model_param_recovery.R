@@ -25,32 +25,32 @@ glf <- rename(glf, estBeta = beta, estAlphaGain = a_gain, estAlphaLoss = a_loss)
 gldl <- merge(gld, glf, by = 'Subject')
 rm(gld, glf)
 
-# # limit to learners-only #### 
-# # comment out if unwanted
+# # limit to gain-loss learners-only #### 
+# comment out if unwanted
 # dt <- read.csv(here('output', 'model_comparisons.csv'))
-# non_learners <- dt %>% filter(BIC_win == 'baseline')
-# non_learners <- non_learners$id
+# gainloss <- dt %>% filter(BIC_win == 'double')
+# gainloss <- gainloss$id
 # rm(dt)
 # gldl$subParent <- str_sub(gldl$Subject, start = 1, end = 8)
-# gldl <- gldl %>% filter(!subParent %in% non_learners)
+# gldl <- gldl %>% filter(subParent %in% gainloss)
 
 # graph #### 
 a2_alpha_gain <- ggscatter(gldl, x = 'trueAlphaGain', y = 'estAlphaGain', shape = 1, color = 'blue', 
                            add = 'reg.line', conf.int = TRUE, 
                            cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(.5, .25), cor.coef.size = 5,
-                           xlab = 'True Alpha Gain value', ylab = 'Extimated Alpha Gain value')
+                           xlab = 'Simulated Alpha Gain value', ylab = 'Recovered Alpha Gain value')
 a2_alpha_gain
 
 a2_alpha_loss <- ggscatter(gldl, x = 'trueAlphaLoss', y = 'estAlphaLoss', shape = 1, color = 'blue4', 
                            add = 'reg.line', conf.int = TRUE, 
                            cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(.5, .25), cor.coef.size = 5,
-                           xlab = 'True Alpha Loss value', ylab = 'Extimated Alpha Loss value')
+                           xlab = 'Simulated Alpha Loss value', ylab = 'Recovered Alpha Loss value')
 
 a2_alpha_loss
 
 a2_beta <- ggscatter(gldl, x = 'trueBeta', y = 'estBeta', shape = 1, color = 'red3', 
                      add = 'reg.line', conf.int = TRUE, 
                      cor.coef = TRUE, cor.method = 'pearson', cor.coef.coord = c(1, 3), cor.coef.size = 5,
-                     xlab = 'True Beta value', ylab = 'Extimated Beta value')
+                     xlab = 'Simulated Beta value', ylab = 'Recovered Beta value')
 a2_beta
 

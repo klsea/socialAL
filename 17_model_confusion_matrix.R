@@ -19,19 +19,19 @@ penalty = 'BIC' # change depending on penalty type
 name = paste0('Confusion Matrix built from ', penalty)
 
 # baseline data ####
-baseline <- calc_prop_best_fit(sim_type, 'b', penalty)
-#baseline <- calc_prop_best_fit_learners(sim_type, 'b', penalty)
+#baseline <- calc_prop_best_fit(sim_type, 'b', penalty)
+baseline <- calc_prop_best_fit_gllearners(sim_type, 'b', penalty)
 
 # single alpha data ####
-alpha1 <- calc_prop_best_fit(sim_type, 'a1', penalty)
-#alpha1 <- calc_prop_best_fit_learners(sim_type, 'a1', penalty)
+#alpha1 <- calc_prop_best_fit(sim_type, 'a1', penalty)
+alpha1 <- calc_prop_best_fit_gllearners(sim_type, 'a1', penalty)
 
 # # single alpha with decay data ####
 # alpha1decay <- calc_prop_best_fit(sim_type, 'a1d')
 
 # double alpha data ####
-alpha2 <- calc_prop_best_fit(sim_type, 'a2', penalty)
-#alpha2 <- calc_prop_best_fit_learners(sim_type, 'a2', penalty)
+#alpha2 <- calc_prop_best_fit(sim_type, 'a2', penalty)
+alpha2 <- calc_prop_best_fit_gllearners(sim_type, 'a2', penalty)
 alpha2 <- alpha2 %>% rename(freq_a2 = freq)
 
 # # double alpha with decay data ####
