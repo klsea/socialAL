@@ -20,13 +20,13 @@ odt <- read.csv(here('data', 'socialAL_clean_data.csv')) %>% drop_na() # origina
 d1 <- read.csv(here::here('output', 'two_alpha_model_params.csv' )) 
 d2 <- read.csv(here::here('output', 'single_alpha_model_params.csv' ))
 d3 <- read.csv(here::here('output', 'baseline_model_params.csv'))
-o4 <- read.csv(here::here('output', 'two_alpha_with_decay_model_params_older.csv'))
-y4 <- read.csv(here::here('output', 'two_alpha_with_decay_model_params_younger.csv'))
-o5 <- read.csv(here::here('output', 'prior_model_params_older.csv'))
-y5 <- read.csv(here::here('output', 'prior_model_params_younger.csv'))
+# o4 <- read.csv(here::here('output', 'two_alpha_with_decay_model_params_older.csv'))
+# y4 <- read.csv(here::here('output', 'two_alpha_with_decay_model_params_younger.csv'))
+# o5 <- read.csv(here::here('output', 'prior_model_params_older.csv'))
+# y5 <- read.csv(here::here('output', 'prior_model_params_younger.csv'))
 
-d4 <- rbind(o4, y4); rm(o4, y4)
-d5 <- rbind(o5, y5); rm(o5, y5)
+# d4 <- rbind(o4, y4); rm(o4, y4)
+# d5 <- rbind(o5, y5); rm(o5, y5)
 
 d1 <- clean_param(d1)
 
@@ -34,16 +34,16 @@ d1 <- clean_param(d1)
 d6 <- merge(d1[c(1:2,6)], d2[c(1,4)], by = 'id')
 colnames(d6) <- c('id', 'agegrp', 'llh_double', 'llh_single')
 
-d7 <- merge(d6, d3[c(1,3)], by = 'id')
-colnames(d7) <- c('id', 'agegrp', 'llh_double', 'llh_single', 'llh_baseline')
+dt <- merge(d6, d3[c(1,3)], by = 'id') # d7 to dt
+colnames(dt) <- c('id', 'agegrp', 'llh_double', 'llh_single', 'llh_baseline') #d7 to dt
 
-d8 <- merge(d7, d4[c(1,6)], by = 'id')
-colnames(d8) <- c('id', 'agegrp', 'llh_double', 'llh_single', 'llh_baseline', 'llh_decay')
-
-dt <- merge(d8, d5[c(1,8)], by = 'id')
-colnames(dt) <- c('id', 'agegrp', 'llh_double', 'llh_single', 'llh_baseline', 'llh_decay', 'llh_prior')
-
-rm(d1,d2,d3,d4,d5,d6,d7,d8)
+# d8 <- merge(d7, d4[c(1,6)], by = 'id')
+# colnames(d8) <- c('id', 'agegrp', 'llh_double', 'llh_single', 'llh_baseline', 'llh_decay')
+# 
+# dt <- merge(d8, d5[c(1,8)], by = 'id')
+# colnames(dt) <- c('id', 'agegrp', 'llh_double', 'llh_single', 'llh_baseline', 'llh_decay', 'llh_prior')
+# 
+# rm(d1,d2,d3,d4,d5,d6,d7,d8)
 
 # remove excluded participants
 cut <- read.csv(here::here('output', 'socialAL_cut.csv'), header = F)$V1
@@ -60,17 +60,18 @@ rm(odt)
 dt$AIC_double <- calc_AIC(45, 3, dt$llh_double)
 dt$AIC_single <- calc_AIC(45, 2, dt$llh_single)
 dt$AIC_baseline <- calc_AIC(45, 1, dt$llh_baseline)
-dt$AIC_decay <- calc_AIC(45, 4, dt$llh_decay)
-dt$AIC_prior <- calc_AIC(45, 6, dt$llh_prior)
+# dt$AIC_decay <- calc_AIC(45, 4, dt$llh_decay)
+# dt$AIC_prior <- calc_AIC(45, 6, dt$llh_prior)
 
 # calculate BIC for each model
 dt$BIC_double <- calc_BIC(dt$n, 3, dt$llh_double)
 dt$BIC_single <- calc_BIC(dt$n, 2, dt$llh_single)
 dt$BIC_baseline <- calc_BIC(dt$n, 1, dt$llh_baseline)
-dt$BIC_decay <- calc_BIC(dt$n, 4, dt$llh_decay)
-dt$BIC_prior <- calc_BIC(dt$n, 6, dt$llh_prior)
+# dt$BIC_decay <- calc_BIC(dt$n, 4, dt$llh_decay)
+# dt$BIC_prior <- calc_BIC(dt$n, 6, dt$llh_prior)
 
 # calculate choose the winning model using AIC
+#y <- winningAIC(dt[c(1, grep('AIC_double', colnames(dt)):grep('AIC_prior', colnames(dt)))])
 y <- winningAIC(dt[c(1, grep('AIC_double', colnames(dt)):grep('AIC_prior', colnames(dt)))])
 d9 <- merge(dt, y[c(1,ncol(y))], by = 'id')
 d9$winModel <- gsub('AIC_', '', d9$winModel)
